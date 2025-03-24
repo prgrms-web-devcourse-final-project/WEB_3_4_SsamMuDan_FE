@@ -1,7 +1,16 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Main from "./pages/Main";
+
 import "./App.css";
 
 function App() {
-  return <div className=" w-full h-36 bg-gray-500">안녕하세요</div>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Main />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
