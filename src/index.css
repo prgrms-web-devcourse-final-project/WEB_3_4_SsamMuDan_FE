@@ -96,3 +96,19 @@ code {
   font-weight: normal;
   font-style: normal;
 }
+
+:root {
+  --color-primary-100: ##bfffda;
+  --color-primary-200: ###00ea99;
+  --color-primary-300: ###00be7b;
+  --color-primary-400: ##d40000;
+  --color-secondary-100: ##ffecee;
+  --color-secondary-200: ##ff0e5e;
+  --color-grey-100: ##eef1ef;
+  --color-grey-200: ##c8cfca;
+  --color-grey-300: ##a2a8a4;
+  --color-grey-400: ##7e827f;
+  --color-grey-500: #5b5e5c;
+  --color-grey-600: #3a3d3b;
+  --color-grey-700: #1d1e1d;
+}
