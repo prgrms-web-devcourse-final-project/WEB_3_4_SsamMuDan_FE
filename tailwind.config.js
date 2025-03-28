@@ -7,7 +7,7 @@ export default {
         primary100: '#bfffda',
         primary200: '#00ea99',
         primary300: '#00be7b',
-        primary400: '#d40000',
+        primary400: '#ee5945',
         secondary100: '#ffecee',
         secondary200: '#ff0e5e',
         grey100: '#eef1ef',
