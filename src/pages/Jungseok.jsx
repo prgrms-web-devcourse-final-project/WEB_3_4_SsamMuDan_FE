@@ -4,6 +4,7 @@ import PositionModal from '@/components/common/PositionModal';
 import CustomPagination from '@/components/common/CustomPagination';
 import IntroduceInput from '@/components/common/IntroduceInput';
 import IntroduceTextArea from '@/components/common/IntroduceTextArea';
+import AddButton from '@/components/common/AddButton';
 
 const Jungseok = () => {
   const techStack = [
@@ -29,6 +30,9 @@ const Jungseok = () => {
       </div>
       <div className="my-5">
         <IntroduceTextArea width="500px" />
+      </div>
+      <div>
+        <AddButton text="경력 추가하기" />
       </div>
     </>
   );
