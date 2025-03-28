@@ -5,19 +5,8 @@ import PrimaryButton from './PrimaryButton';
 import { Button } from '@/components/ui/button';
 import StackBadge from '@/common/StackBadge';
 
-const StackModal = () => {
-  const techStack = [
-    'Python',
-    'SpringFramework',
-    'AWS',
-    'Git',
-    'iOS',
-    'HTML',
-    'JavaScript',
-    'MySQL',
-    'SQL',
-  ];
-
+const StackModal = ({ data }) => {
+  const techStack = data;
   return (
     <Dialog>
       <DialogTrigger className="flex flex-row items-center font-bold text-[24px] gap-4 ">
@@ -31,12 +20,15 @@ const StackModal = () => {
           className="px-14 h-[45px] bg-grey100 relative !text-[16px] placeholder:text-[16px]"
           placeholder="보유한 기술 스택을 입력해 주세요"
         />
-        <MagnifyingGlassIcon className="w-[20px] absolute top-[82px] left-[40px]" />
+        <MagnifyingGlassIcon className="w-[20px] absolute top-[79px] left-[40px]" />
         <div className="w-full h-[500px] overflow-y-auto">
           <div className=" w-full flex flex-wrap gap-3 mt-4 items-start justify-start  ">
-            {techStack.map((item) => {
+            {techStack.map((item, index) => {
               return (
-                <span className=" hover:cursor-pointer h-[50px] text-[16px] px-3 flex items-center justify-center rounded-[10px] border border-grey200  font-[500] ">
+                <span
+                  key={index}
+                  className=" hover:cursor-pointer h-[50px] text-[16px] px-3 flex items-center justify-center rounded-[10px] border border-grey200  font-[500] "
+                >
                   {item}
                 </span>
               );
