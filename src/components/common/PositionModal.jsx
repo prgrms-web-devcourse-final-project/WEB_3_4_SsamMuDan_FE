@@ -2,7 +2,7 @@ import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
-import CommonButton from './CommonButton';
+import PrimaryButton from './PrimaryButton';
 const PositionModal = () => {
   const position = ['전체', '프론트엔드', '벡엔드', '풀스택', 'iOS'];
 
@@ -36,7 +36,7 @@ const PositionModal = () => {
           >
             초기화
           </Button>
-          <CommonButton text="적용" width="90px" height="40px" />
+          <PrimaryButton text="적용" width="90px" height="40px" />
         </div>
       </PopoverContent>
     </Popover>

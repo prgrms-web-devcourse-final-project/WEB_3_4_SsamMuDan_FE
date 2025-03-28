@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { Input } from '@/components/ui/input';
-import CommonButton from './CommonButton';
+import PrimaryButton from './PrimaryButton';
 import { Button } from '@/components/ui/button';
 import StackBadge from '@/common/StackBadge';
 
@@ -59,7 +59,7 @@ const StackModal = () => {
           >
             초기화
           </Button>
-          <CommonButton text="적용" width="400px" height="48px" />
+          <PrimaryButton text="적용" width="400px" height="48px" />
         </div>
       </DialogContent>
     </Dialog>

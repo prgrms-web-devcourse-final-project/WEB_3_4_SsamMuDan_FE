@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 
-const CommonButton = ({ text, width, height }) => {
+const PrimaryButton = ({ text, width, height }) => {
   return (
     <Button
       className="bg-primary300 text-white text-[16px] font-[700] hover:bg-primary300 hover:text-white hover:border-none"
@@ -15,4 +15,4 @@ const CommonButton = ({ text, width, height }) => {
   );
 };
 
-export default CommonButton;
+export default PrimaryButton;
