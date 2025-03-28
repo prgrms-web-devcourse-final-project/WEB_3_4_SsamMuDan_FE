@@ -7,6 +7,7 @@ import IntroduceTextArea from '@/components/common/IntroduceTextArea';
 import AddButton from '@/components/common/AddButton';
 import IntroduceBar from '@/components/common/IntroduceBar';
 import FloatingButton from '@/components/common/FloatingButton';
+import CategoryTab from '@/components/common/CategoryTab';
 
 const Jungseok = () => {
   const techStack = [
@@ -41,6 +42,9 @@ const Jungseok = () => {
       </div>
       <div>
         <FloatingButton />
+      </div>
+      <div>
+        <CategoryTab />
       </div>
     </>
   );
