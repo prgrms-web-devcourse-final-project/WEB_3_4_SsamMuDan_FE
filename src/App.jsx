@@ -4,6 +4,7 @@ import Jiwoo from './pages/Jiwoo';
 import Jungseok from './pages/Jungseok';
 
 import './App.css';
+import JongHee from './pages/JongHee';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/jungseok" element={<Jungseok />} />
         <Route path="/jiwoo" element={<Jiwoo />} />
+        <Route path="/jonghee" element={<JongHee />} />
       </Routes>
     </BrowserRouter>
   );
