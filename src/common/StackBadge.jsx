@@ -1,6 +1,8 @@
 const StackBadge = ({ text, showCloseIcon = false }) => {
   return (
-    <div className="inline-flex items-center px-3 py-[10px] bg-[#31374C] text-white rounded-[999px] m-3">
+
+    <div className="inline-flex items-center px-3 py-[10px] bg-[#31374C] text-white rounded-[20px]">
+
       <span className="text-sm leading-none">{text}</span>
       {showCloseIcon && (
         <img
