@@ -110,4 +110,43 @@ code {
   --color-grey-500: #5b5e5c;
   --color-grey-600: #3a3d3b;
   --color-grey-700: #1d1e1d;
+  --font-esamanru: 'Esamanru', sans-serif;
+  font-family:
+    'Pretendard Variable',
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    sans-serif;
+  font-weight: 400;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: 'Esamanru';
+  src:
+    url('/fonts/GongGothicMedium-Light.woff2') format('woff2'),
+    url('/fonts/GongGothicMedium-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Esamanru';
+  src:
+    url('/fonts/GongGothicMedium-Regular.woff2') format('woff2'),
+    url('/fonts/GongGothicMedium-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Esamanru';
+  src:
+    url('/fonts/GongGothicMedium-Medium.woff2') format('woff2'),
+    url('/fonts/GongGothicMedium-Medium.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
 }

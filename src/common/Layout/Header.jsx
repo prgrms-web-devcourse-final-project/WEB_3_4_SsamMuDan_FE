@@ -30,7 +30,7 @@ const Header = () => {
           </li>
         </ul>
         <div className="flex items-center ml-auto">
-          <NavLink className="text-[18px] font-semibold mr-[53px] mr-[28px]">로그인</NavLink>
+          <NavLink className="text-[18px] font-Thin mr-[53px] mr-[28px]">로그인</NavLink>
           <NavLink className="text-[18px] text-white w-[89px] h-[35px] rounded-[8px] bg-primary300 flex items-center justify-center">
             회원가입
           </NavLink>
