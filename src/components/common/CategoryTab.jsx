@@ -1,10 +1,9 @@
-import { AnimatePresence } from 'motion/react';
 import * as motion from 'motion/react-client';
 import { useState } from 'react';
 
 const tabs = ['강의소개', '수강평', '커뮤니티'];
 
-export default function CategorySlider() {
+const CategoryTab = () => {
   const [currentTab, setCurrentTab] = useState('강의소개');
 
   return (
@@ -33,4 +32,6 @@ export default function CategorySlider() {
       ))}
     </div>
   );
-}
+};
+
+export default CategoryTab;
