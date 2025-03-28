@@ -5,6 +5,7 @@ body {
     'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-pretendard);
 }
 
 code {
@@ -110,15 +111,8 @@ code {
   --color-grey-500: #5b5e5c;
   --color-grey-600: #3a3d3b;
   --color-grey-700: #1d1e1d;
+  --font-pretendard: 'Pretendard Variable', 'Pretendard', sans-serif;
   --font-esamanru: 'Esamanru', sans-serif;
-  font-family:
-    'Pretendard Variable',
-    Pretendard,
-    -apple-system,
-    BlinkMacSystemFont,
-    system-ui,
-    sans-serif;
-  font-weight: 400;
 
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
