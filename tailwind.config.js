@@ -60,7 +60,12 @@ export default {
       },
       fontFamily: {
         pretendard: ['Pretendard', 'sans-serif'],
-        esamanru: ['GongGothicMedium'],
+        esamanru: ['GongGothicMedium', 'sans-serif'],
+      },
+      fontWeight: {
+        'esamanru-light': 300,
+        'esamanru-medium': 400,
+        'esamanru-bold': 700,
       },
       keyframes: {
         'accordion-down': {
