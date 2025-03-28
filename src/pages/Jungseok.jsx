@@ -2,6 +2,8 @@ import Layout from '../common/Layout/Layout';
 import StackModal from '@/components/common/stackModal';
 import PositionModal from '@/components/common/PositionModal';
 import CustomPagination from '@/components/common/CustomPagination';
+import IntroduceInput from '@/components/common/IntroduceInput';
+import IntroduceTextArea from '@/components/common/IntroduceTextArea';
 
 const Jungseok = () => {
   const techStack = [
@@ -18,11 +20,17 @@ const Jungseok = () => {
   const position = ['전체', '프론트엔드', '벡엔드', '풀스택', 'iOS'];
 
   return (
-    <Layout>
+    <>
       <StackModal data={techStack} />
       <PositionModal position={position} />
       <CustomPagination />
-    </Layout>
+      <div className="my-5">
+        <IntroduceInput text="자기소개" width="500px" />
+      </div>
+      <div className="my-5">
+        <IntroduceTextArea width="500px" />
+      </div>
+    </>
   );
 };
 
