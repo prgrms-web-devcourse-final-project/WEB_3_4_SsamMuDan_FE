@@ -5,6 +5,8 @@ import CustomPagination from '@/components/common/CustomPagination';
 import IntroduceInput from '@/components/common/IntroduceInput';
 import IntroduceTextArea from '@/components/common/IntroduceTextArea';
 import AddButton from '@/components/common/AddButton';
+import IntroduceBar from '@/components/common/IntroduceBar';
+import FloatingButton from '@/components/common/FloatingButton';
 
 const Jungseok = () => {
   const techStack = [
@@ -33,6 +35,12 @@ const Jungseok = () => {
       </div>
       <div>
         <AddButton text="경력 추가하기" />
+      </div>
+      <div className="m-10">
+        <IntroduceBar />
+      </div>
+      <div>
+        <FloatingButton />
       </div>
     </>
   );
