@@ -11,14 +11,15 @@ const ActionButton = ({
 }) => {
   // 기본 스타일
   const baseStyle = `
-    relative rounded-[10px] flex items-center justify-center font-semibold
-    transition hover:scale-105 active:scale-95 hover:shadow-md duration-150
-  `;
+  relative rounded-[10px] flex items-center justify-center font-semibold
+  transition-transform hover:scale-[1.02] active:scale-[0.98]
+  duration-150
+`;
 
   // 각 variant별 스타일
   const variants = {
-    default: 'w-[370px] h-[42px] bg-primary300 text-white border-none text-base',
-    auth: 'w-[370px] h-[42px] bg-white text-primary300 border border-primary300 text-base',
+    default: 'w-full h-[42px] bg-primary300 text-white border-none text-base',
+    auth: 'w-full h-[42px] bg-white text-primary300 border border-primary300 text-base',
     payment: 'w-[380px] h-[57px] bg-primary300 text-white border-none text-2xl font-esamanru',
     like: 'w-[380px] h-[57px] bg-white text-primary300 border border-primary300 text-2xl font-esamanru',
   };
