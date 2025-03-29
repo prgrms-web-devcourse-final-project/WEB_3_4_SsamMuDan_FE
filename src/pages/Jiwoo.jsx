@@ -2,6 +2,8 @@ import Badge from '@/common/Badge';
 import LectureCard from '@/common/LectureCard';
 import StackBadge from '@/common/StackBadge';
 import LectureCardSimple from '@/components/common/LectureCardSimple';
+import ActionButton from '@/components/common/ActionButton';
+import { useState } from 'react';
 
 // 강의 카드 더미데이터
 const dummyLecture = {
@@ -13,6 +15,10 @@ const dummyLecture = {
 };
 
 const Jiwoo = () => {
+  // 좋아요, 결제하기 버튼 상태 테스트
+  const [liked, setLiked] = useState(false);
+  const [isPaid, setIsPaid] = useState(false);
+
   return (
     <div className="flex flex-col gap-4">
       {/* 스택 뱃지 */}
@@ -49,7 +55,44 @@ const Jiwoo = () => {
           showPrice={false}
         />
       </div>
-      <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+      {/* /////////////////////////////////////////////////////// */}
+      {/* 로그인, 교육 페이지 결제창에서 사용하는 버튼 */}
+      <div className="flex flex-col gap-4">
+        <div className="flex gap-4 p-4">
+          {/* 로그인 버튼 */}
+          <ActionButton
+            text="로그인"
+            variant="default"
+            onClick={() => alert('로그인 버튼 클릭됨')}
+          />
+          {/* 회원가입 버튼 */}
+          <ActionButton
+            text="회원가입"
+            variant="auth"
+            onClick={() => alert('회원가입 버튼 클릭됨')}
+          />
+        </div>
+
+        <div className="flex gap-4 p-4">
+          {/* 결제하기 버튼 -> 클릭 시 '바로보기'로 상태 변경  */}
+          <ActionButton
+            text="결제하기"
+            variant="payment"
+            isPayCompleted={isPaid}
+            hasTopImage
+            topImageSrc="/icons/leaf.svg"
+            onClick={() => setIsPaid(true)}
+          />
+
+          {/* 좋아요 버튼 -> 클릭 시 좋아요 상태 토글됨 */}
+          <ActionButton
+            text="좋아요"
+            variant="like"
+            isLiked={liked}
+            onClick={() => setLiked((prev) => !prev)}
+          />
+        </div>
+      </div>
     </div>
   );
 };
