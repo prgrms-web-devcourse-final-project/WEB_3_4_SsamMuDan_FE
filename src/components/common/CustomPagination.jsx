@@ -3,7 +3,6 @@ import {
   PaginationContent,
   PaginationItem,
   PaginationLink,
-  PaginationEllipsis,
 } from '@/components/ui/pagination';
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
