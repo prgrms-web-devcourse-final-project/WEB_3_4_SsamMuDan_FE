@@ -7,7 +7,7 @@ const CategoryTab = () => {
   const [currentTab, setCurrentTab] = useState('강의소개');
 
   return (
-    <div className="flex flex-row justify-around w-[365px] h-[60px]">
+    <div className="flex flex-row justify-around w-[365px] h-[40px]">
       {tabs.map((tab) => (
         <div
           key={tab}

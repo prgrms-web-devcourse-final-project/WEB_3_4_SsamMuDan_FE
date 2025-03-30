@@ -1,6 +1,6 @@
 const LectureCard = ({ title, instructor, likes, price, imageUrl }) => {
   return (
-    <div className="w-[318px] h-[297px]">
+    <div className="w-[300px] h-[297px]">
       {/* 이미지 */}
       <div className="w-full h-[185px] mb-3">
         <img
@@ -15,7 +15,7 @@ const LectureCard = ({ title, instructor, likes, price, imageUrl }) => {
 
       {/* 강사&좋아요 */}
       <div className="flex items-center mb-1">
-        <span className="text-grey300 font-medium mr-5 ml-1">{instructor}</span>
+        <span className="text-grey300 font-medium mr-2 ml-1">{instructor}</span>
         <div className="flex items-center gap-1">
           <img
             src="/icons/heart.svg"
