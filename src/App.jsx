@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Education from './pages/Education';
 import Signup from './pages/Signup';
 import Career from './pages/Career';
+import CareerDetail from './pages/CareerDetail';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/education" element={<Education />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/career" element={<Career />} />
+        <Route path="/careerDetail/:id" element={<CareerDetail />} />
       </Routes>
     </BrowserRouter>
   );
