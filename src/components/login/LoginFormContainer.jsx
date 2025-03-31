@@ -24,9 +24,9 @@ const LoginFormContainer = () => {
         />
         <span
           onClick={() => setShowPassword((prev) => !prev)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500"
+          className="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400"
         >
-          {showPassword ? <EyeIcon className="w-5 h-5" /> : <EyeSlashIcon className="w-5 h-5" />}
+          {showPassword ? <EyeIcon /> : <EyeSlashIcon />}
         </span>
       </div>
 
