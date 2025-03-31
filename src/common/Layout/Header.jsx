@@ -9,7 +9,7 @@ const Header = () => {
         </NavLink>
         <ul className="flex ml-[102px]">
           <li>
-            <NavLink to="/" className="text-[18px] font-semibold mr-[53px]">
+            <NavLink to="/education" className="text-[18px] font-semibold mr-[53px]">
               교육
             </NavLink>
           </li>
