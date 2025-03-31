@@ -6,6 +6,7 @@ import JongHee from './pages/JongHee';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import Career from './pages/Career';
+import CareerDetail from './pages/CareerDetail';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/jonghee" element={<JongHee />} />
         <Route path="/login" element={<Login />} />
         <Route path="/career" element={<Career />} />
+        <Route path="/careerDetail/:id" element={<CareerDetail />} />
       </Routes>
     </BrowserRouter>
   );

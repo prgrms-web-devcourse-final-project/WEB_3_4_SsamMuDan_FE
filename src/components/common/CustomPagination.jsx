@@ -14,7 +14,7 @@ const CustomPagination = () => {
     <Pagination>
       <PaginationContent>
         {/* 화살표 아이콘 */}
-        <PaginationItem>
+        <PaginationItem className="hover:cursor-pointer">
           <ChevronLeftIcon className="w-[25px] text-grey300" />
         </PaginationItem>
 
@@ -47,7 +47,7 @@ const CustomPagination = () => {
           </div>
         </PaginationItem>
         {/*  */}
-        <PaginationItem>
+        <PaginationItem className="hover:cursor-pointer">
           <ChevronRightIcon className="w-[25px] text-grey300" href="#" />
         </PaginationItem>
       </PaginationContent>
