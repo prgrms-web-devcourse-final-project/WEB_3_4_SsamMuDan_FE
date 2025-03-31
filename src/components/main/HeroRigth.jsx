@@ -9,15 +9,15 @@ const HeroRight = () => {
           {/* 진한 초록배경 */}
           <div className="absolute bottom-0 right-0  w-[100%] h-[520px] rounded-[20px] bg-primary300 z-10"></div>
           {/* 사람 */}
-          <div className="absolute top-[170px] left-[13%] w-[70%] h-[370px]  z-20">
+          <div className="absolute top-[180px] left-[10%] w-[75%] h-[370px]  z-20">
             <img src="/public/images/main/heroPeople.svg" alt="" />
           </div>
           {/* 왼쪽 별 */}
-          <div className="absolute top-[40px] left-[1px] w-[45%] h-[370px] z-20">
+          <div className="absolute top-[25px] left-[-110px] w-[100%] h-[370px] z-20">
             <img src="/public/images/main/mainHeroSection/Mask group-2.svg " alt="" />
           </div>
           {/* 오른쪽 별 */}
-          <div className="absolute top-[90px] right-[1px] w-[45%] h-[370px] z-20">
+          <div className="absolute top-[100px] right-[-20px] w-[50%] h-[370px] z-20">
             <img src="/public/images/main/mainHeroSection/Mask group-3.svg " alt="" />
           </div>
           {/* 오른쪽하단 하늘 + 하양 */}
