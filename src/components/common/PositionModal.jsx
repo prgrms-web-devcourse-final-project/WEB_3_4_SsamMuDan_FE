@@ -1,8 +1,9 @@
-import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import { Popover, PopoverTrigger, PopoverContent, PopoverClose } from '@/components/ui/popover';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import PrimaryButton from './PrimaryButton';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 const PositionModal = ({ position }) => {
   return (
     <Popover>
@@ -13,8 +14,11 @@ const PositionModal = ({ position }) => {
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-[300px] p-0 ">
-        <div className=" w-[90%] h-[72px] mx-auto text-[20px] font-[600] flex flex-row items-center">
-          직군 직무
+        <div className=" w-[90%] h-[72px] mx-auto text-[20px] font-[600] flex flex-row justify-between items-center">
+          <div className="text-[20px]">직군 직무</div>
+          <PopoverClose>
+            <XMarkIcon className="w-[30px]" />
+          </PopoverClose>
         </div>
         {/* 직군 셀렉트 */}
         <div className="w-full flex flex-col border-b">
