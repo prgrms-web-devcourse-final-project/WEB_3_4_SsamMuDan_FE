@@ -1,34 +1,21 @@
 import { useState } from 'react';
+import EducationDetailIntro from './EducationDetailIntro';
 import CategoryTab from '../common/CategoryTab';
-import { StarIcon } from '@heroicons/react/24/solid';
-import PrimarySelect from '@/components/common/PrimarySelect';
+import { StarIcon } from 'lucide-react';
+import PrimarySelect from '../common/PrimarySelect';
 import EducationDetailReview from './EducationDetailReview';
 import PrimaryButton from '../common/PrimaryButton';
-import EducationDetailIntro from './EducationDetailIntro';
+import EducationBookDetailIntro from './EducationBookDetailIntro';
 
-const EducationDetailContent = () => {
+const EducationDetailBookContent = () => {
   const tabs = ['강의소개', '수강평', '커뮤니티'];
   const [currentTab, setCurrentTab] = useState('강의소개');
   const selectList = ['전체', '최신순', '높은 평점순'];
 
   // 강의소개 더미데이터
   const introduceData = {
-    image: '/images/dummy-education-detail.svg',
-    content: `
-    ⭐ 이런 걸 배울 수 있어요
-    - 자바스크립트의 기초부터 실무 문법과 구현 사용법
-    - 최신 문법과 현대적인 자바스크립트 활용법
-    - DOM 조작과 비동기 처리의 원리 등등...
-
-    🔥 자바스크립트 언어 집중 공략
-    이 강의는 JS를 집중적으로 학습하고 실무에서 어떻게 적용하는지를 다룹니다.
-
-    💡 이 강의를 들으면 무엇이 달라질까요?
-    - 비전공자도 실무에 적용 가능한 JS 기술 습득
-    - 실제 프로젝트에서 코드 작성 자신감 향상
-
-     📌 선수 지식 및 유의 사항
-    기초 HTML/CSS를 알고 있다면 더 수월하게 따라올 수 있어요.`,
+    content: `The entire Pro Git book, written by Scott Chacon and Ben Straub and published by Apress, is available here. All content is licensed under the Creative Commons Attribution Non Commercial Share Alike 3.0 license. Print versions of the book are available on Amazon.com.
+        The version found here has been updated with corrections and additions from hundreds of contributors. If you see an error or have a suggestion, patches and issues are welcome in its GitHub repository.`,
   };
 
   // 수강평 더미데이터
@@ -45,7 +32,9 @@ const EducationDetailContent = () => {
     <div className="w-[870px]  py-10">
       <CategoryTab tabs={tabs} currentTab={currentTab} onTabChange={setCurrentTab} />
       {currentTab === '강의소개' && (
-        <EducationDetailIntro image={introduceData.image} content={introduceData.content} />
+        <div>
+          <EducationBookDetailIntro image={introduceData.image} content={introduceData.content} />
+        </div>
       )}{' '}
       {currentTab === '수강평' && (
         <div className="bg-white rounded-[15px] border p-4">
@@ -93,4 +82,4 @@ const EducationDetailContent = () => {
   );
 };
 
-export default EducationDetailContent;
+export default EducationDetailBookContent;
