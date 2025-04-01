@@ -4,7 +4,7 @@ const EducationBanner = () => {
   return (
     <div className="h-[377px] w-full relative bg-[url(/images/education-banner.svg)] bg-no-repeat bg-cover mb-[88px]">
       {/* <img src="/images/education-banner.svg" alt="교육배너" /> */}
-      <div className="w-[1336px] flex pt-[53px] mx-auto">
+      <div className="w-[1246px] flex pt-[53px] mx-auto">
         <div className="mr-[35px]">
           <div className="w-[73px] h-[33px] rounded-[20px] bg-[#3FC22E] text-[14px] font-bold mb-[20px] text-center leading-[33px] text-white">
             New
@@ -17,31 +17,18 @@ const EducationBanner = () => {
           </div>
         </div>
         <div className="flex">
-          {/* dummy로 만드는 것보단, 실제로 해놓고 나중에 map 작업 필요 (3개를 생으로 배치함) */}
-          <div className="mr-[13px]">
-            <LectureCardSimple
-              imageUrl="images/education-image1.png"
-              title="Jenkins를 이용한 CI/CD Pipeline 구축"
-              price="70,400원"
-              instructor="Dowon Lee "
-            />
-          </div>
-          <div className="mr-[13px]">
-            <LectureCardSimple
-              imageUrl="images/education-image1.png"
-              title="Jenkins를 이용한 CI/CD Pipeline 구축"
-              price="70,400원"
-              instructor="Dowon Lee "
-            />
-          </div>
-          <div className="mr-[13px]">
-            <LectureCardSimple
-              imageUrl="images/education-image1.png"
-              title="Jenkins를 이용한 CI/CD Pipeline 구축"
-              price="70,400원"
-              instructor="Dowon Lee "
-            />
-          </div>
+          {Array(3)
+            .fill(null)
+            .map((_, index) => (
+              <div className="mr-[13px]">
+                <LectureCardSimple
+                  imageUrl="images/education-image1.png"
+                  title="Jenkins를 이용한 CI/CD Pipeline 구축"
+                  price="70,400원"
+                  instructor="Dowon Lee "
+                />
+              </div>
+            ))}
         </div>
       </div>
     </div>

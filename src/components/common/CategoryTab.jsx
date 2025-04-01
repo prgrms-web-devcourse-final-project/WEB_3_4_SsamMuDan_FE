@@ -1,5 +1,6 @@
 import * as motion from 'motion/react-client';
 
+
 const CategoryTab = ({ tabs, currentTab, onTabChange }) => {
   return (
     <div className="flex flex-row h-[40px] ">
