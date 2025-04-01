@@ -1,6 +1,5 @@
 import DateSetForm from './DateSetForm';
 import CareerContentForm from './CareerContentForm';
-//
 
 const CareerForm = () => {
   return (
@@ -12,7 +11,7 @@ const CareerForm = () => {
         </div>
         {/* 작성 */}
         <div className="flex flex-row justify-end mt-[40px]">
-          <DateSetForm />
+          <DateSetForm type="경력" />
           <CareerContentForm />
           <div></div>
         </div>

@@ -22,10 +22,10 @@ const ProjectContentForm = () => {
             <TrashIcon className="w-[25px] text-white" />
           </Button>
         </div>
-        {/* 직무 */}
+        {/* 자기소개 */}
         <div>
-          <div className="text-[22px] font-medium mb-2">직무</div>
-          <IntroduceInput width="800px" height="60px" />
+          <div className="text-[22px] font-medium mb-2">자기소개</div>
+          <IntroduceTextArea width="800px" height="170px" />
         </div>
 
         {/* 기술스택 */}
@@ -45,12 +45,6 @@ const ProjectContentForm = () => {
             />
             <MagnifyingGlassIcon className="absolute top-[20px] left-[20px] w-[20px] " />
           </div>
-        </div>
-
-        {/* 자기소개 */}
-        <div>
-          <div className="text-[22px] font-medium mb-2">자기소개</div>
-          <IntroduceTextArea width="800px" height="170px" />
         </div>
       </div>
     </>
