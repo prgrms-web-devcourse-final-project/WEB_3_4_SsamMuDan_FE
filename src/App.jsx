@@ -8,12 +8,10 @@ import Login from './pages/Login';
 import Education from './pages/Education';
 import Signup from './pages/Signup';
 import Career from './pages/Career';
-import { Document, Page, pdfjs } from 'react-pdf';
 import Payment from './pages/Payment';
 import Mypage from './pages/Mypage';
+import CareerDetail from './pages/CareerDetail';
 
-// pdf.worker.js 활성화
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function App() {
   return (
@@ -29,6 +27,7 @@ function App() {
         <Route path="/career" element={<Career />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/mypage" element={<Mypage />} />
+        <Route path="/careerDetail/:id" element={<CareerDetail />} />
       </Routes>
     </BrowserRouter>
   );
