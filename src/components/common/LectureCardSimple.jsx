@@ -8,7 +8,7 @@ const LectureCardSimple = ({
   showPrice = true, // 기본값은 가격 O
 }) => {
   return (
-    <div className="w-[321px] h-[291px]">
+    <div className="w-[285px] h-[291px]">
       {/* 이미지 */}
       <div className="w-full h-[212px] mb-3">
         <img
