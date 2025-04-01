@@ -10,7 +10,7 @@ const CareerDetail = () => {
     <>
       <Layout>
         {/* 이력서 */}
-        <div className="w-[1246px] h-[2000px] border mx-auto flex flex-col mt-[68px] rounded-[8px]">
+        <div className="w-[1246px] border mx-auto flex flex-col mt-[68px] rounded-[8px]">
           <IntroduceSection />
           <CareerDetailSection />
           <ProjectDetailSection />
