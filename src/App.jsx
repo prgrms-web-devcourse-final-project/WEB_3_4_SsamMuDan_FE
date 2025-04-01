@@ -14,6 +14,7 @@ import CareerDetail from './pages/CareerDetail';
 import CareerWrite from './pages/CareerWrite';
 import ProjectJoin from './pages/ProjectJoin';
 import ProjectJoinWrite from './pages/ProjectJoinWrite';
+import ProjectJoinDetail from './pages/ProjectJoinDetail';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/careerWrite" element={<CareerWrite />} />
         <Route path="/projectJoin" element={<ProjectJoin />} />
         <Route path="/projectJoinWrite" element={<ProjectJoinWrite />} />
+        <Route path="/projectJoinDetail/:id" element={<ProjectJoinDetail />} />
       </Routes>
     </BrowserRouter>
   );
