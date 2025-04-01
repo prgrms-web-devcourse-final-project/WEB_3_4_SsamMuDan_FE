@@ -1,37 +1,32 @@
-// src/components/educationDetail/PdfViewer.jsx
+import { pdfjs } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-import React, { useState } from 'react';
-import { Document, Page } from 'react-pdf';
-
-function PdfViewer({ file }) {
+const MyApp = () => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
-  // PDF 로드 성공 시 페이지 개수 저장
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
 
   return (
     <div>
-      <Document file="/testpdf.pdf" onLoadSuccess={onDocumentLoadSuccess}>
+      <Document file={testPdf} onLoadSuccess={onDocumentLoadSuccess}>
         <Page pageNumber={pageNumber} />
       </Document>
-
-      {/* 페이지 이동 버튼 */}
-      <div>
-        <button disabled={pageNumber <= 1} onClick={() => setPageNumber(pageNumber - 1)}>
-          이전 페이지
-        </button>
+      <p>
+        {/* //이전 페이지 보기 */}
+        <span onClick={() => (pageNumber > 1 ? setPageNumber(pageNumber - 1) : null)}>&lt;</span>
         <span>
-          {pageNumber} / {numPages}
+          Page {pageNumber} of {numPages}
         </span>
-        <button disabled={pageNumber >= numPages} onClick={() => setPageNumber(pageNumber + 1)}>
-          다음 페이지
-        </button>
-      </div>
+        {/* //다음 페이지 보기 */}
+        <span onClick={() => (pageNumber < numPages ? setPageNumber(pageNumber + 1) : null)}>
+          &gt;
+        </span>
+      </p>
     </div>
   );
-}
+};
 
-export default PdfViewer;
+export default MyApp;

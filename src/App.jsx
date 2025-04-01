@@ -12,7 +12,9 @@ import Payment from './pages/Payment';
 import Mypage from './pages/Mypage';
 import CareerDetail from './pages/CareerDetail';
 import CareerWrite from './pages/CareerWrite';
-
+import TechTube from './pages/TechTube';
+import TechBook from './pages/TechBook';
+import CommunityDetail from './pages/CommunityDetail';
 
 function App() {
   return (
@@ -30,6 +32,9 @@ function App() {
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/careerDetail/:id" element={<CareerDetail />} />
         <Route path="/careerWrite" element={<CareerWrite />} />
+        <Route path="/techtube" element={<TechTube />} />
+        <Route path="/techbook" element={<TechBook />} />
+        <Route path="/communitydetail" element={<CommunityDetail />} />
       </Routes>
     </BrowserRouter>
   );
