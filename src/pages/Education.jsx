@@ -10,9 +10,9 @@ const Education = () => {
   return (
     <Layout>
       <EducationBanner />
-      <div className="max-w-[1336px] mx-auto">
+      <div className="max-w-[1246px] mx-auto">
         <div className="mb-[85px]">
-          <CategoryTab cateColor="primary400" tabs={['TechTube', 'TechBook']} />
+          <CategoryTab cateColor={'#ee5945'} tabs={['TechTube', 'TechBook']} />
         </div>
         <div className="flex  justify-between mb-[41px]">
           <div className="font-medium text-[36px]">검색한 강의</div>
@@ -25,7 +25,7 @@ const Education = () => {
             />
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-[26px]">
+        <div className="grid grid-cols-4 gap-[17px]">
           {Array(16)
             .fill(null)
             .map((_, index) => (
