@@ -13,6 +13,7 @@ import Mypage from './pages/Mypage';
 import CareerDetail from './pages/CareerDetail';
 import CareerWrite from './pages/CareerWrite';
 import ProjectJoin from './pages/ProjectJoin';
+import ProjectJoinWrite from './pages/ProjectJoinWrite';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/careerDetail/:id" element={<CareerDetail />} />
         <Route path="/careerWrite" element={<CareerWrite />} />
         <Route path="/projectJoin" element={<ProjectJoin />} />
+        <Route path="/projectJoinWrite" element={<ProjectJoinWrite />} />
       </Routes>
     </BrowserRouter>
   );
