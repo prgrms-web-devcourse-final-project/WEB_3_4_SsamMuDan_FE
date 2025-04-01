@@ -17,7 +17,7 @@ const StackModal = ({ data }) => {
       <DialogContent className="w-[600px] h-[650px] max-w-none flex flex-col border border-gray-300 rounded-lg">
         <span className="font-bold text-[20px]">기술스택</span>
         <Input
-          className="px-14 h-[45px] bg-grey100 relative !text-[16px] placeholder:text-[16px]"
+          className="px-14 h-[45px] bg-grey100 relative !text-[16px] placeholder:text-[16px] focus-visible:ring-0"
           placeholder="보유한 기술 스택을 입력해 주세요"
         />
         <MagnifyingGlassIcon className="w-[20px] absolute top-[79px] left-[40px]" />
@@ -35,8 +35,8 @@ const StackModal = ({ data }) => {
             })}
           </div>
         </div>
-
-        <div className=" w-full h-[70px] border-t flex flex-row justify-start items-center gap-5 ">
+        <div className="w-full border"></div>
+        <div className=" w-full h-[70px] flex flex-row justify-start items-center gap-5">
           {' '}
           <StackBadge text="Python" />
           <StackBadge text="Python" />
