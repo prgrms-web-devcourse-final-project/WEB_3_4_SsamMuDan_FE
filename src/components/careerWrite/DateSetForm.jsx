@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
-const DateSetForm = () => {
+const DateSetForm = ({ type }) => {
   return (
     <>
       {/* 날짜 */}
@@ -67,7 +67,7 @@ const DateSetForm = () => {
             htmlFor="terms"
             className="text-[16px] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-grey400"
           >
-            재직중
+            {type === '경력' ? '재직중' : '진행중'}
           </label>
         </div>
         <div></div>
