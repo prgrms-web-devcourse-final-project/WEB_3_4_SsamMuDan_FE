@@ -12,9 +12,14 @@ import Payment from './pages/Payment';
 import Mypage from './pages/Mypage';
 import CareerDetail from './pages/CareerDetail';
 import CareerWrite from './pages/CareerWrite';
+import Community from './pages/Community';
 import ProjectJoin from './pages/ProjectJoin';
 import ProjectJoinWrite from './pages/ProjectJoinWrite';
+
 import ProjectJoinDetail from './pages/ProjectJoinDetail';
+
+import PageNotFound from './pages/PageNotFound';
+
 
 function App() {
   return (
@@ -32,9 +37,14 @@ function App() {
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/careerDetail/:id" element={<CareerDetail />} />
         <Route path="/careerWrite" element={<CareerWrite />} />
+        <Route path="/community" element={<Community />} />
         <Route path="/projectJoin" element={<ProjectJoin />} />
         <Route path="/projectJoinWrite" element={<ProjectJoinWrite />} />
+
         <Route path="/projectJoinDetail/:id" element={<ProjectJoinDetail />} />
+
+        <Route path="*" element={<PageNotFound />} />
+
       </Routes>
     </BrowserRouter>
   );
