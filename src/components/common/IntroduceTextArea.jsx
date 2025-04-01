@@ -1,13 +1,13 @@
 import { useRef, useEffect } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 
-const IntroduceTextArea = ({ width = '100%' }) => {
+const IntroduceTextArea = ({ width, height }) => {
   const textareaRef = useRef(null);
 
   const handleInput = () => {
     const textarea = textareaRef.current;
     if (textarea) {
-      textarea.style.height = 'auto'; // 초기화
+      textarea.style.height = '170px'; // 초기화
       textarea.style.height = `${textarea.scrollHeight}px`; // 내용에 따라 높이 설정
     }
   };
@@ -21,8 +21,8 @@ const IntroduceTextArea = ({ width = '100%' }) => {
       ref={textareaRef}
       placeholder="내용을 입력해주세요"
       onInput={handleInput}
-      className="bg-grey100 resize-none overflow-hidden focus-visible:ring-0 border-none focus:outline-none"
-      style={{ width }}
+      className="bg-grey100 resize-none overflow-hidden focus-visible:ring-0 border-none focus:outline-none placeholder:text-grey400 placeholder:text-[20px] px-3 py-5"
+      style={{ width: width, height: height || '170px' }}
     />
   );
 };

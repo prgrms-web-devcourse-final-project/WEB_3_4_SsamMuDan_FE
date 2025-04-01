@@ -11,6 +11,7 @@ import Career from './pages/Career';
 import Payment from './pages/Payment';
 import Mypage from './pages/Mypage';
 import CareerDetail from './pages/CareerDetail';
+import CareerWrite from './pages/CareerWrite';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/careerDetail/:id" element={<CareerDetail />} />
+        <Route path="/careerWrite" element={<CareerWrite />} />
       </Routes>
     </BrowserRouter>
   );
