@@ -1,6 +1,6 @@
 const LectureCard = ({ title, instructor, likes, price, imageUrl }) => {
   return (
-    <div className="w-[317px] h-[297px] mb-[37px]">
+    <div className="w-[300px] h-[297px] mb-[37px]">
       {/* 이미지 */}
       <div className="w-full h-[185px] mb-3">
         <img
@@ -9,10 +9,8 @@ const LectureCard = ({ title, instructor, likes, price, imageUrl }) => {
           className="w-full h-full object-cover rounded-[15px]"
         />
       </div>
-
       {/* 타이틀 */}
       <p className="text-lg font-bold leading-none pl-1 mb-2">{title}</p>
-
       {/* 강사&좋아요 */}
       <div className="flex items-center mb-1">
         <span className="text-grey300 font-regular mr-2 ml-1">{instructor}</span>
@@ -25,7 +23,6 @@ const LectureCard = ({ title, instructor, likes, price, imageUrl }) => {
           <span className="text-grey300 font-regular">좋아요({likes})</span>
         </div>
       </div>
-
       {/* 가격 */}
       <span className="text-xl font-bold ml-1">{price.toLocaleString()}원</span>
     </div>

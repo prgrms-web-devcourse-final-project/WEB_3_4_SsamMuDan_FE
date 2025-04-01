@@ -9,6 +9,7 @@ import Education from './pages/Education';
 import Signup from './pages/Signup';
 import Career from './pages/Career';
 import CareerDetail from './pages/CareerDetail';
+import CareerWrite from './pages/CareerWrite';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/career" element={<Career />} />
         <Route path="/careerDetail/:id" element={<CareerDetail />} />
+        <Route path="/careerWrite" element={<CareerWrite />} />
       </Routes>
     </BrowserRouter>
   );
