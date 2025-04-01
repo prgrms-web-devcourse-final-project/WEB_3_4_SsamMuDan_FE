@@ -19,7 +19,7 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/" className="text-[18px] font-semibold mr-[53px]">
+            <NavLink to="/community" className="text-[18px] font-semibold mr-[53px]">
               커뮤니티
             </NavLink>
           </li>
