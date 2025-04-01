@@ -1,0 +1,35 @@
+import { StarIcon } from '@heroicons/react/24/solid';
+
+const EducationDetailReview = ({ reviewer, date, rating, content, profileImage }) => {
+  return (
+    <div className="w-[760px] mb-6 mt-4 relative mx-auto">
+      <div className="flex gap-2">
+        {/* 프로필사진 */}
+        <img
+          src="/images/dummy-user-avatar.svg"
+          alt={reviewer}
+          className="w-11 h-11 rounded-full object-cover mb-1"
+        />
+        {/* 닉네임 & 작성일 */}
+        <div className="flex flex-col mb-1">
+          <p className="text-base font-semibold">{reviewer}</p>
+          <p className="text-gray-400 text-sm">{date}</p>
+        </div>
+      </div>
+      {/* 별점 */}
+      <div className="flex items-center text-yellow-400 mb-1">
+        {Array(rating)
+          .fill()
+          .map((_, i) => (
+            <StarIcon key={i} className="w-5 h-5" />
+          ))}
+      </div>
+      {/* 내용 */}
+      <div>
+        <p className="leading-relaxed whitespace-pre-wrap">{content}</p>
+      </div>
+    </div>
+  );
+};
+
+export default EducationDetailReview;
