@@ -8,10 +8,11 @@ const ActionButton = ({
   hasTopImage = false,
   topImageSrc = '',
   onClick,
+  customeStyle,
 }) => {
   // 기본 스타일
   const baseStyle = `
-  relative rounded-[10px] flex items-center justify-center font-semibold
+  relative rounded-[10px] flex items-center justify-center 
   transition-transform hover:scale-[1.02] active:scale-[0.98]
   duration-150
 `;
@@ -20,11 +21,14 @@ const ActionButton = ({
   const variants = {
     default: 'w-full h-[42px] bg-primary300 text-white border-none text-base',
     auth: 'w-full h-[42px] bg-white text-primary300 border border-primary300 text-base',
-    payment: 'w-[380px] h-[57px] bg-primary300 text-white border-none text-2xl font-esamanru',
-    like: 'w-[380px] h-[57px] bg-white text-primary300 border border-primary300 text-2xl font-esamanru',
+    payment:
+      'w-[277px] h-[57px] bg-primary300 text-white border-none text-2xl font-esamanru font-esamanru-light',
+    like: 'w-[380px] h-[57px] bg-white text-primary300 border border-primary300 text-2xl font-esamanru font-esamanru-medium',
+    toMypage:
+      'w-[277px] h-[57px] bg-white text-primary300 border border-primary300 text-2xl font-esamanru font-esamanru-light',
   };
 
-  const style = `${baseStyle} ${variants[variant] || variants.default}`;
+  const style = `${baseStyle} ${variants[variant] || variants.default} ${customeStyle}`;
 
   return (
     <button className={style} onClick={onClick}>

@@ -1,8 +1,8 @@
-const LectureCard = ({ title, instructor, likes, price, imageUrl }) => {
+const LectureCard = ({ title, instructor, likes, price, imageUrl, style, stylemg }) => {
   return (
-    <div className="w-[300px] h-[297px] mb-[37px]">
+    <div className={`w-[300px] h-[297px] mb-[37px] ${stylemg}`}>
       {/* 이미지 */}
-      <div className="w-full h-[185px] mb-3">
+      <div className={`w-full h-[185px] mb-3 ${style}`}>
         <img
           src={imageUrl}
           alt="강의 카드 이미지"
