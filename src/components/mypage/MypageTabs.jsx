@@ -26,11 +26,11 @@ const MypageTabs = ({ activeSection }) => {
   return (
     <div className="bg-white border border-grey200 p-6 shadow-lg rounded-2xl mb-[90px] max-w-[1246px] mx-auto">
       {' '}
-      <div className="mb-4">
+      <div className="mb-8">
         <CategoryTab tabs={tabs} currentTab={currentTab} onTabChange={setCurrentTab} />
       </div>
       <div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10">
           {dummyLectureList.map((lecture) => (
             <LectureCardSimple
               key={lecture.id}
