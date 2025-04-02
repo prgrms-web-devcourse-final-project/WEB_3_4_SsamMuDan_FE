@@ -5,14 +5,23 @@ import SearchBar from '@/components/common/SearchBar';
 import PrimarySelect from '@/components/common/PrimarySelect';
 import LectureCard from '@/common/LectureCard';
 import CustomPagination from '@/components/common/CustomPagination';
+import { useState } from 'react';
 
 const Education = () => {
+  const tabs = ['TechTube', 'TechBook'];
+  const [currentTab, setCurrentTab] = useState('TechTube');
+
   return (
     <Layout>
       <EducationBanner />
       <div className="max-w-[1246px] mx-auto">
         <div className="mb-[85px]">
-          <CategoryTab cateColor={'#ee5945'} tabs={['TechTube', 'TechBook']} />
+          <CategoryTab
+            cateColor={'#ee5945'}
+            tabs={tabs}
+            currentTab={currentTab}
+            onTabChange={setCurrentTab}
+          />
         </div>
         <div className="flex  justify-between mb-[41px]">
           <div className="font-medium text-[36px]">검색한 강의</div>
@@ -26,17 +35,30 @@ const Education = () => {
           </div>
         </div>
         <div className="grid grid-cols-4 gap-[17px]">
-          {Array(16)
-            .fill(null)
-            .map((_, index) => (
-              <LectureCard
-                title="React 완벽 마스터: 기초 개념부터 린캔버스 프로젝트까지"
-                instructor="김코딩"
-                likes="77"
-                price="16,800"
-                imageUrl="/images/education-image1.png"
-              />
-            ))}
+          {currentTab === 'TechTube' &&
+            Array(16)
+              .fill(null)
+              .map((_, index) => (
+                <LectureCard
+                  title="React 완벽 마스터: 기초 개념부터 린캔버스 프로젝트까지"
+                  instructor="김코딩"
+                  likes="77"
+                  price="16,800"
+                  imageUrl="/images/education-image1.png"
+                />
+              ))}
+          {currentTab === 'TechBook' &&
+            Array(16)
+              .fill(null)
+              .map((_, index) => (
+                <LectureCard
+                  title="React 완벽 마스터: 기초 개념부터 린캔버스 프로젝트까지"
+                  instructor="김코딩"
+                  likes="77"
+                  price="16,800"
+                  imageUrl="/images/education-image1.png"
+                />
+              ))}
         </div>
         <CustomPagination style="mt-[67px]" />
         <img src="/images/education-ad.png" alt="교육" className="mt-[117px] mb-[143px]" />

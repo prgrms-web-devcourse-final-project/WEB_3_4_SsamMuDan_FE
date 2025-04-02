@@ -34,7 +34,7 @@ function App() {
         <Route path="/careerWrite" element={<CareerWrite />} />
         <Route path="/techtube" element={<TechTube />} />
         <Route path="/techbook" element={<TechBook />} />
-        <Route path="/communitydetail" element={<CommunityDetail />} />
+        <Route path="/community/:id" element={<CommunityDetail />} />
       </Routes>
     </BrowserRouter>
   );

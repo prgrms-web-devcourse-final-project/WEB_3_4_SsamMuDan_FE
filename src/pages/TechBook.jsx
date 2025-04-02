@@ -1,8 +1,6 @@
 import Layout from '@/common/Layout/Layout';
-import EducationDetailBanner from '@/components/educationDetail/EducationDetailBanner';
 import EducationDetailBookBanner from '@/components/educationDetail/EducationDetailBookBanner';
 import EducationDetailBookContent from '@/components/educationDetail/EducationDetailBookContent';
-import EducationDetailContent from '@/components/educationDetail/EducationDetailContent';
 import EducationPay from '@/components/educationDetail/EducationPay';
 import EducationRelatedVideos from '@/components/educationDetail/EducationRelatedVideos';
 import { useState } from 'react';
