@@ -16,12 +16,14 @@ const CareerWrite = () => {
             ⭐ <span className="text-primary300">홍길동 </span>님의 정보를 알려주세요
           </div>
           {/* 기본정보 */}
-          <BasicForm />
+          <div className="mt-[70px]">
+            <BasicForm />
+          </div>
 
           {/* 경력 */}
           <div className="w-full mt-[160px] flex flex-col items-center ">
             <CareerForm />
-            <div className="mt-[92px] ">
+            <div className="mt-[110px] ">
               <AddButton text="경력 추가하기" />
             </div>
           </div>
@@ -29,7 +31,7 @@ const CareerWrite = () => {
           {/* 프로젝트 */}
           <div className="w-full mt-[160px] flex flex-col items-center ">
             <ProjectForm />
-            <div className="mt-[92px] ">
+            <div className="mt-[110px] ">
               <AddButton text="프로젝트 추가하기" />
             </div>
           </div>
@@ -40,7 +42,7 @@ const CareerWrite = () => {
           </div>
         </div>
 
-        <div className="fixed  bottom-[514px] right-3 ">
+        <div className="fixed bottom-[350px] right-[1%] ">
           <FloatingButton />
         </div>
       </Layout>

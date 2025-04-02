@@ -11,9 +11,11 @@ const HistoryModal = () => {
   return (
     <Popover>
       <PopoverTrigger>
-        <div className="flex flex-row gap-4">
+        <div className="flex flex-row items-center gap-4 ">
           <span className="font-bold text-[24px]">경력</span>
-          <ChevronDownIcon className="w-[30px] border border-solid rounded-[10px]" />
+          <div className="w-[30px] h-[30px] flex flex-row items-center justify-center  border border-solid rounded-[10px]">
+            <ChevronDownIcon className="w-[20px]" />
+          </div>
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-[468px] h-[380px] ">

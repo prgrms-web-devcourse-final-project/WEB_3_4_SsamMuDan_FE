@@ -14,7 +14,7 @@ const ProfileCard = () => {
         </div>
         {/* 설명 */}
         <div className="w-full h-[162px]">
-          <div className="w-[95%] h-full mx-auto flex flex-col justify-center gap-2 ">
+          <div className="w-full h-full p-[15px] mx-auto flex flex-col justify-center gap-2 ">
             {/* 직업 */}
             <div className="line-clamp-1 text-[22px] font-semibold">
               프론트엔드 개발자/ 벡엔드 개발자 프론트엔드 개발자/ 벡엔드 개발자

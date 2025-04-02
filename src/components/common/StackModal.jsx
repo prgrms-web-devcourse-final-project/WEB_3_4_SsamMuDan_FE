@@ -10,8 +10,12 @@ const StackModal = ({ data }) => {
   return (
     <Dialog>
       <DialogTrigger className="flex flex-row items-center font-bold text-[24px] gap-4 ">
-        <span>기술 스택</span>
-        <ChevronDownIcon className="w-[30px]  border border-solid rounded-[10px]" />
+        <div className="flex flex-row items-center gap-4 ">
+          <span className="font-bold text-[24px]">기술 스택</span>
+          <div className="w-[30px] h-[30px] flex flex-row items-center justify-center  border border-solid rounded-[10px]">
+            <ChevronDownIcon className="w-[20px]" />
+          </div>
+        </div>
       </DialogTrigger>
 
       <DialogContent className="w-[600px] h-[650px] max-w-none flex flex-col border border-gray-300 rounded-lg">
