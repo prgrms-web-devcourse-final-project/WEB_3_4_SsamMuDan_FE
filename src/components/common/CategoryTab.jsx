@@ -1,7 +1,6 @@
 import * as motion from 'motion/react-client';
 
 const CategoryTab = ({ tabs, currentTab, onTabChange, cateColor }) => {
-  console.log(cateColor);
   return (
     <div className="flex flex-row h-[40px] ">
       {tabs.map((tab) => (
