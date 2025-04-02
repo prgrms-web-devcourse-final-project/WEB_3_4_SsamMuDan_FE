@@ -17,7 +17,7 @@ const PositionModal = ({ position }) => {
         <div className=" w-[90%] h-[72px] mx-auto text-[20px] font-[600] flex flex-row justify-between items-center">
           <div className="text-[20px]">직군 직무</div>
           <PopoverClose>
-            <XMarkIcon className="w-[30px]" />
+            <XMarkIcon className="w-[25px]" />
           </PopoverClose>
         </div>
         {/* 직군 셀렉트 */}
@@ -26,7 +26,7 @@ const PositionModal = ({ position }) => {
             return (
               <div
                 key={index}
-                className="w-[90%] h-[48px] mx-auto flex flex-row justify-between items-center"
+                className="w-[86%] h-[48px] mx-auto flex flex-row justify-between items-center"
               >
                 <div className="text-[16px] font-[500]">{item}</div>
                 <Checkbox className="data-[state=checked]:bg-primary300 border-grey200" />
