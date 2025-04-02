@@ -13,21 +13,21 @@ const DateSetForm = ({ type }) => {
               maxLength={4}
               type="text"
               placeholder="YYYY"
-              className="focus-visible:ring-0 w-[35px] text-grey400 border-none shadow-none px-0 "
+              className="focus-visible:ring-0 w-[43px] text-grey400 border-none shadow-none px-0 "
             />
             .{/* 월 */}
             <Input
               maxLength={2}
               type="text"
               placeholder="MM"
-              className="focus-visible:ring-0 w-[25px] text-grey400 border-none shadow-none px-0"
+              className="focus-visible:ring-0 w-[30px] text-grey400 border-none shadow-none px-0"
             />
             .{/* 일 */}
             <Input
               maxLength={2}
               type="text"
               placeholder="DD"
-              className="focus-visible:ring-0 w-[25px] text-grey400 border-none shadow-none px-0"
+              className="focus-visible:ring-0 w-[30px] text-grey400 border-none shadow-none px-0"
             />
           </div>
           <div className="text-grey400">-</div>
@@ -38,21 +38,21 @@ const DateSetForm = ({ type }) => {
               maxLength={4}
               type="text"
               placeholder="YYYY"
-              className="focus-visible:ring-0 w-[35px] text-grey400 border-none shadow-none px-0 "
+              className="focus-visible:ring-0 w-[43px] text-grey400 border-none shadow-none px-0 "
             />
             .{/* 월 */}
             <Input
               maxLength={2}
               type="text"
               placeholder="MM"
-              className="focus-visible:ring-0 w-[25px] text-grey400 border-none shadow-none px-0"
+              className="focus-visible:ring-0 w-[30px] text-grey400 border-none shadow-none px-0"
             />
             .{/* 일 */}
             <Input
               maxLength={2}
               type="text"
               placeholder="DD"
-              className="focus-visible:ring-0 w-[25px] text-grey400 border-none shadow-none px-0"
+              className="focus-visible:ring-0 w-[30px] text-grey400 border-none shadow-none px-0"
             />
             <span className="text-[#FF063C]">*</span>
           </div>
@@ -61,7 +61,7 @@ const DateSetForm = ({ type }) => {
         <div className="flex items-center space-x-2">
           <Checkbox
             id="terms"
-            className="w-[24px] h-[24px] shadow-none rounded-none border-grey300 data-[state=checked]:bg-primary300 "
+            className="w-[16px] h-[16px] shadow-none rounded-none border-grey300 data-[state=checked]:bg-primary300 "
           />
           <label
             htmlFor="terms"
