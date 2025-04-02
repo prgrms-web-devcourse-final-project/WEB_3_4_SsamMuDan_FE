@@ -1,3 +1,7 @@
+import { pdfjs } from 'react-pdf';
+import { Document, Page } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+
 const EducationBookDetailIntro = ({ image, content }) => {
   return (
     <div className="bg-white rounded-[15px] border p-8">
@@ -12,7 +16,11 @@ const EducationBookDetailIntro = ({ image, content }) => {
       <div className="">
         <div className="text-[30px] font-regular mb-[30px]">미리보기</div>
         {/* pdf자리 */}
-        <div className="h-[1020px] w-[761px] bg-secondary"></div>
+        <div className="h-[1020px] w-[761px] bg-secondary overflow-y-scroll">
+          <Document file="public/testpdf.pdf">
+            <Page pageNumber={2} />
+          </Document>
+        </div>
       </div>
     </div>
   );
