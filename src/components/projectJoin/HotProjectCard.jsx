@@ -7,11 +7,11 @@ import { EyeIcon, HeartIcon } from '@heroicons/react/24/outline';
 const HotProjectCard = () => {
   return (
     <>
-      <div className="w-[615px] h-[386px] rounded-[30px] bg-grey100 flex flex-col">
+      <div className="w-[610px] h-[405px] rounded-[30px] bg-grey100 flex flex-col justify-center gap-2  ">
         {/* 상단 => 뱃지, 모집인원  */}
-        <div className="w-[540px] h-[44px] mx-auto mt-[5px]">
+        <div className="w-[540px] h-[44px] mx-auto">
           {' '}
-          <div className="w-[269px] h-[44px] flex flex-row justify-between items-end">
+          <div className="w-[269px] h-[44px] flex flex-row justify-between items-center">
             <Badge
               text="HOT"
               className="w-[72px] h-[27px] bg-primary400 text-white text-[13px] font-bold"
@@ -25,9 +25,9 @@ const HotProjectCard = () => {
 
         {/* 중간 */}
 
-        <div className="w-[540px] mx-auto flex flow-row justify-between items-start mt-[18px]">
+        <div className="w-[540px] mx-auto flex flow-row justify-between items-start">
           {/* 왼쪽 */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {/* 제목 */}
             <div className="text-[24px] w-[265px]">AI 교육 도메인 웹앱 React 개발자 구인</div>
             {/* 날짜 */}
@@ -64,7 +64,7 @@ const HotProjectCard = () => {
         </div>
 
         {/* 하단 */}
-        <div className="w-[540px] h-[44px] mx-auto mt-[12px]">
+        <div className="w-[540px] h-[44px] mx-auto">
           {' '}
           <div className="w-[269px] flex flex-row justify-between">
             {/* 왼쪽 */}
