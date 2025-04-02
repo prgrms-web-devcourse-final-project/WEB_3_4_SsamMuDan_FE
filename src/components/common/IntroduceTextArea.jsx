@@ -21,7 +21,7 @@ const IntroduceTextArea = ({ width, height }) => {
       ref={textareaRef}
       placeholder="내용을 입력해주세요"
       onInput={handleInput}
-      className="bg-grey100 resize-none overflow-hidden focus-visible:ring-0 border-none focus:outline-none placeholder:text-grey400 placeholder:text-[20px] px-3 py-5"
+      className="bg-grey100 resize-none overflow-hidden focus-visible:ring-0 border-none focus:outline-none placeholder:text-grey400 placeholder:text-[16px] px-7 py-5"
       style={{ width: width, height: height || '170px' }}
     />
   );

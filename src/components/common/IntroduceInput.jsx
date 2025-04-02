@@ -4,7 +4,7 @@ const IntroduceInput = ({ width, height }) => {
   return (
     <>
       <Input
-        className="bg-grey100 focus-visible:ring-0 placeholder:text-grey400 placeholder:text-[20px] "
+        className="bg-grey100 focus-visible:ring-0 placeholder:text-grey400 placeholder:text-[16px] "
         placeholder="내용을 입력해주세요"
         style={{ width: width, height: height }}
       />

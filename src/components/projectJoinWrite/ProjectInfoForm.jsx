@@ -16,7 +16,7 @@ const ProjectInfoForm = () => {
         <div className="w-[1213px] h-[44px] mx-auto border-b">
           <div className="text-[22px] font-semibold">📌 프로젝트</div>
         </div>
-        <div className="w-full flex flex-col gap-[42px]">
+        <div className="w-full flex flex-col gap-[80px]">
           {/* 이미지 */}
           <div className="flex flex-col items-center justify-center mt-[80px]">
             <Label
@@ -45,12 +45,12 @@ const ProjectInfoForm = () => {
 
             <div className="relative ">
               <Input
-                className="px-14 h-[60px] bg-grey100 relative !text-[16px] placeholder:text-grey400 placeholder:text-[20px] focus-visible:ring-0"
+                className="px-16 h-[60px] bg-grey100 relative !text-[16px] placeholder:text-grey400 placeholder:text-[16px] focus-visible:ring-0"
                 placeholder="모집 분야를 입력해주세요"
               />
-              <MagnifyingGlassIcon className="absolute top-[20px] left-[20px] w-[20px] " />
+              <MagnifyingGlassIcon className="absolute top-[20px] left-[28px] w-[20px] " />
             </div>
-            <div className="w-[70%] flex flex-wrap items-center gap-6">
+            <div className="w-[70%] flex flex-wrap items-center gap-10 mt-4">
               {Array(6)
                 .fill(null)
                 .map((_, index) => (
@@ -82,10 +82,10 @@ const ProjectInfoForm = () => {
             </div>
             <div className="relative ">
               <Input
-                className="px-14 h-[60px] bg-grey100 relative !text-[16px] placeholder:text-grey400 placeholder:text-[20px] focus-visible:ring-0"
+                className="px-16 h-[60px] bg-grey100 relative !text-[16px] placeholder:text-grey400 placeholder:text-[16px] focus-visible:ring-0"
                 placeholder="보유한 기술 스택을 입력해 주세요"
               />
-              <MagnifyingGlassIcon className="absolute top-[20px] left-[20px] w-[20px] " />
+              <MagnifyingGlassIcon className="absolute top-[20px] left-[28px] w-[20px] " />
             </div>
           </div>
           {/* 연차 */}
@@ -93,11 +93,11 @@ const ProjectInfoForm = () => {
             <div className="font-medium text-[20px] ">어떤 분을 찾고 있나요?</div>
             <div className="relative ">
               <Input
-                className="h-[60px] bg-grey100 relative placeholder:text-grey400 placeholder:text-[20px] focus-visible:ring-0"
+                className="h-[60px] bg-grey100 relative placeholder:text-grey400 placeholder:text-[17px] focus-visible:ring-0"
                 placeholder="내용을 입력해주세요"
               />
             </div>
-            <div className="w-[70%] flex flex-wrap items-center gap-6">
+            <div className="w-[70%] flex flex-wrap items-center gap-6 ml-4">
               {Array(3)
                 .fill(null)
                 .map((_, index) => (
