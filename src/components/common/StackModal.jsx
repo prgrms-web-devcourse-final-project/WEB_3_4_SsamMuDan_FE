@@ -13,7 +13,7 @@ const StackModal = ({ data }) => {
         <div className="flex flex-row items-center gap-4 ">
           <span className="font-bold text-[24px]">기술 스택</span>
           <div className="w-[30px] h-[30px] flex flex-row items-center justify-center  border border-solid rounded-[10px]">
-            <ChevronDownIcon className="w-[25px]" />
+            <ChevronDownIcon className="w-[20px]" />
           </div>
         </div>
       </DialogTrigger>

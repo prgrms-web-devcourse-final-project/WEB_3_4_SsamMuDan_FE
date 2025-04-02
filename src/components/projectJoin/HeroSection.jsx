@@ -1,6 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { ChevronDoubleRightIcon } from '@heroicons/react/24/solid';
+import { motion } from 'framer-motion';
 
+// 기존 Button을 motion 컴포넌트로 확장합니다.
+const MotionButton = motion(Button);
 const HeroSection = () => {
   return (
     <>
@@ -15,10 +18,15 @@ const HeroSection = () => {
             </div>
 
             {/* 버튼 */}
-            <Button className="absolute w-[164px] h-[57px] bottom-[51px] right-0 rounded-[10px] flex flex-row justify-center items-center bg-white hover:bg-white">
+            <MotionButton
+              className="absolute w-[164px] h-[57px] bottom-[51px] right-0 rounded-[10px] flex flex-row justify-center items-center bg-white hover:bg-white"
+              initial={{ scale: 1 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               <span className="text-[20px] text-primary300">등록하기</span>
               <ChevronDoubleRightIcon className="text-primary300" />
-            </Button>
+            </MotionButton>
           </div>
 
           {/* 오른쪽 */}

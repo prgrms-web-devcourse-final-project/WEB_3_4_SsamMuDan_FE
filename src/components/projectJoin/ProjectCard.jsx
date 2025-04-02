@@ -7,11 +7,11 @@ import { EyeIcon, HeartIcon } from '@heroicons/react/24/outline';
 const ProjectCard = () => {
   return (
     <>
-      <div className="w-[300px] h-[386px] rounded-[30px] bg-white flex flex-col border mb-[50px]">
+      <div className="w-[300px] h-[386px] rounded-[30px] bg-white flex flex-col justify-center gap-2 border mb-[50px]">
         {/* 상단 => 뱃지, 모집인원  */}
-        <div className="w-[269px] h-[44px] mx-auto ">
+        <div className="w-[250px] h-[44px] mx-auto">
           {' '}
-          <div className="w-[269px] h-[44px] flex flex-row justify-between items-end">
+          <div className="w-[250px] h-[44px] flex flex-row justify-between items-center">
             <Badge
               text="모집중"
               className="w-[72px] h-[27px] bg-[#3FC22E]  text-white text-[13px] font-bold"
@@ -25,11 +25,11 @@ const ProjectCard = () => {
 
         {/* 중간 */}
 
-        <div className="w-[269px] mx-auto flex flow-row justify-between items-start mt-[18px]">
+        <div className="w-[250px] mx-auto flex flow-row justify-between items-start">
           {/* 왼쪽 */}
           <div className="flex flex-col gap-3">
             {/* 제목 */}
-            <div className="text-[24px] w-[265px]">AI 교육 도메인 웹앱 React 개발자 구인</div>
+            <div className="text-[20px] w-[265px]">AI 교육 도메인 웹앱 React 개발자 구인</div>
             {/* 날짜 */}
             <div className="w-[265px] text-[13px] flex flex-row gap-2 ">
               <div>
@@ -41,7 +41,7 @@ const ProjectCard = () => {
               </div>
             </div>
             {/* 내용 */}
-            <div className="text-[14px] w-[265px] line-clamp-4">
+            <div className="text-[16px] w-[265px] line-clamp-4">
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officia natus eius ipsam
               sint incidunt assumenda ratione ad doloribus modi, in nisi, inventore rem ipsa commodi
               tempore quas dolorem. Aspernatur, et!
@@ -54,12 +54,12 @@ const ProjectCard = () => {
           </div>
         </div>
         {/* underLine */}
-        <div className="w-[269px] border mt-[15px] mx-auto"></div>
+        <div className="w-[250px] border mx-auto"></div>
 
         {/* 하단 */}
-        <div className="w-[269px] h-[44px] mx-auto mt-[5px]">
+        <div className="w-[250px] h-[44px] mx-auto">
           {' '}
-          <div className="w-[269px] flex flex-row justify-between">
+          <div className="w-[250px] flex flex-row justify-between">
             {/* 왼쪽 */}
             <div className="w-[100px] h-[44px] flex flex-row items-center gap-2">
               {/* 뱃지 */}
