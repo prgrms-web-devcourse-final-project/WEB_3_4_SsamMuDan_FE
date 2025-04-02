@@ -81,7 +81,7 @@ const EditProfileModal = ({ onClose }) => {
 
           <ActionButton
             text="수정완료"
-            customeStyle="w-[203px] h-[42px] text-primary300 border border-primary300"
+            customeStyle="w-[203px] h-[42px] font-semibold text-primary300 border border-primary300"
             onClick={() => {
               alert('수정이 완료되었습니다!');
               onClose();
@@ -89,7 +89,7 @@ const EditProfileModal = ({ onClose }) => {
           />
         </form>
 
-        <button className="mt-4 text-sm text-gray-400" onClick={onClose}>
+        <button className="mt-4 text-sm font-semibold text-gray-400" onClick={onClose}>
           닫기
         </button>
       </div>
