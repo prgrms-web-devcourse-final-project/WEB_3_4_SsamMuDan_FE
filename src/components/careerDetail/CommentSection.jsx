@@ -21,20 +21,19 @@ const CommentSection = () => {
       {/* 댓글 */}
       <div className="w-[1246px] mx-auto">
         {/* 제목 */}
-        <div className="w-full border-b border-black h-[50px] ">
-          <div className="text-[20px] font-[500] ">
-            댓글 <span className="text-primary300 font-semibold">10</span>
-          </div>
+        <div className="flex items-center border-b border-[#CFCFCF] pb-[15px] mt-[100px]">
+          <div className="text-[20px] font-medium mr-[8px]">댓글</div>
+          <div className="text-[22px] text-primary300 font-semibold">10</div>
         </div>
         {/* 댓글 */}
         <div className="mt-[40px]">
           {/* 클릭 시 Editor 표시 */}
           {!isEditing ? (
             <div
-              className="w-[1246px] h-[57px] rounded-[10px] border flex flex-col justify-center mt-2 cursor-pointer"
+              className="w-[1246px] h-[57px] rounded-[10px] border flex flex-col justify-center mt-2 cursor-pointer mb-[100px]"
               onClick={() => setIsEditing(true)}
             >
-              <span className="ml-7">내용을 입력해주세요</span>
+              <span className="ml-7 text-grey400 text-[16px]">내용을 입력해주세요</span>
             </div>
           ) : (
             <div>

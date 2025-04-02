@@ -21,7 +21,6 @@ import ProjectJoinWrite from './pages/ProjectJoinWrite';
 import ProjectJoinDetail from './pages/ProjectJoinDetail';
 import PageNotFound from './pages/PageNotFound';
 
-
 function App() {
   return (
     <BrowserRouter>
@@ -40,13 +39,12 @@ function App() {
         <Route path="/careerWrite" element={<CareerWrite />} />
         <Route path="/techtube" element={<TechTube />} />
         <Route path="/techbook" element={<TechBook />} />
-        <Route path="/communitydetail" element={<CommunityDetail />} />
+        <Route path="/community/:id" element={<CommunityDetail />} />
         <Route path="/community" element={<Community />} />
         <Route path="/projectJoin" element={<ProjectJoin />} />
         <Route path="/projectJoinWrite" element={<ProjectJoinWrite />} />
         <Route path="/projectJoinDetail/:id" element={<ProjectJoinDetail />} />
         <Route path="*" element={<PageNotFound />} />
-
       </Routes>
     </BrowserRouter>
   );
