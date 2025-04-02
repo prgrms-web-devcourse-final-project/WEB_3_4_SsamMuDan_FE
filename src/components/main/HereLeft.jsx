@@ -22,8 +22,8 @@ const HeroLeft = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-end w-[661px] h-full ">
-        <div className="flex flex-col justify-between h-[406px]">
+      <div className="flex flex-col justify-end w-[690px] h-full ">
+        <div className="flex flex-col justify-between h-[427px]">
           {/* 제목 */}
           <div className="w-full flex flex-col   ">
             <div className="text-[50px] font-bold whitespace-pre-line">
@@ -34,10 +34,10 @@ const HeroLeft = () => {
             </div>
           </div>
           {/* 페이지네이션 */}
-          <div className="w-[108px] h-[44px] flex flex-row items-center justify-center gap-2 rounded-[30px] bg-grey300  ">
+          <div className="w-[108px] h-[44px] p-[10px] flex items-center  rounded-[30px] bg-grey300  p-[20px] justify-around">
             <div className="text-[20px] text-white">1</div>
             <div className="text-[20px] text-grey200">/ 3</div>
-            <ChevronRightIcon className="w-[20px] text-white hover:cursor-pointer " />
+            <ChevronRightIcon className="w-[20px] text-white hover:cursor-pointer ml-[15px]" />
           </div>
         </div>
       </div>

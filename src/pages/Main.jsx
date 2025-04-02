@@ -13,9 +13,12 @@ const Main = () => {
     <>
       <Layout className="">
         {/* 히어로 섹션 */}
-        <div className="w-full h-[580px] flex flex-row items-center justify-end ">
+        <div className="w-[1246px] mx-auto h-[580px] flex flex-row items-center relative">
           <HeroLeft />
-          <HeroRight />
+
+          <div className="absolute top-[0px] right-[-325px]">
+            <HeroRight />
+          </div>
         </div>
         <div className="w-[1246px] mx-auto">
           <CategorySection />
@@ -30,7 +33,7 @@ const Main = () => {
         <div className="mt-[124px]">
           <ProjectSection />
         </div>
-        <div className="mt-[130px]">
+        <div className="mt-[50px] mb-[200px]">
           <CommunitySection />
         </div>
       </Layout>

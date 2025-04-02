@@ -30,24 +30,24 @@ const TechBookList = () => {
   ];
 
   return (
-    <div className=" w-[700px] flex flex-col gap-3 border-r">
+    <div className="  flex flex-col gap-3 border-r">
       {bookList.map((item, index) => {
         return (
           // 카드
           <div
             key={index}
-            className="w-[670px] h-[158px] flex flex-row border justify-center items-center rounded-[10px]"
+            className="w-[670px] h-[158px] flex flex-row border justify-center items-center rounded-[10px] p-[15px] mr-[20px]"
           >
             <div className="w-[450px] h-[114px] flex flex-col justify-between ">
               <div className="text-[20px] font-[600] text-black">{item.title}</div>
-              <div className="flex flex-row items-center">
-                <div>{item.author}</div>
+              <div className="flex flex-row items-center text-grey300">
+                <div className="mr-[15px]">{item.author}</div>
                 <img
                   src="/icons/heart.svg"
                   alt="좋아요 아이콘"
-                  className="w-5 h-5 inline-block align-middle"
+                  className="w-5 h-5 inline-block align-middle mr-[2px]"
                 />
-                <div>좋아요({item.like})</div>
+                <div>좋아요&nbsp;({item.like})</div>
               </div>
               <div className="w-[471px] line-clamp-2">{item.content}</div>
             </div>

@@ -4,7 +4,7 @@ import TechBookBest from './TechBookBest';
 import { useState } from 'react';
 
 const TechBookSection = () => {
-  const tabs = ['프론트엔드', '백엔드', '풀스택'];
+  const tabs = ['프론트엔드', '백엔드', '풀스택'];
   const [currentTab, setCurrentTab] = useState('프론트엔드');
 
   return (
