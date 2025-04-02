@@ -9,17 +9,18 @@ const ProjectSection = () => {
         🔥 프로젝트 같이 하자..!!{' '}
       </div>
 
-      <div className="relative w-full h-[607px]">
+      <div className="relative w-full mx-w-[1920px] h-[800px] mx-auto overflow-hidden">
         {/* 배경이미지 */}
-
-        <div className="w-full h-[607px] overflow-hidden">
-          <img
-            src="/public/images/main/projectSection.svg  "
-            alt=""
-            className="w-full h-full object-contain"
-          />
-        </div>
-
+        <img
+          src="/images/main/main-greenblur.svg"
+          alt=""
+          className="absolute left-[-500px] top-[-100px]"
+        />
+        <img
+          src="/images/main/main-redblur.svg"
+          alt=""
+          className="absolute right-[-500px] top-[-50px]"
+        />
         <div className="flex flex-col w-[1246px] h-[493px] absolute top-[80px] left-1/2 -translate-x-1/2 text-black">
           <div className="mb-5">
             <JoinCard />
