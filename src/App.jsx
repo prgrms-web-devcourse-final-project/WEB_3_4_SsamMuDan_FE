@@ -20,6 +20,7 @@ import ProjectJoin from './pages/ProjectJoin';
 import ProjectJoinWrite from './pages/ProjectJoinWrite';
 import ProjectJoinDetail from './pages/ProjectJoinDetail';
 import PageNotFound from './pages/PageNotFound';
+import CommunityWrite from './pages/CommunityWrite';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route path="/community" element={<Community />} />
         <Route path="/projectJoin" element={<ProjectJoin />} />
         <Route path="/projectJoinWrite" element={<ProjectJoinWrite />} />
+        <Route path="/communityWrite" element={<CommunityWrite />} />
         <Route path="/projectJoinDetail/:id" element={<ProjectJoinDetail />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
