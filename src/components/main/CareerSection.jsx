@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
+import { motion } from 'framer-motion';
 
 const CareerSection = () => {
   return (
@@ -16,13 +18,20 @@ const CareerSection = () => {
           <div className="text-[36px] font-semibold">지금 영입하지 않으면 후회할지도..?! 😆</div>
           <div className="flex flex-col text-[#6C6C6C] text-[20px]">
             <div>자신이 만든 이력서로 자신을 보여주세요!!</div>
-            <div>CoTree는 다양한 방법을 제시해줄 수 있습니다!!!</div>
+            <div>CoTree는 다양한 방법을 제시해 줄 수 있습니다!!!</div>
           </div>
         </div>
 
-        <Button className="w-[279px] h-[50px] text-[20px] text-[#48FF08] font-bold">
-          자신을 어필하러 가기
-        </Button>
+        <Link to="/career">
+          <motion.div
+            whileHover={{ y: -4 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          >
+            <Button className="w-[279px] h-[50px] text-[20px] text-[#48FF08] font-bold">
+              자신을 어필하러 가기
+            </Button>
+          </motion.div>
+        </Link>
       </div>
     </div>
   );
