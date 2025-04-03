@@ -38,9 +38,6 @@ const EditProfileModal = ({ onClose }) => {
               className="hidden"
               onChange={(e) => {
                 const file = e.target.files[0];
-                if (file) {
-                  console.log('선택한 파일:', file);
-                }
               }}
             />
           </div>
