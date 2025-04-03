@@ -1,9 +1,9 @@
-import axios from 'axios';
-import coTreeAPI from '@/config/career';
+import coTreeAPI from '@/config/coTree';
+import { COTREE_ENDPOINT } from '../endpoint';
 
 const getCareerInfo = async () => {
   try {
-    const response = await coTreeAPI.get('https://api.cotree.site/api/v1/category/skill');
+    const response = await coTreeAPI.get(COTREE_ENDPOINT.techbook);
     console.log(response.data);
     // return response.data;
   } catch (error) {

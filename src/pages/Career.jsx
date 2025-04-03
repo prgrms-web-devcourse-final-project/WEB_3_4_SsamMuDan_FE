@@ -8,6 +8,7 @@ import PrimarySelect from '@/components/common/PrimarySelect';
 import CardList from '@/components/career/CardList';
 import CustomPagination from '@/components/common/CustomPagination';
 import getCareerInfo from '@/api/career/getCareerInfo';
+import { NavLink } from 'react-router-dom';
 
 const Career = () => {
   getCareerInfo();
