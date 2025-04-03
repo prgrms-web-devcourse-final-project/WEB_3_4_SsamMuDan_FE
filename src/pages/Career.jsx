@@ -7,8 +7,11 @@ import HistoryModal from '@/components/career/HistoryModal';
 import PrimarySelect from '@/components/common/PrimarySelect';
 import CardList from '@/components/career/CardList';
 import CustomPagination from '@/components/common/CustomPagination';
+import getCareerInfo from '@/api/career/getCareerInfo';
 
 const Career = () => {
+  getCareerInfo();
+
   const techStack = [
     'Python',
     'SpringFramework',
