@@ -4,16 +4,47 @@ import { Button } from '@/components/ui/button';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import PrimaryButton from './PrimaryButton';
 import { XMarkIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const PositionModal = ({ position }) => {
+const PositionModal = () => {
+  const [positions, setPositions] = useState([
+    { position: '전체', selected: true },
+    { position: '프론트엔드', selected: false },
+    { position: '벡엔드', selected: false },
+    { position: '풀스택', selected: false },
+    { position: 'iOS', selected: false },
+  ]);
+
   const [positionList, setPositionList] = useState([]);
 
-  const handleClick = (position) => {
-    // if (trimmedStack !== '' && !positionList.includes(trimmedStack)) {
-    //   setStackList((prev) => [...prev, trimmedStack]);
-    // }
-    console.log(position);
+  // positions가 변경될 때마다 selected가 true인 항목만 positionList에 저장
+  useEffect(() => {
+    setPositionList(positions.filter((item) => item.selected));
+  }, [positions]);
+
+  const handleClick = (clickedItem) => {
+    if (clickedItem.position === '전체') {
+      // '전체'를 클릭하면, '전체'만 true, 나머지는 false로 설정
+      setPositions((prevPositions) =>
+        prevPositions.map((item) =>
+          item.position === '전체' ? { ...item, selected: true } : { ...item, selected: false },
+        ),
+      );
+    } else {
+      // 다른 항목을 클릭하면 해당 항목은 토글하고 '전체'는 반드시 false로 설정
+      setPositions((prevPositions) =>
+        prevPositions.map((item) => {
+          if (item.position === clickedItem.position) {
+            return { ...item, selected: !item.selected };
+          } else if (item.position === '전체') {
+            return { ...item, selected: false };
+          } else {
+            return item;
+          }
+        }),
+      );
+    }
+    console.log(positionList);
   };
 
   return (
@@ -35,15 +66,16 @@ const PositionModal = ({ position }) => {
         </div>
         {/* 직군 셀렉트 */}
         <div className="w-full flex flex-col border-b">
-          {position.map((item, index) => {
+          {positions.map((item, index) => {
             return (
               <div
                 key={index}
                 className="w-[86%] h-[48px] mx-auto flex flex-row justify-between items-center"
               >
-                <div className="text-[16px] font-[500]">{item}</div>
+                <div className="text-[16px] font-[500]">{item.position}</div>
                 <Checkbox
                   onClick={() => handleClick(item)}
+                  checked={item.selected}
                   className="data-[state=checked]:bg-primary300 border-grey200"
                 />
               </div>

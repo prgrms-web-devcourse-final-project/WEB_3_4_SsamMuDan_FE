@@ -8,6 +8,10 @@ import { useState } from 'react';
 
 const HistoryModal = () => {
   const [range, setRange] = useState([0, 0]);
+  const handleRange = (val) => {
+    setRange(val);
+    console.log(range);
+  };
   return (
     <Popover>
       <PopoverTrigger>
@@ -31,7 +35,7 @@ const HistoryModal = () => {
           <div className="w-[90%] flex flex-col gap-4">
             {/* 슬라이더 */}
             <div className="">
-              <Slider value={range} onValueChange={(val) => setRange(val)} max={100} step={10} />
+              <Slider value={range} onValueChange={(val) => handleRange(val)} max={110} step={10} />
             </div>
             {/*  */}
             <div className="flex flex-row justify-between items-center text-[14px] font-semibold">

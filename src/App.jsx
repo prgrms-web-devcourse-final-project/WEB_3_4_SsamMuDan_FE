@@ -37,7 +37,7 @@ function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/careerDetail/:id" element={<CareerDetail />} />
-        <Route path="/careerWrite" element={<CareerWrite />} />
+        <Route path="/careerWrite/:id" element={<CareerWrite />} />
         <Route path="/techtube" element={<TechTube />} />
         <Route path="/techbook" element={<TechBook />} />
         <Route path="/community/:id" element={<CommunityDetail />} />
