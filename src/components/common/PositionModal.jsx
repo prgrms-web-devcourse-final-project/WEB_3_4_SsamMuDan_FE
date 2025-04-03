@@ -4,7 +4,18 @@ import { Button } from '@/components/ui/button';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import PrimaryButton from './PrimaryButton';
 import { XMarkIcon } from '@heroicons/react/24/solid';
+import { useState } from 'react';
+
 const PositionModal = ({ position }) => {
+  const [positionList, setPositionList] = useState([]);
+
+  const handleClick = (position) => {
+    // if (trimmedStack !== '' && !positionList.includes(trimmedStack)) {
+    //   setStackList((prev) => [...prev, trimmedStack]);
+    // }
+    console.log(position);
+  };
+
   return (
     <Popover>
       <PopoverTrigger>
@@ -31,7 +42,10 @@ const PositionModal = ({ position }) => {
                 className="w-[86%] h-[48px] mx-auto flex flex-row justify-between items-center"
               >
                 <div className="text-[16px] font-[500]">{item}</div>
-                <Checkbox className="data-[state=checked]:bg-primary300 border-grey200" />
+                <Checkbox
+                  onClick={() => handleClick(item)}
+                  className="data-[state=checked]:bg-primary300 border-grey200"
+                />
               </div>
             );
           })}
