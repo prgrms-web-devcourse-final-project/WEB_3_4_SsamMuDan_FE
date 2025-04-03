@@ -8,10 +8,6 @@ const HeroRight = () => {
           <img src="/images/main-banner-green.svg" alt="" />
         </div>
       </div>
-      {/* position: absolute;
-    top: 55px;
-    width: 950px;
-    right: 57px; */}
     </>
   );
 };
