@@ -4,7 +4,7 @@ import ActionButton from '../common/ActionButton';
 const EducationPay = ({ price, instructor }) => {
   return (
     <div className="w-[400px] h-[355px] rounded-[12px] bg-white border border-[#D9D9D9] shadow-md  p-[24px] mb-[28px]">
-      <div className="font-semibold  text-[35px] mt-[33px] mb-[26px]">{price}70,000 원</div>
+      <div className="font-semibold  text-[35px] mt-[20px] mb-[26px]">{price}70,000 원</div>
       <div className="flex justify-around mb-[42px]">
         <div className="flex items-center mr-[30px]">
           <img src="/icons/educationdetail-user.svg" className="mr-[7px]" alt="유저" />

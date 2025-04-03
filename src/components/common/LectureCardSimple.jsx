@@ -6,11 +6,12 @@ const LectureCardSimple = ({
   price,
   imageUrl,
   showPrice = true, // 기본값은 가격 O
+  customstyle,
 }) => {
   return (
     <div className="w-[285px] h-[291px]">
       {/* 이미지 */}
-      <div className="w-full h-[212px] mb-3">
+      <div className={`w-full h-[212px] mb-3 ${customstyle}`}>
         <img
           src={imageUrl}
           alt="강의 카드 이미지"

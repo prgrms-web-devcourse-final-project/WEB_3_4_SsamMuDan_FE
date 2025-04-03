@@ -86,6 +86,10 @@ export default {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      // 커스텀
+      boxShadow: {
+        'custom-md': '0 0 10px 0 rgb(133, 133 ,133 ,0.3)', // 연한 그림자
+      },
     },
   },
   plugins: [require('tailwindcss-animate'), require('@tailwindcss/line-clamp')],

@@ -8,11 +8,9 @@ import { useState } from 'react';
 const CommunityDetail = () => {
   const [floatingBadge, setFloatingBadge] = useState({
     viwer: {
-      image: '/icons/community-eye.svg',
       text: 0,
     },
     like: {
-      image: '/icons/community-like.svg',
       text: 0,
     },
     delete: {
@@ -32,7 +30,12 @@ const CommunityDetail = () => {
   return (
     <Layout>
       <div className="w-[1246px] mx-auto relative">
-        <CommunityDetailInfo title="제목입니다" user="똑또기" date="2025.02.12" />
+        <CommunityDetailInfo
+          title="제목입니다"
+          user="똑또기"
+          date="2025.02.12"
+          className="mb-[10px]"
+        />
         <CommunityDetailContens />
         {/* 댓글 영역*/}
         <CommentSection />
@@ -41,12 +44,12 @@ const CommunityDetail = () => {
           <CommunityFloating
             text={floatingBadge.viwer.text}
             type="viwer"
-            image={floatingBadge.viwer.image}
+            // image={floatingBadge.viwer.image}
           />
           <CommunityFloating
             text={floatingBadge.like.text}
             type="like"
-            image={floatingBadge.like.image}
+            // image={floatingBadge.like.image}
           />
           <CommunityFloating
             text={floatingBadge.modify.text}
