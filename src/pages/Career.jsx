@@ -24,7 +24,6 @@ const Career = () => {
     'MySQL',
     'SQL',
   ];
-  const position = ['전체', '프론트엔드', '벡엔드', '풀스택', 'iOS'];
 
   const selectList = ['최신순', '높은 평점순'];
   return (
@@ -38,7 +37,7 @@ const Career = () => {
           <div className="w-full  flex flex-row justify-between items-center gap-6 mt-[106px] ">
             <div className="flex flex-row justify-between gap-6 ">
               <StackModal data={techStack} />
-              <PositionModal position={position} />
+              <PositionModal />
               <HistoryModal />
             </div>
             <PrimarySelect selectList={selectList} placeholder={'최신순'}></PrimarySelect>

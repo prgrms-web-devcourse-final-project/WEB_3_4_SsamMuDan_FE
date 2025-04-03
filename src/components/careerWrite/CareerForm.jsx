@@ -1,7 +1,30 @@
 import DateSetForm from './DateSetForm';
 import CareerContentForm from './CareerContentForm';
+import { useState, useEffect } from 'react';
 
-const CareerForm = () => {
+const CareerForm = ({ setPostData }) => {
+  const [dateInfo, setDateInfo] = useState({});
+  const [careerContent, setCareerContent] = useState({});
+
+  const handleDateChange = (data) => {
+    setDateInfo(data);
+  };
+
+  const handleCareerChange = (data) => {
+    setCareerContent(data);
+  };
+
+  useEffect(() => {
+    if (Object.keys(dateInfo).length) {
+      const merged = { ...dateInfo };
+
+      setPostData((prev) => ({
+        ...prev,
+        careerInfos: [merged], // 추후 추가 지원 시 배열 관리
+      }));
+    }
+  }, [dateInfo]);
+
   return (
     <>
       <div className="w-[1213px] mx-auto">
@@ -11,7 +34,7 @@ const CareerForm = () => {
         </div>
         {/* 작성 */}
         <div className="flex flex-row justify-end mt-[40px]">
-          <DateSetForm type="경력" />
+          <DateSetForm onChange={(data) => handleDateChange(data)} />
           <CareerContentForm />
           <div></div>
         </div>
