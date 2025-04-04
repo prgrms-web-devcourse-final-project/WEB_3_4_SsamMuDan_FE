@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 // import getTechBook from '@/api/education/getTechBook';
 import item from '@/api/education/TechBookDummy';
 import { NavLink } from 'react-router-dom';
-import TechBookStore from '@/store/TechBookSearch';
+// import TechBookStore from '@/store/TechBookSearch';
 
 const Education = () => {
   const tabs = ['TechTube', 'TechBook'];
