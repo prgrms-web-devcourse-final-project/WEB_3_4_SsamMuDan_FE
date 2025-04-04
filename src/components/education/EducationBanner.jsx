@@ -19,7 +19,7 @@ const EducationBanner = () => {
           {Array(3)
             .fill(null)
             .map((_, index) => (
-              <div className="mr-[16px]">
+              <div className="mr-[16px]" key={index}>
                 <LectureCardSimple
                   imageUrl="images/education-image1.png"
                   title="Jenkins를 이용한 CI/CD Pipeline 구축"
