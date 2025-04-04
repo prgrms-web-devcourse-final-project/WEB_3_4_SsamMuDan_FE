@@ -5,11 +5,16 @@ import SearchBar from '@/components/common/SearchBar';
 import PrimarySelect from '@/components/common/PrimarySelect';
 import LectureCard from '@/common/LectureCard';
 import CustomPagination from '@/components/common/CustomPagination';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Education = () => {
   const tabs = ['TechTube', 'TechBook'];
   const [currentTab, setCurrentTab] = useState('TechTube');
+
+  // 스크롤 맨 위로 이동
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, []);
 
   return (
     <Layout>

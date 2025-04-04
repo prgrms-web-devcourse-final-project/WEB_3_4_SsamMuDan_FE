@@ -9,6 +9,7 @@ import CardList from '@/components/career/CardList';
 import CustomPagination from '@/components/common/CustomPagination';
 import getCareerInfo from '@/api/career/getCareerInfo';
 import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Career = () => {
   getCareerInfo();
@@ -26,6 +27,11 @@ const Career = () => {
   ];
 
   const selectList = ['최신순', '높은 평점순'];
+
+  // 스크롤 맨 위로 이동
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, []);
   return (
     <>
       <Layout>

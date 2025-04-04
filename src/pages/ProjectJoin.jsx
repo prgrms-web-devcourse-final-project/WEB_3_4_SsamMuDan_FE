@@ -6,6 +6,7 @@ import PositionModal from '@/components/common/PositionModal';
 import PrimarySelect from '@/components/common/PrimarySelect';
 import ProjectCardListSection from '@/components/projectJoin/ProjectListSection';
 import CustomPagination from '@/components/common/CustomPagination';
+import { useEffect } from 'react';
 
 const ProjectJoin = () => {
   const techStack = [
@@ -22,6 +23,11 @@ const ProjectJoin = () => {
   const position = ['전체', '프론트엔드', '벡엔드', '풀스택', 'iOS'];
 
   const selectList = ['최신순', '높은 평점순'];
+
+  // 스크롤 맨 위로 이동
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, []);
   return (
     <>
       <Layout>
