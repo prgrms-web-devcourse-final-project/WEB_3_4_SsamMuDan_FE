@@ -14,7 +14,7 @@ const TechBookSection = () => {
         <div className="flex flex-col">
           {/* 제목 */}
           <div className="flex flex-row  items-center">
-            <div className="font-esamanru text-[25px] mr-[69px] ">TechTube</div>
+            <div className="font-esamanru text-[25px] mr-[69px] ">TechBook</div>
             <CategoryTab tabs={tabs} currentTab={currentTab} onTabChange={setCurrentTab} />
           </div>
           <div className="mt-[75px]">
@@ -26,7 +26,7 @@ const TechBookSection = () => {
         <div className="flex flex-col ml-[18px]">
           {/* 제목 */}
           <div className="flex flex-row  items-center">
-            <div className="font-esamanru text-[25px] mr-[69px] ">TechTube</div>
+            <div className="font-esamanru text-[25px] mr-[69px] ">지금 HOT한 TechBook</div>
           </div>
           <div className="mt-[75px]">
             <TechBookBest />
