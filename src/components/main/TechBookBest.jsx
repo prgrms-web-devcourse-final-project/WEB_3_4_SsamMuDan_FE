@@ -34,7 +34,7 @@ const TechBookBest = () => {
             <img
               src={item.techBookThumbnailUrl}
               alt="강의 카드 이미지"
-              className="w-full h-full object-cover border"
+              className="w-full h-full object-cover border" // border는 나중에 이미지 보이면 제거
             />
           </div>
           <div className="flex flex-col ">
