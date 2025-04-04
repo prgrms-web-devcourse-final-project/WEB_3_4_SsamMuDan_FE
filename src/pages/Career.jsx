@@ -9,6 +9,7 @@ import CardList from '@/components/career/CardList';
 import CustomPagination from '@/components/common/CustomPagination';
 import getCareerInfo from '@/api/career/getCareerInfo';
 import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Career = () => {
   getCareerInfo();
@@ -24,9 +25,13 @@ const Career = () => {
     'MySQL',
     'SQL',
   ];
-  const position = ['전체', '프론트엔드', '벡엔드', '풀스택', 'iOS'];
 
   const selectList = ['최신순', '높은 평점순'];
+
+  // 스크롤 맨 위로 이동
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, []);
   return (
     <>
       <Layout>
@@ -38,7 +43,7 @@ const Career = () => {
           <div className="w-full  flex flex-row justify-between items-center gap-6 mt-[106px] ">
             <div className="flex flex-row justify-between gap-6 ">
               <StackModal data={techStack} />
-              <PositionModal position={position} />
+              <PositionModal />
               <HistoryModal />
             </div>
             <PrimarySelect selectList={selectList} placeholder={'최신순'}></PrimarySelect>

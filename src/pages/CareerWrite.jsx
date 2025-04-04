@@ -5,8 +5,25 @@ import AddButton from '@/components/common/AddButton';
 import ProjectForm from '@/components/careerWrite/ProjectForm';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import FloatingButton from '@/components/common/FloatingButton';
+import { useState } from 'react';
 
 const CareerWrite = () => {
+  const [postData, setPostData] = useState({
+    basicInfo: {
+      profileImage: '',
+      email: '',
+      years: 0,
+      introduction: '',
+      developPositionIds: [],
+      techStackIds: [],
+    },
+    careerInfos: [],
+    portfolioInfos: '',
+  });
+
+  const handleResiter = () => {
+    console.log(postData);
+  };
   return (
     <>
       <Layout>
@@ -17,12 +34,12 @@ const CareerWrite = () => {
           </div>
           {/* 기본정보 */}
           <div className="mt-[70px]">
-            <BasicForm />
+            <BasicForm setPostData={setPostData} />
           </div>
 
           {/* 경력 */}
           <div className="w-full mt-[160px] flex flex-col items-center ">
-            <CareerForm />
+            <CareerForm setPostData={setPostData} />
             <div className="mt-[110px] ">
               <AddButton text="경력 추가하기" />
             </div>
@@ -37,7 +54,10 @@ const CareerWrite = () => {
           </div>
 
           {/* 등록 버튼 */}
-          <div className="w-[1213px] mx-auto flex flex-row justify-end mt-[204px] mb-[111px]">
+          <div
+            className="w-[1213px] mx-auto flex flex-row justify-end mt-[204px] mb-[111px]"
+            onClick={handleResiter}
+          >
             <PrimaryButton text="등록하기" width="239px" height="40px" />
           </div>
         </div>

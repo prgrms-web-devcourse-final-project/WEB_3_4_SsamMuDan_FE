@@ -10,9 +10,6 @@ import { useEffect, useState } from 'react';
 import item from '@/api/education/TechBookDummy';
 import { NavLink } from 'react-router-dom';
 import TechBookStore from '@/store/TechBookSearch';
-// import { useStore } from 'zustand';
-
-// import TechBookStore from '@/store/TechBookSearch';
 
 const Education = () => {
   const tabs = ['TechTube', 'TechBook'];
@@ -83,6 +80,11 @@ const Education = () => {
   //     return new Date(b.date) - new Date(a.date);
   //   });
   // //////////////////////////////////////////////////////////
+
+  // 스크롤 맨 위로 이동
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, []);
 
   return (
     <Layout>
