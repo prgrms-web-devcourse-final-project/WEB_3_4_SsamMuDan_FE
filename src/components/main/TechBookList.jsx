@@ -59,7 +59,7 @@ const TechBookList = () => {
             <img
               src={item.techBookThumbnailUrl}
               alt="강의 카드 이미지"
-              className="w-[200px] h-full object-cover rounded-[15px] border mr-2" // border는 나중에 이미지 보이면 제거
+              className="w-[200px] h-full object-cover rounded-[15px] mr-2"
             />
           </div>
         </div>
