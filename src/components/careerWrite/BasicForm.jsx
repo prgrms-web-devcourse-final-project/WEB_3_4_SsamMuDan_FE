@@ -6,7 +6,7 @@ import IntroduceTextArea from '../common/IntroduceTextArea';
 import StackBadge from '@/common/StackBadge';
 import { useState, useEffect } from 'react';
 import getSkillStack from '@/api/careerWrite/getSkillStack';
-
+import getPosition from '@/api/careerDetail/getPosition';
 const BasicForm = ({ setPostData }) => {
   // 이미지
   const [imageUrl, setImgUrl] = useState('');
@@ -36,8 +36,12 @@ const BasicForm = ({ setPostData }) => {
   // 이메일
   const [email, setEmail] = useState('');
 
-  //직문
+  //직무
   const [position, setPosition] = useState([]);
+  const [positionQuery, setPositionQuery] = useState('');
+  const [positionSuggestions, setPositionSuggestions] = useState([]);
+  const [positionOptions, setPositionOptions] = useState([]);
+  const [activePositionIndex, setActivePositionIndex] = useState(-1);
 
   // 연차
   const [years, setYears] = useState('');
@@ -49,8 +53,10 @@ const BasicForm = ({ setPostData }) => {
 
   // 기술 스택 입력값 상태
   const [query, setQuery] = useState('');
+
   // 추천 검색어 상태
   const [suggestions, setSuggestions] = useState([]);
+
   // API에서 받아온 기술 스택 옵션
   const [techStackOptions, setTechStackOptions] = useState([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
@@ -97,6 +103,65 @@ const BasicForm = ({ setPostData }) => {
 
   const removeSkill = (skillToRemove) => {
     setSelectedSkill((prev) => prev.filter((item) => item.name !== skillToRemove.name));
+  };
+
+  // 컴포넌트가 마운트될 때, 직무 옵션을 비동기로 불러옵니다.
+  useEffect(() => {
+    const fetchPositions = async () => {
+      try {
+        const options = await getPosition();
+        console.log(options);
+        setPositionOptions(options);
+      } catch (error) {
+        console.error('Error fetching position options:', error);
+      }
+    };
+
+    fetchPositions();
+  }, []);
+
+  // 직무 입력값이 바뀔 때마다 추천 검색어를 업데이트합니다.
+  useEffect(() => {
+    if (positionQuery.trim() === '') {
+      setPositionSuggestions([]);
+      return;
+    }
+    const filtered = positionOptions.filter((pos) =>
+      pos.name.toLowerCase().includes(positionQuery.toLowerCase()),
+    );
+    setPositionSuggestions(filtered);
+  }, [positionQuery, positionOptions]);
+
+  // 직무 선택 함수
+  const selectPosition = (pos) => {
+    setPosition((prev) => {
+      // 중복 방지 (이미 선택된 경우 추가하지 않음)
+      if (prev.some((item) => item.id === pos.id)) {
+        return prev;
+      }
+      return [...prev, pos];
+    });
+    // 추천 목록과 입력창 초기화
+    setPositionQuery('');
+    setPositionSuggestions([]);
+  };
+
+  // 직무 제거 함수
+  const removePosition = (posToRemove) => {
+    setPosition((prev) => prev.filter((item) => item.id !== posToRemove.id));
+  };
+
+  const handlePositionKeyDown = (e) => {
+    if (e.key === 'ArrowDown') {
+      setActivePositionIndex((prev) => (prev + 1 >= positionSuggestions.length ? 0 : prev + 1));
+    } else if (e.key === 'ArrowUp') {
+      setActivePositionIndex((prev) => (prev - 1 < 0 ? positionSuggestions.length - 1 : prev - 1));
+    } else if (e.key === 'Enter') {
+      if (activePositionIndex >= 0 && activePositionIndex < positionSuggestions.length) {
+        selectPosition(positionSuggestions[activePositionIndex]);
+      }
+      e.preventDefault();
+    }
   };
 
   // 입력값들이 변경될 때마다 부모의 postData.basicInfo 업데이트
@@ -185,11 +250,41 @@ const BasicForm = ({ setPostData }) => {
           {/* 직무 */}
           <div>
             <div className="text-[22px] font-medium mb-2">개발직무</div>
-            <IntroduceInput
-              width="1213px"
-              height="60px"
-              onChange={(e) => setPosition(e.target.value)}
-            />
+            <div className="flex flex-wrap items-center gap-6 mb-4">
+              {position.map((item) => (
+                <StackBadge
+                  key={item.id}
+                  text={item.name}
+                  showCloseIcon={true}
+                  onClose={() => removePosition(item)}
+                />
+              ))}
+            </div>
+            <div className="relative">
+              <Input
+                className="px-14 h-[60px] bg-grey100 placeholder:text-grey400 placeholder:text-[16px] focus-visible:ring-0"
+                placeholder="직무를 입력해 주세요"
+                value={positionQuery}
+                onChange={(e) => setPositionQuery(e.target.value)}
+                onKeyDown={handlePositionKeyDown}
+              />
+              <MagnifyingGlassIcon className="absolute top-[20px] left-[20px] w-[20px]" />
+              {positionSuggestions.length > 0 && (
+                <div className="absolute z-10 w-full bg-white border border-gray-200 mt-2 rounded shadow">
+                  {positionSuggestions.map((pos, index) => (
+                    <div
+                      key={pos.id}
+                      className={`px-4 py-2 cursor-pointer ${
+                        index === activePositionIndex ? 'bg-gray-100' : 'hover:bg-gray-100'
+                      }`}
+                      onClick={() => selectPosition(pos)}
+                    >
+                      {pos.name}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
           {/* 연차 */}
           <div>
