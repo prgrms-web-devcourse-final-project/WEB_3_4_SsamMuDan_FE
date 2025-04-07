@@ -14,14 +14,14 @@ const CategorySection = () => {
       link: '/education', // 수정할 예정
     },
     {
-      img: '/images/main/categorySection/project.svg',
-      text: '프로젝트',
-      link: '/projectJoin',
-    },
-    {
       img: '/images/main/categorySection/job.svg',
       text: '채용',
       link: '/career',
+    },
+    {
+      img: '/images/main/categorySection/project.svg',
+      text: '프로젝트',
+      link: '/projectJoin',
     },
     {
       img: '/images/main/categorySection/community.svg',
