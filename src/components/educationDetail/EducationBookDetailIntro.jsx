@@ -13,7 +13,6 @@ const EducationBookDetailIntro = ({ introduction, content, totalpage }) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [numPages, setNumPages] = useState(30); // 전체 페이지 수
 
-  console.log(pageNumber);
   return (
     <div className="bg-white rounded-[15px] border p-8">
       {/* 강의소개 */}
@@ -29,7 +28,7 @@ const EducationBookDetailIntro = ({ introduction, content, totalpage }) => {
         <div className="text-[30px] font-regular mb-[30px]">미리보기</div>
         {/* pdf자리 */}
         <div
-          className="shadow-md p-[20px] !pointer-events-none border border-[#dddddd]"
+          className="shadow-md p-[20px] !pointer-events-none border border-[#dddddd] min-h-[834px]"
           onClick={(e) => e.stopPropagation()}
         >
           <Document file={content}>
@@ -41,9 +40,9 @@ const EducationBookDetailIntro = ({ introduction, content, totalpage }) => {
           <button
             onClick={() => setPageNumber((prev) => prev - 1)}
             disabled={pageNumber == 1}
-            className=" text-gray-500 disabled:opacity-50 w-[30px] h-[30px] mr-[8px]  hover:bg-black"
+            className=" text-gray-400 disabled:text-[#d7d7d7] w-[30px] h-[30px] mr-[8px] rounded-full hover:bg-[#efefef] flex items-center justify-center"
           >
-            <ChevronLeftIcon className="" />
+            <ChevronLeftIcon className="w-[20px]" />
           </button>
           <div className="text-grey300 text-[15px]">{pageNumber}</div>
           <div className="text-grey300 text-[15px] mx-[10px]">/</div>
@@ -52,9 +51,9 @@ const EducationBookDetailIntro = ({ introduction, content, totalpage }) => {
           <button
             onClick={() => setPageNumber((prev) => prev + 1)}
             disabled={pageNumber >= 3}
-            className=" text-gray-500 disabled:opacity-50 w-[20px] ml-[8px] "
+            className=" text-gray-400 disabled:text-[#d7d7d7] w-[30px] h-[30px] ml-[8px] rounded-full hover:bg-[#efefef] flex items-center justify-center"
           >
-            <ChevronRightIcon />
+            <ChevronRightIcon className="w-[20px]" />
           </button>
         </div>
       </div>

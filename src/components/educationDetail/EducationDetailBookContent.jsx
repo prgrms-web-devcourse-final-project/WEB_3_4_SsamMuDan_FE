@@ -7,11 +7,11 @@ import EducationDetailReview from './EducationDetailReview';
 import PrimaryButton from '../common/PrimaryButton';
 import EducationBookDetailIntro from './EducationBookDetailIntro';
 import getTechBookReview from '@/api/techbookDetail/techbookReview';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const EducationDetailBookContent = ({ techBookInfo }) => {
+const EducationDetailBookContent = ({ techBookInfo, code }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { id } = useParams();
+  const navigate = useNavigate();
   const tabs = [
     { label: '강의소개', value: '강의소개' },
     { label: '수강평', value: '수강평' },
@@ -21,7 +21,7 @@ const EducationDetailBookContent = ({ techBookInfo }) => {
   const [currentTab, setCurrentTab] = useState('강의소개');
   const sortName = { 최신순: 'LATEST', 평점수: 'RATING' };
   const [reviewList, setReviewList] = useState([]);
-  const reviewAverage = Math.round(
+  const reviewAverage = Math.floor(
     reviewList.length > 0
       ? reviewList.reduce((sum, item) => sum + item.rating, 0) / reviewList.length
       : 0,
@@ -38,7 +38,7 @@ const EducationDetailBookContent = ({ techBookInfo }) => {
     newParams.delete('keyword');
     setReviewList([]);
     setHasMore(true);
-    setSearchParams(newParams);
+    navigate({ search: newParams.toString() }, { replace: true });
   };
 
   //정렬 핸들러
@@ -48,14 +48,14 @@ const EducationDetailBookContent = ({ techBookInfo }) => {
     newParams.set('page', '0');
     setReviewList([]);
     setHasMore(true);
-    setSearchParams(newParams);
+    navigate({ search: newParams.toString() }, { replace: true });
   };
 
   // 더보기 핸들러
   const handleLoadMore = () => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set('page', String(page + 1));
-    setSearchParams(newParams);
+    navigate({ search: newParams.toString() }, { replace: true });
   };
 
   //  초기 진입 시 기본값 세팅
@@ -67,22 +67,24 @@ const EducationDetailBookContent = ({ techBookInfo }) => {
       newParams.set('category', '강의소개');
       changed = true;
     }
-    // if (!searchParams.get('page')) {
-    //   newParams.set('page', '0');
-    //   changed = true;
-    // }
+    if (!searchParams.get('page')) {
+      newParams.set('page', '0');
+      changed = true;
+    }
     if (!searchParams.get('sort')) {
       newParams.set('sort', 'LATEST');
       changed = true;
     }
 
-    if (changed) setSearchParams(newParams);
+    if (changed) {
+      navigate({ search: newParams.toString() }, { replace: true }); // ✅ 이걸로 히스토리 덮기
+    }
   }, []);
 
   useEffect(() => {
     async function fetchReviewList() {
       try {
-        const response = await getTechBookReview(id, page, sortOption);
+        const response = await getTechBookReview(code, page, sortOption);
         const newReviews = response.data.content || [];
         const totlaList = response.data.totalElements || [];
 
@@ -103,7 +105,7 @@ const EducationDetailBookContent = ({ techBookInfo }) => {
       }
     }
     fetchReviewList();
-  }, [id, page, sortOption, category]);
+  }, [code, page, sortOption, category]);
 
   return (
     <div className="w-[870px]  py-10">
@@ -155,12 +157,7 @@ const EducationDetailBookContent = ({ techBookInfo }) => {
           </div>
 
           {/* 수강평 리스트 */}
-          <div className=" text-sm text-gray-700">
-            {/* {Array(5)
-              .fill()
-              .map((_, idx) => (
-                <EducationDetailReview key={idx} {...reviewData} />
-              ))} */}
+          <div className=" text-sm text-gray-700 min-h-[500.5px]">
             {reviewList.map((item, index) => (
               <EducationDetailReview key={index} reviewinfo={item} />
             ))}
