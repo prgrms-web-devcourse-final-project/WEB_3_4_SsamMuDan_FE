@@ -1,24 +1,24 @@
 import { StarIcon } from '@heroicons/react/24/solid';
 
-const EducationDetailReview = ({ reviewer, date, rating, content, profileImage }) => {
+const EducationDetailReview = ({ reviewinfo }) => {
   return (
-    <div className="w-[760px] mb-6 mt-4 relative mx-auto">
+    <div className="w-[760px] mb-10 mt-4 relative mx-auto">
       <div className="flex gap-2">
         {/* 프로필사진 */}
         <img
           src="/images/dummy-user-avatar.svg"
-          alt={reviewer}
+          alt={reviewinfo?.id}
           className="w-11 h-11 rounded-full object-cover mb-1"
         />
         {/* 닉네임 & 작성일 */}
         <div className="flex flex-col mb-1">
-          <p className="text-base font-semibold">{reviewer}</p>
-          <p className="text-gray-400 text-sm">{date}</p>
+          <p className="text-base font-semibold">{reviewinfo?.id}</p>
+          <p className="text-gray-400 text-sm">{reviewinfo?.createdAt}</p>
         </div>
       </div>
       {/* 별점 */}
       <div className="flex items-center text-yellow-400 mb-1">
-        {Array(rating)
+        {Array(reviewinfo?.rating)
           .fill()
           .map((_, i) => (
             <StarIcon key={i} className="w-5 h-5" />
@@ -26,7 +26,7 @@ const EducationDetailReview = ({ reviewer, date, rating, content, profileImage }
       </div>
       {/* 내용 */}
       <div>
-        <p className="leading-relaxed whitespace-pre-wrap">{content}</p>
+        <p className="leading-relaxed whitespace-pre-wrap">{reviewinfo?.content}</p>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import Layout from '../common/Layout/Layout';
 import StackModal from '@/components/common/stackModal';
 import PositionModal from '@/components/common/PositionModal';
-import CustomPagination from '@/components/common/CustomPagination';
+// import CustomPagination from '@/components/common/CustomPagination';
 import IntroduceInput from '@/components/common/IntroduceInput';
 import IntroduceTextArea from '@/components/common/IntroduceTextArea';
 import AddButton from '@/components/common/AddButton';

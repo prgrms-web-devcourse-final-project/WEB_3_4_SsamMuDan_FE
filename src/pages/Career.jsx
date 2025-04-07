@@ -6,7 +6,7 @@ import PositionModal from '@/components/common/PositionModal';
 import HistoryModal from '@/components/career/HistoryModal';
 import PrimarySelect from '@/components/common/PrimarySelect';
 import CardList from '@/components/career/CardList';
-import CustomPagination from '@/components/common/CustomPagination';
+// import CustomPagination from '@/components/common/CustomPagination';
 import getCareerInfo from '@/api/career/getCareerInfo';
 import { NavLink } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -51,9 +51,7 @@ const Career = () => {
           <div className="mt-[72px]">
             <CardList />
           </div>
-          <div className="w-full mx-auto mt-[103px] mb-[152px]">
-            <CustomPagination />
-          </div>
+          <div className="w-full mx-auto mt-[103px] mb-[152px]">{/* <CustomPagination /> */}</div>
         </div>
       </Layout>
     </>

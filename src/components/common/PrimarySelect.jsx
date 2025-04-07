@@ -7,27 +7,23 @@ import {
 } from '@/components/ui/select';
 
 const PrimarySelect = ({ customstyle, selectList, placeholder, onSortChange }) => {
+  const handleSortChange = (selectedValue) => {
+    onSortChange(selectList[selectedValue]); // 직접 매핑해서 보냄
+  };
+
   return (
-    <>
-      <Select onValueChange={onSortChange}>
-        <SelectTrigger className={customstyle}>
-          <SelectValue placeholder={placeholder} />
-        </SelectTrigger>
-        <SelectContent>
-          {selectList.map((item) => (
-            // <SelectItem key={item} value={item}>
-            //   {item}
-            // </SelectItem>
-            <SelectItem key={item} value={item === '최신순' ? '최신순' : '좋아요순'}>
-              {item}
-            </SelectItem>
-          ))}
-          {/* <SelectItem value="latest">최신순</SelectItem>
-          <SelectItem value="likes">좋아요순</SelectItem> */}
-        </SelectContent>
-      </Select>
-    </>
+    <Select onValueChange={handleSortChange}>
+      <SelectTrigger className={customstyle}>
+        <SelectValue placeholder={placeholder} />
+      </SelectTrigger>
+      <SelectContent>
+        {Object.keys(selectList).map((item) => (
+          <SelectItem key={item} value={item}>
+            {item}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 };
-
 export default PrimarySelect;

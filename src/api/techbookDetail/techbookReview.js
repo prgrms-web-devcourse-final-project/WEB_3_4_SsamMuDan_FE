@@ -1,19 +1,18 @@
 import coTreeAPI from '@/config/cotree';
 import { COTREE_ENDPOINT } from '../endpoint';
 
-const getTechBook = async (page, sort, keyword) => {
-  console.log('keyword', keyword);
-  const size = 16;
+const getTechBookReview = async (id, page, sort) => {
+  const size = 10;
   try {
-    const response = await coTreeAPI.get(COTREE_ENDPOINT.techbook, {
+    const response = await coTreeAPI.get(COTREE_ENDPOINT.techbookReview, {
       params: {
+        reviewType: 'TECH_BOOK',
+        itemId: id,
         ...(page && { page }),
         size,
         ...(sort && { sort }),
-        ...(keyword && { keyword }),
       },
     });
-    console.log('response', response);
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -22,4 +21,4 @@ const getTechBook = async (page, sort, keyword) => {
   }
 };
 
-export default getTechBook;
+export default getTechBookReview;

@@ -5,86 +5,132 @@ import SearchBar from '@/components/common/SearchBar';
 import PrimarySelect from '@/components/common/PrimarySelect';
 import LectureCard from '@/common/LectureCard';
 import CustomPagination from '@/components/common/CustomPagination';
+import { motion } from 'framer-motion';
+
 import { useEffect, useState } from 'react';
-// import getTechBook from '@/api/education/getTechBook';
-import item from '@/api/education/TechBookDummy';
-import { NavLink } from 'react-router-dom';
-// import TechBookStore from '@/store/TechBookSearch';
+import { NavLink, useSearchParams } from 'react-router-dom';
+import getTechBook from '@/api/education/getTechBook';
+import getTechTube from '@/api/education/getTechTube';
 
 const Education = () => {
-  const tabs = ['TechTube', 'TechBook'];
-  const [currentTab, setCurrentTab] = useState('TechTube');
-  const techbookList = item.data.content;
-  const [sortOption, setSortOption] = useState('최신순');
-  const [sortList, setSortList] = useState([]);
-  const [keyword, setKeyword] = useState();
+  const tabs = [
+    { label: 'TechTube', value: 'techtube' },
+    { label: 'TechBook', value: 'techbook' },
+  ];
 
-  useEffect(() => {
-    if (!techbookList || techbookList.length === 0) return; // 데이터가 없으면 종료
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [techbookList, setTechBookList] = useState([]);
+  // const [sortOption, setSortOption] = useState('LATEST');
+  const [totalList, setTotalList] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const keyword = searchParams.get('keyword') || '';
+  const page = Number(searchParams.get('page')) || 0;
+  const category = searchParams.get('category') || 'techtube';
+  const sortOption = searchParams.get('sort') || 'LATEST';
+  const sortName = {
+    최신순: 'LATEST',
+    좋아요순: 'LIKES',
+  };
 
-    let sorted = [...techbookList].sort((a, b) => {
-      if (sortOption === '최신순') {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      } else if (sortOption === '좋아요순') {
-        return b.likeCount - a.likeCount;
-      }
-      return 0;
-    });
-    sorted = sorted.filter((item) =>
-      keyword
-        ? item.title
-            .replace(/\s/g, '')
-            .toLowerCase()
-            .includes(keyword.replace(/\s/g, '').toLowerCase())
-        : true,
-    );
+  // 탭 변경 핸들러
+  const handleTabChange = (tabValue) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('category', tabValue);
+    newParams.set('page', '0');
+    newParams.delete('keyword');
 
-    setSortList(sorted); // 최종 데이터 업데이트
-  }, [sortOption, keyword, techbookList]); // 🔥 `keyword`도 의존성에 추가!
+    setSearchParams(newParams);
+  };
 
-  // useEffect(() => {
-  //   const sorted = [...techbookList].sort((a, b) => {
-  //     if (sortOption == '최신순') {
-  //       return new Date(b.createdAt) - new Date(a.createdAt);
-  //     } else if (sortOption === '좋아요순') {
-  //       return b.likeCount - a.likeCount;
-  //     }
+  // 검색 핸들러
+  const handleSearchChange = (input) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('keyword', input.trim());
+    newParams.set('page', '0');
+    setSearchParams(newParams);
+  };
 
-  //     return 0;
-  //   });
-
-  //   setSortList(sorted);
-  // }, [sortOption]);
-
-  // /////////////////////////////////////////////////////////
-  // techbookList 는 dummydata여서 여기에 넣은거다 실제는 fetchItems 써야함
-  // const { techbookList, filter, setFilter, filteredItems, fetchItems } = TechBookStore();
-  // const [filterSelect, setFilterSelect] = useState();
-
-  // console.log(techbookList);
-  // useEffect(() => {
-  //   // api를 썼을때만 쓰기
-  //   fetchItems();
-  // }, []);
-
-  // const SelectedFilter = techbookList.filter((item) =>
-  //   filter === 'All' ? true : item.category === filter,
-  // );
-
-  // const filteredItems = items
-  //   .filter((item) => (filter === 'All' ? true : item.category === filter))
-  //   .sort((a, b) => {
-  //     // 1️⃣ like 기준 내림차순 정렬
-  //     if (b.like !== a.like) return b.like - a.like;
-  //     // 2️⃣ like 값이 같다면 날짜 기준 내림차순 (최신이 먼저)
-  //     return new Date(b.date) - new Date(a.date);
-  //   });
-  // //////////////////////////////////////////////////////////
-
-  // 스크롤 맨 위로 이동
-  useEffect(() => {
+  //페이지네이션 핸들러
+  const handlepagination = (newPage) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('page', String(newPage - 1));
+    setSearchParams(newParams);
     window.scrollTo({ top: 0, behavior: 'auto' });
+  };
+
+  //정렬 핸들러
+  const handleSortChange = (newSortValue) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('sort', newSortValue);
+    newParams.set('page', '0');
+    setSearchParams(newParams);
+  };
+
+  //  초기 진입 시 기본값 세팅
+  useEffect(() => {
+    const newParams = new URLSearchParams(searchParams);
+    let changed = false;
+
+    if (!searchParams.get('category')) {
+      newParams.set('category', 'techtube');
+      changed = true;
+    }
+    if (!searchParams.get('page')) {
+      newParams.set('page', '0');
+      changed = true;
+    }
+    if (!searchParams.get('sort')) {
+      newParams.set('sort', 'LATEST');
+      changed = true;
+    }
+
+    if (changed) setSearchParams(newParams);
   }, []);
+
+  // 리스트 불러오기
+  useEffect(() => {
+    setIsLoading(true);
+    const fetchData = async () => {
+      try {
+        setTechBookList([]);
+        let result;
+
+        if (category === 'techbook') {
+          result = await getTechBook(page, sortOption, keyword);
+        } else {
+          result = await getTechTube(page, sortOption, keyword);
+        }
+
+        setTechBookList(result?.data.content || []);
+        setTotalList(result?.data.totalElements || []);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setTechBookList([]);
+        setTotalList([]);
+      }
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, [category, keyword, page, sortOption]);
+
+  // 로딩과 없는 기준을 만들엇다
+
+  const loadingRender = () => {
+    return (
+      <div>
+        <h1>로딩중입니다.</h1>
+      </div>
+    );
+  };
+
+  const noneRender = () => {
+    return (
+      <div>
+        <div className="text-[50px] col-span-4 text-center">없다!@@@</div>
+      </div>
+    );
+  };
 
   return (
     <Layout>
@@ -92,53 +138,56 @@ const Education = () => {
       <div className="max-w-[1246px] mx-auto">
         <div className="mb-[85px]">
           <CategoryTab
-            cateColor={'#ee5945'}
             tabs={tabs}
-            currentTab={currentTab}
-            onTabChange={setCurrentTab}
+            currentTab={category}
+            onTabChange={handleTabChange}
+            cateColor="#ee5945"
           />
         </div>
-        <div className="flex  justify-between mb-[41px]">
+        <div className="flex justify-between mb-[41px]">
           <div className="font-medium text-[36px]">검색한 강의</div>
           <div className="flex">
-            <SearchBar style="mr-[47px]" onSearchChange={setKeyword} />
+            <SearchBar style="mr-[47px]" value={keyword} onSearchChange={handleSearchChange} />
             <PrimarySelect
-              selectList={['최신순', '좋아요순']}
+              selectList={sortName}
               placeholder="최신순"
               customstyle="h-[46px]"
-              onSortChange={setSortOption}
+              onSortChange={handleSortChange}
             />
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-[17px] ">
-          {currentTab === 'TechTube' &&
-            Array(16)
-              .fill(null)
-              .map((_, index) => (
-                <LectureCard
-                  key={index}
-                  title="React 완벽 마스터: 기초 개념부터 린캔버스 프로젝트까지"
-                  instructor="김코딩"
-                  likes="77"
-                  price="16,800"
-                  imageUrl="/images/education-image1.png"
-                />
-              ))}
-          {currentTab === 'TechBook' &&
-            sortList.map((item) => (
-              <NavLink to={`/education/techbook/${item.id}`} key={item.id}>
-                <LectureCard
-                  id={item.id}
-                  title={item.title}
-                  instructor={item.writer}
-                  likes={item.likeCount}
-                  price={item.price}
-                  imageUrl={item.techBookThumbnailUrl}
-                />
-              </NavLink>
-            ))}
+
+        <div className="grid grid-cols-4 gap-[17px] min-h-[700px]">
+          {isLoading
+            ? loadingRender()
+            : techbookList.length <= 0
+              ? noneRender()
+              : techbookList.map((item) => (
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                  >
+                    <NavLink to={`/TECH_BOOK/${item.id}`} key={item.id}>
+                      <LectureCard
+                        id={item.id}
+                        title={item.title}
+                        instructor={item.writer}
+                        likes={item.likeCount}
+                        price={item.price}
+                        imageUrl={item.techBookThumbnailUrl}
+                      />
+                    </NavLink>
+                  </motion.div>
+                ))}
         </div>
-        <CustomPagination style="mt-[67px]" />
+
+        <CustomPagination
+          totalItems={totalList}
+          itemsPerPage={16}
+          currentPage={Number(page) + 1}
+          onChangePage={handlepagination}
+          style="mt-[67px]"
+        />
         <img src="/images/education-ad.png" alt="교육" className="mt-[117px] mb-[143px]" />
       </div>
     </Layout>
