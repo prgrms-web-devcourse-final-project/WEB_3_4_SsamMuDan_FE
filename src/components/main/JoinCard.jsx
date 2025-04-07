@@ -63,7 +63,7 @@ const JoinCard = ({ project }) => {
           </div>
         </div>
         {/* 설명 */}
-        <div className="text-[15px]">{description}</div>
+        <div className="text-[16px]">{description}</div>
         {/* 기술스택 아이콘 */}
         <div className="flex flex-row gap-2">
           {Array.isArray(techStacksImageUrl) &&
@@ -73,7 +73,7 @@ const JoinCard = ({ project }) => {
                 key={`${img}-${i}`}
                 src={img}
                 alt={`기술스택 아이콘 ${i}`}
-                className="w-6 h-6 object-contain border rounded"
+                className="w-8 h-8 object-contain border rounded"
               />
             ))}
         </div>

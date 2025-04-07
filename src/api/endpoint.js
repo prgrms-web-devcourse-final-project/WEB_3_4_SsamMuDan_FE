@@ -6,14 +6,21 @@ export const COTREE_ENDPOINT = Object.freeze({
   communityPosts: `/api/v1/community/board`, // 커뮤니티 게시글 조회
   techtube: `/api/v1/education/techtube`, // 교육 테크튜브  조회
   // //임시로 1을 붙여놓았음
-  techbookDetail: `/api/v1/education/techbook/50/info`, // 교육 테크북 상세페이지
+  techbookDetail: `/api/v1/education/techbook`, // 교육 테크북 상세페이지
   techbookReview: `/api/v1/education/review`, // 교육 테크북 리뷰
   techbookLike: `/api/v1/like`,
   projectPostsMain: `/api/v1/project/team/hot`, // 메인페이지에서 프로젝트 모집글 조회
   signin: `/api/v1/member/signin`, // 로그인
   careerWrite: '/api/v1/recruitment/resume?id=1',
+
   CareerDetail: '/api/v1/recruitment/resume/1',
   Comment: '/api/v1/comment',
   hotProject: '/api/v1/project/team/hot', // 메인페이지에서 프로젝트 모집글 조회
   projectList: 'api/v1/project/team', // 메인페이지에서 프로젝트 모집글 조회
+  signup: `/api/v1/member/signup`, // 회원가입
+  userInfo: `/api/v1/member`, // 로그인한 사용자의 정보 조회
+  logout: `/api/v1/member/signout`, // 로그아웃
+
+
+
 });

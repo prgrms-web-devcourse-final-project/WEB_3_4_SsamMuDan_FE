@@ -4,6 +4,7 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
 import ActionButton from '@/components/common/ActionButton';
 import loginUser from '@/api/login/loginUser';
 import useAuthStore from '@/store/useAuthStore';
+import getUserInfo from '@/api/login/getUserInfo';
 
 const LoginFormContainer = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,12 +13,13 @@ const LoginFormContainer = () => {
   const { login } = useAuthStore();
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    try {
-      const res = await loginUser({ email, password });
-      // const { accessToken, refreshToken } = res.data;
+  const handleLogin = async (e) => {
+    e?.preventDefault();
 
-      // login();
+    try {
+      await loginUser({ email, password }); // 로그인 성공 ->  쿠키 저장
+      const res = await getUserInfo(); // 유저 정보 조회
+      login(res.data); // 스토어에 저장
 
       alert('로그인 성공!');
       navigate('/');
@@ -27,7 +29,10 @@ const LoginFormContainer = () => {
   };
 
   return (
-    <div className="w-[655px] h-[685px] bg-[#EEF1EF] bg-opacity-20 rounded-r-[30px] flex flex-col items-center justify-center px-[110px] gap-3 shadow-lg shadow-gray-200">
+    <form
+      onSubmit={handleLogin}
+      className="w-[655px] h-[685px] bg-[#EEF1EF] bg-opacity-20 rounded-r-[30px] flex flex-col items-center justify-center px-[110px] gap-3 shadow-lg shadow-gray-200"
+    >
       <p className="text-4xl font-esamanru font-bold text-primary300 mb-[70px]">LOGIN</p>
 
       {/* 이메일 */}
@@ -37,6 +42,7 @@ const LoginFormContainer = () => {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="이메일을 입력해 주세요."
         className="w-full h-[42px] px-4 rounded-[10px] border border-gray-200 focus:outline-none focus:border-primary300 focus:ring-1 focus:ring-primary300 transition-all duration-200 ease-in-out text-sm text-grey700"
+        required
       />
 
       {/* 비밀번호 */}
@@ -46,7 +52,8 @@ const LoginFormContainer = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="비밀번호를 입력해 주세요."
-          className="w-full h-[42px] px-4 rounded-[10px] border border-gray-200 focus:outline-none focus:border-primary300 focus:ring-1 focus:ring-primary300 transition-all duration-200 ease-in-out text-sm text-grey700"
+          className="w-full h-[42px] px-4 pr-10 rounded-[10px] border border-gray-200 focus:outline-none focus:border-primary300 focus:ring-1 focus:ring-primary300 transition-all duration-200 ease-in-out text-sm text-grey700"
+          required
         />
         <span
           onClick={() => setShowPassword((prev) => !prev)}
@@ -57,10 +64,10 @@ const LoginFormContainer = () => {
       </div>
 
       {/* 로그인 버튼 */}
-      <ActionButton text="로그인" variant="default" onClick={handleLogin} />
+      <ActionButton text="로그인" variant="default" />
 
       {/* 회원가입 버튼 */}
-      <ActionButton text="회원가입" variant="auth" onClick={() => alert('회원가입 버튼 클릭됨')} />
+      <ActionButton text="회원가입" variant="auth" onClick={() => navigate('/signup')} />
 
       {/* 아이디 찾기 & 비밀번호 재설정 */}
       <div className="flex justify-end gap-4 text-sm text-gray-400 mb-6 w-full">
@@ -87,6 +94,7 @@ const LoginFormContainer = () => {
 
       {/* 카카오 로그인 버튼 */}
       <button
+        type="button"
         className="w-full h-[45px] bg-[#FEE500] text-black rounded-[10px] font-semibold relative"
         onClick={() => alert('카카오 로그인 버튼 클릭됨')}
       >
@@ -99,7 +107,7 @@ const LoginFormContainer = () => {
           카카오 로그인
         </span>
       </button>
-    </div>
+    </form>
   );
 };
 
