@@ -10,12 +10,26 @@ import getSkillStack from '@/api/careerWrite/getSkillStack';
 const BasicForm = ({ setPostData }) => {
   // 이미지
   const [imageUrl, setImgUrl] = useState('');
+  const [postImgRul, setPostImgUrl] = useState('');
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      // 임시 URL 생성 후 상태 업데이트
-      setImgUrl(URL.createObjectURL(file));
+
+      // const formData = new FormData();
+      // formData.append('image', file);
+      // // 임시 URL 생성 후 상태 업데이트
+      // setImgUrl(URL.createObjectURL(file));
+      // setPostImgUrl(file);
+
+      // FileReader를 사용하여 Base64로 변환
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        setImgUrl(base64String); // 미리보기용 URL
+        setPostImgUrl(base64String); // 서버 전송용 Base64 문자열
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -23,14 +37,15 @@ const BasicForm = ({ setPostData }) => {
   const [email, setEmail] = useState('');
 
   //직문
-  const [position, setPosition] = useState('');
+  const [position, setPosition] = useState([]);
 
   // 연차
   const [years, setYears] = useState('');
 
   // 선택된 기술 스택을 저장하는 상태
   const [selectedSkill, setSelectedSkill] = useState([]);
-  const [introduction, setIntroduction] = useState([]);
+  // 자기소개
+  const [introduction, setIntroduction] = useState('');
 
   // 기술 스택 입력값 상태
   const [query, setQuery] = useState('');
@@ -38,6 +53,7 @@ const BasicForm = ({ setPostData }) => {
   const [suggestions, setSuggestions] = useState([]);
   // API에서 받아온 기술 스택 옵션
   const [techStackOptions, setTechStackOptions] = useState([]);
+  const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
 
   // 컴포넌트가 마운트될 때, 기술 스택 옵션을 비동기로 불러옵니다.
   useEffect(() => {
@@ -85,19 +101,32 @@ const BasicForm = ({ setPostData }) => {
 
   // 입력값들이 변경될 때마다 부모의 postData.basicInfo 업데이트
   useEffect(() => {
-    setPostData({
+    setPostData((prev) => ({
+      ...prev, // 🔥 기존 careerInfos, portfolioInfos 등 유지
       basicInfo: {
+        ...prev.basicInfo, // optional: 기존 값 유지
         profileImage: imageUrl,
         email: email,
         years: parseInt(years, 10) || 0,
-        introduction: introduction,
-        // 예시로 position을 단일 값으로 처리 (ID로 변환이 필요하면 로직 추가)
+        introduction,
         developPositionIds: position,
-        // selectedSkill에서 기술 스택의 id값을 추출 (만약 id가 없으면 name으로 대체 가능)
-        techStackIds: selectedSkill.map((skill) => skill.name),
+        techStackIds: selectedSkill.map((skill) => skill.id),
       },
-    });
+    }));
   }, [imageUrl, email, years, introduction, position, selectedSkill]);
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowDown') {
+      setActiveSuggestionIndex((prev) => (prev + 1 >= suggestions.length ? 0 : prev + 1));
+    } else if (e.key === 'ArrowUp') {
+      setActiveSuggestionIndex((prev) => (prev - 1 < 0 ? suggestions.length - 1 : prev - 1));
+    } else if (e.key === 'Enter') {
+      if (activeSuggestionIndex >= 0 && activeSuggestionIndex < suggestions.length) {
+        selectSkill(suggestions[activeSuggestionIndex]);
+      }
+      e.preventDefault();
+    }
+  };
 
   return (
     <>
@@ -166,6 +195,7 @@ const BasicForm = ({ setPostData }) => {
           <div>
             <div className="text-[22px] font-medium mb-2">연차</div>
             <IntroduceInput
+              value={years}
               width="1213px"
               height="60px"
               onChange={(e) => setYears(e.target.value)}
@@ -173,38 +203,40 @@ const BasicForm = ({ setPostData }) => {
           </div>
           {/* 기술스택 */}
           <div className="flex flex-col gap-6">
-            <div className="font-medium text-[20px] ">기술스택</div>
+            <div className="font-medium text-[20px]">기술스택</div>
             <div className="flex flex-wrap items-center gap-6">
-              <div className="flex flex-wrap items-center gap-6">
-                {selectedSkill.length > 0 &&
-                  selectedSkill.map((item, index) => (
-                    <StackBadge
-                      key={index}
-                      text={item.name}
-                      showCloseIcon={true}
-                      onClose={() => removeSkill(item)}
-                    />
-                  ))}
-              </div>
+              {selectedSkill.map((item, index) => (
+                <StackBadge
+                  key={index}
+                  text={item.name}
+                  showCloseIcon={true}
+                  onClose={() => removeSkill(item)}
+                />
+              ))}
             </div>
-            <div className="relative ">
+            <div className="relative">
               <Input
-                className="px-14 h-[60px] bg-grey100 relative placeholder:text-grey400 placeholder:text-[20px] focus-visible:ring-0"
+                className="px-14 h-[60px] bg-grey100 placeholder:text-grey400 placeholder:text-[16px] focus-visible:ring-0"
                 placeholder="보유한 기술 스택을 입력해 주세요"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
-              <MagnifyingGlassIcon className="absolute top-[20px] left-[20px] w-[20px] " />
-              {/* 추천 검색어 드롭다운 */}
+              <MagnifyingGlassIcon className="absolute top-[20px] left-[20px] w-[20px]" />
               {suggestions.length > 0 && (
                 <div className="absolute z-10 w-full bg-white border border-gray-200 mt-2 rounded shadow">
                   {suggestions.map((tech, index) => (
                     <div
                       key={index}
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      className={`px-4 py-2 cursor-pointer ${
+                        index === activeSuggestionIndex ? 'bg-gray-100' : 'hover:bg-gray-100'
+                      }`}
                       onClick={() => selectSkill(tech)}
                     >
-                      {tech.name}
+                      <div className="flex flex-row items-center">
+                        <img src={tech.imageUrl} alt={tech.name} className="w-6 h-6 mr-2" />
+                        {tech.name}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -215,6 +247,7 @@ const BasicForm = ({ setPostData }) => {
           <div>
             <div className="text-[22px] font-medium mb-2">자기소개</div>
             <IntroduceTextArea
+              value={introduction}
               width="1213px"
               height="170px"
               onChange={(e) => setIntroduction(e.target.value)}

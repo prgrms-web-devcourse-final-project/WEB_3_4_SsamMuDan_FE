@@ -9,6 +9,5 @@ export const COTREE_ENDPOINT = Object.freeze({
   techbookLike: `/api/v1/like`,
   projectPostsMain: `/api/v1/project/team/hot`, // 메인페이지에서 프로젝트 모집글 조회
   signin: `/api/v1/member/signin`, // 로그인
-
-  //  예시 readQuantityAnalysis: `/readQt?authKey=${LIBRARY_KEY}`,
+  careerWrite: '/api/v1/recruitment/resume?id=1',
 });

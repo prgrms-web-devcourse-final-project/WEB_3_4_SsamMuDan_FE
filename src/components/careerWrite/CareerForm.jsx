@@ -2,40 +2,52 @@ import DateSetForm from './DateSetForm';
 import CareerContentForm from './CareerContentForm';
 import { useState, useEffect } from 'react';
 
-const CareerForm = ({ setPostData }) => {
-  const [dateInfo, setDateInfo] = useState({});
-  const [careerContent, setCareerContent] = useState({});
+const CareerForm = ({ setPostData, index, careerInfos, onDelete, canDelete }) => {
+  const [dateInfo, setDateInfo] = useState('');
+  const [careerContent, setCareerContent] = useState('');
+
+  useEffect(() => {
+    console.log(dateInfo);
+    console.log(careerContent);
+    if (!dateInfo || !careerContent) return;
+
+    const merged = { ...dateInfo, ...careerContent };
+
+    setPostData((prev) => {
+      const updated = [...prev.careerInfos];
+      updated[index] = {
+        ...updated[index], // 기존 값도 병합 (안전성 ↑)
+        ...merged,
+      };
+
+      return {
+        ...prev,
+        careerInfos: updated,
+      };
+    });
+
+    // console.log('📦 merged:', merged);
+  }, [dateInfo, careerContent]);
 
   const handleDateChange = (data) => {
     setDateInfo(data);
   };
 
-  const handleCareerChange = (data) => {
+  const handleCareerContentChange = (data) => {
     setCareerContent(data);
   };
 
-  useEffect(() => {
-    if (Object.keys(dateInfo).length) {
-      const merged = { ...dateInfo };
-
-      setPostData((prev) => ({
-        ...prev,
-        careerInfos: [merged], // 추후 추가 지원 시 배열 관리
-      }));
-    }
-  }, [dateInfo]);
-
   return (
     <>
-      <div className="w-[1213px] mx-auto">
-        {/* 제목 */}
-        <div className="w-full h-[44px] mx-auto border-b">
-          <div className="text-[22px] font-semibold">📌 경력</div>
-        </div>
+      <div className="w-[1213px] mx-auto mt-6">
         {/* 작성 */}
         <div className="flex flex-row justify-end mt-[40px]">
-          <DateSetForm onChange={(data) => handleDateChange(data)} />
-          <CareerContentForm />
+          <DateSetForm key={index} index={index} type="경력" onDateChange={handleDateChange} />
+          <CareerContentForm
+            onCareerChange={handleCareerContentChange}
+            onDelete={onDelete}
+            canDelete={canDelete} // ✅ 넘겨줌
+          />
           <div></div>
         </div>
       </div>
