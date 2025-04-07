@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 
-const IntroduceTextArea = ({ width, height, onChange }) => {
+const IntroduceTextArea = ({ width, height, onChange, value }) => {
   const textareaRef = useRef(null);
 
   const handleInput = () => {
@@ -18,6 +18,7 @@ const IntroduceTextArea = ({ width, height, onChange }) => {
 
   return (
     <Textarea
+      value={value}
       ref={textareaRef}
       onChange={onChange}
       placeholder="내용을 입력해주세요"
