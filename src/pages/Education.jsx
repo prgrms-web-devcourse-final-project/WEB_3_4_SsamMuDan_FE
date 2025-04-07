@@ -20,13 +20,13 @@ const Education = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [techbookList, setTechBookList] = useState([]);
-  // const [sortOption, setSortOption] = useState('LATEST');
   const [totalList, setTotalList] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const keyword = searchParams.get('keyword') || '';
   const page = Number(searchParams.get('page')) || 0;
   const category = searchParams.get('category') || 'techtube';
   const sortOption = searchParams.get('sort') || 'LATEST';
+  const pagesize = 16; // 페이지안에 아이템 수
   const sortName = {
     최신순: 'LATEST',
     좋아요순: 'LIKES',
@@ -183,7 +183,7 @@ const Education = () => {
 
         <CustomPagination
           totalItems={totalList}
-          itemsPerPage={16}
+          itemsPerPage={pagesize}
           currentPage={Number(page) + 1}
           onChangePage={handlepagination}
           style="mt-[67px]"
