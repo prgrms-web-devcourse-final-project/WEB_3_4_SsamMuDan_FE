@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EducationDetailIntro from './EducationDetailIntro';
 import CategoryTab from '../common/CategoryTab';
 import { StarIcon } from 'lucide-react';
@@ -6,50 +6,136 @@ import PrimarySelect from '../common/PrimarySelect';
 import EducationDetailReview from './EducationDetailReview';
 import PrimaryButton from '../common/PrimaryButton';
 import EducationBookDetailIntro from './EducationBookDetailIntro';
+import getTechBookReview from '@/api/techbookDetail/techbookReview';
+import { useParams, useSearchParams } from 'react-router-dom';
 
-const EducationDetailBookContent = () => {
-  const tabs = ['강의소개', '수강평', '커뮤니티'];
+const EducationDetailBookContent = ({ techBookInfo }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { id } = useParams();
+  const tabs = [
+    { label: '강의소개', value: '강의소개' },
+    { label: '수강평', value: '수강평' },
+  ];
+  const [hasMore, setHasMore] = useState(true);
+  const [totalList, setTotalList] = useState();
   const [currentTab, setCurrentTab] = useState('강의소개');
-  const selectList = ['전체', '최신순', '높은 평점순'];
+  const sortName = { 최신순: 'LATEST', 평점수: 'RATING' };
+  const [reviewList, setReviewList] = useState([]);
+  const reviewAverage = Math.round(
+    reviewList.length > 0
+      ? reviewList.reduce((sum, item) => sum + item.rating, 0) / reviewList.length
+      : 0,
+  );
+  const category = searchParams.get('category') || '강의소개';
+  const sortOption = searchParams.get('sort') || 'LATEST';
+  const page = Number(searchParams.get('page')) || 0;
 
-  // 강의소개 더미데이터
-  const introduceData = {
-    content: `The entire Pro Git book, written by Scott Chacon and Ben Straub and published by Apress, is available here. All content is licensed under the Creative Commons Attribution Non Commercial Share Alike 3.0 license. Print versions of the book are available on Amazon.com.
-        The version found here has been updated with corrections and additions from hundreds of contributors. If you see an error or have a suggestion, patches and issues are welcome in its GitHub repository.`,
+  // 탭 변경 핸들러
+  const handleTabChange = (tabValue) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('category', tabValue);
+    newParams.set('page', '0');
+    newParams.delete('keyword');
+    setReviewList([]);
+    setHasMore(true);
+    setSearchParams(newParams);
   };
 
-  // 수강평 더미데이터
-  const reviewData = {
-    reviewer: '피자먹고싶다',
-    date: '2025.01.25',
-    rating: 5,
-    content:
-      '브라우저 콘솔을 활용해서 자바스크립트를 연구, 분석하듯이 배워나가는 과정이 너무나 즐거웠습니다. 그동안 js를 적당히만 알고 리액트랑 노드를 써왔는데 이 강의를 들으면서 아 이게 이런원리였구나 하고 깨달았던게 정말 많았습니다. 얄코님다운 쉬운 설명 덕에 고급 개념들도 수월히 배울 수 있었습니다. Js를 강의 제목처럼 제대로 파고들어 공부해 보고 싶으신 분들께는 정말 재미있는 강의가 될 것 같습니다. 현업에서 js를 쓰시는 분들께 특히 강력 추천합니다.',
-    profileImage: '/images/user-avatar.png',
+  //정렬 핸들러
+  const handleSortChange = (newSortValue) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('sort', newSortValue);
+    newParams.set('page', '0');
+    setReviewList([]);
+    setHasMore(true);
+    setSearchParams(newParams);
   };
+
+  // 더보기 핸들러
+  const handleLoadMore = () => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('page', String(page + 1));
+    setSearchParams(newParams);
+  };
+
+  //  초기 진입 시 기본값 세팅
+  useEffect(() => {
+    const newParams = new URLSearchParams(searchParams);
+    let changed = false;
+
+    if (!searchParams.get('category')) {
+      newParams.set('category', '강의소개');
+      changed = true;
+    }
+    // if (!searchParams.get('page')) {
+    //   newParams.set('page', '0');
+    //   changed = true;
+    // }
+    if (!searchParams.get('sort')) {
+      newParams.set('sort', 'LATEST');
+      changed = true;
+    }
+
+    if (changed) setSearchParams(newParams);
+  }, []);
+
+  useEffect(() => {
+    async function fetchReviewList() {
+      try {
+        const response = await getTechBookReview(id, page, sortOption);
+        const newReviews = response.data.content || [];
+        const totlaList = response.data.totalElements || [];
+
+        if (page === 0) {
+          setReviewList(newReviews);
+        } else {
+          setReviewList((prev) => [...prev, ...newReviews]);
+        }
+
+        const currentCount = page === 0 ? newReviews.length : reviewList.length + newReviews.length;
+        if (currentCount >= totlaList || newReviews.length < 10) {
+          setHasMore(false);
+        }
+      } catch (error) {
+        console.error('Error fetching tech book review:', error);
+        setReviewList([]);
+        setHasMore(false);
+      }
+    }
+    fetchReviewList();
+  }, [id, page, sortOption, category]);
 
   return (
     <div className="w-[870px]  py-10">
-      <CategoryTab tabs={tabs} currentTab={currentTab} onTabChange={setCurrentTab} />
-      {currentTab === '강의소개' && (
+      <CategoryTab
+        tabs={tabs}
+        currentTab={category}
+        onTabChange={handleTabChange}
+        cateColor="#00be7b"
+      />
+      {category === '강의소개' && (
         <div>
-          <EducationBookDetailIntro image={introduceData.image} content={introduceData.content} />
+          <EducationBookDetailIntro
+            content={techBookInfo?.techBookPreviewUrl}
+            introduction={techBookInfo?.introduction}
+            totalpage={techBookInfo?.techBookPage}
+          />
         </div>
       )}{' '}
-      {currentTab === '수강평' && (
+      {category === '수강평' && (
         <div className="bg-white rounded-[15px] border p-4">
           {/* 수강평 별점 요약 배너 */}
           <div className="bg-[#FAFAFA] w-[760px] h-[248px] rounded-[15px] border mb-6 mx-auto flex items-center justify-center relative">
             <div className="text-center">
-              <p className="text-4xl font-bold mb-2">5.0</p>
+              <p className="text-4xl font-bold mb-2">{reviewList.length > 0 ? reviewAverage : 0}</p>
               <div className="flex items-center justify-center gap-1 mb-2">
-                {Array(5)
+                {Array(reviewAverage)
                   .fill()
                   .map((_, index) => (
                     <StarIcon key={index} className="w-[32px] h-[32px] text-yellow-400" />
                   ))}
               </div>
-              <p className="text-lg text-gray-400">15개의 수강평</p>
+              <p className="text-lg text-gray-400">{reviewList.length}개의 수강평</p>
             </div>
             <img
               src="/images/review-avatar.svg"
@@ -60,22 +146,32 @@ const EducationDetailBookContent = () => {
 
           {/* 정렬 드롭다운 */}
           <div className="flex justify-end mb-4">
-            <PrimarySelect selectList={selectList} placeholder={'전체'}></PrimarySelect>
+            <PrimarySelect
+              selectList={sortName}
+              placeholder="최신순"
+              customstyle="h-[46px]"
+              onSortChange={handleSortChange}
+            />
           </div>
 
           {/* 수강평 리스트 */}
-          <div className="space-y-6 text-sm text-gray-700">
-            {Array(5)
+          <div className=" text-sm text-gray-700">
+            {/* {Array(5)
               .fill()
               .map((_, idx) => (
                 <EducationDetailReview key={idx} {...reviewData} />
-              ))}
+              ))} */}
+            {reviewList.map((item, index) => (
+              <EducationDetailReview key={index} reviewinfo={item} />
+            ))}
           </div>
 
           {/* 더보기 버튼 */}
-          <div className="flex justify-center mt-6">
-            <PrimaryButton text="더보기" width="760px" height="47px" />
-          </div>
+          {hasMore && (
+            <div className="flex justify-center mt-6">
+              <PrimaryButton text="더보기" width="760px" height="47px" onClick={handleLoadMore} />
+            </div>
+          )}
         </div>
       )}
     </div>
