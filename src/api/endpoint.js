@@ -14,4 +14,6 @@ export const COTREE_ENDPOINT = Object.freeze({
   careerWrite: '/api/v1/recruitment/resume?id=1',
   CareerDetail: '/api/v1/recruitment/resume/1',
   Comment: '/api/v1/comment',
+  hotProject: '/api/v1/project/team/hot', // 메인페이지에서 프로젝트 모집글 조회
+  projectList: 'api/v1/project/team', // 메인페이지에서 프로젝트 모집글 조회
 });
