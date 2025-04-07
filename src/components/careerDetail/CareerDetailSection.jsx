@@ -1,6 +1,7 @@
 import IntroduceBar from '@/components/common/IntroduceBar';
 
-const CareerDetailSection = () => {
+const CareerDetailSection = ({ data }) => {
+  console.log(data);
   return (
     <>
       {/* 경력 세션 */}
@@ -11,8 +12,11 @@ const CareerDetailSection = () => {
         </div>
         {/* 경력 정보 */}
         <div className="w-full flex flex-col gap-[41px]">
-          <IntroduceBar text="" />
-          <IntroduceBar text="" />
+          {Array.isArray(data) && data.length > 0 ? (
+            data.map((item, index) => <IntroduceBar key={item.index} text={item} />)
+          ) : (
+            <div className="text-center text-gray-500">경력 정보가 없습니다.</div>
+          )}
         </div>
       </div>
     </>

@@ -1,6 +1,6 @@
 import IntroduceProjectForm from './introduceProjectForm';
 
-const ProjectDetailSection = () => {
+const ProjectDetailSection = ({ data }) => {
   return (
     <>
       {/* 경력 세션 */}
@@ -11,7 +11,11 @@ const ProjectDetailSection = () => {
         </div>
         {/* 경력 정보 */}
         <div className="w-full flex flex-col gap-[41px]">
-          <IntroduceProjectForm />
+          {Array.isArray(data) && data.length > 0 ? (
+            data.map((item) => <IntroduceProjectForm key={item.id} text={item} />)
+          ) : (
+            <div className="text-center text-gray-500">프로젝트 정보가 없습니다.</div>
+          )}
         </div>
       </div>
     </>

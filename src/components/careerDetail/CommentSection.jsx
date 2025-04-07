@@ -4,16 +4,40 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 import Comment from '@/components/careerDetail/Comment';
 import CustomPagination from '../common/CustomPagination';
+import getComment from '@/api/careerDetail/getComment';
+import { useEffect } from 'react';
+import postComment from '@/api/careerDetail/postComment';
 
-const CommentSection = () => {
+const CommentSection = ({ id, data }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [content, setContent] = useState(''); // 저장된 내용
   const editorRef = useRef(null);
 
-  const handleRegister = () => {
+  const [postData, setPostData] = useState({
+    content: content,
+    category: 'RESUME',
+    whereId: 9007199254740991,
+    commentId: 9007199254740991,
+  });
+
+  // console.log(data);
+  const handleRegister = async () => {
     if (editorRef.current) {
-      setContent(editorRef.current.getInstance().getMarkdown()); // 마크다운 저장
-      setIsEditing(false); // 에디터 닫기
+      const markdownContent = editorRef.current.getInstance().getMarkdown();
+      setContent(markdownContent);
+
+      try {
+        await postComment({
+          content: markdownContent,
+          category: 'RESUME',
+          whereId: 1,
+          commentId: 1,
+        });
+        console.log(markdownContent);
+        setIsEditing(false);
+      } catch (error) {
+        console.error('Error posting comment:', error);
+      }
     }
   };
   return (

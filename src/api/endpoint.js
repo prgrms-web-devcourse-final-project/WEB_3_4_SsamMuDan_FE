@@ -1,3 +1,5 @@
+import CareerDetail from '@/pages/CareerDetail';
+
 export const COTREE_ENDPOINT = Object.freeze({
   techSkills: `/api/v1/category/skill`, // 기술 스택 조회
   techbook: `/api/v1/education/techbook`, // 교육 테크북
@@ -10,9 +12,15 @@ export const COTREE_ENDPOINT = Object.freeze({
   projectPostsMain: `/api/v1/project/team/hot`, // 메인페이지에서 프로젝트 모집글 조회
   signin: `/api/v1/member/signin`, // 로그인
   careerWrite: '/api/v1/recruitment/resume?id=1',
+
+  CareerDetail: '/api/v1/recruitment/resume/1',
+  Comment: '/api/v1/comment',
+  hotProject: '/api/v1/project/team/hot', // 메인페이지에서 프로젝트 모집글 조회
+  projectList: 'api/v1/project/team', // 메인페이지에서 프로젝트 모집글 조회
   signup: `/api/v1/member/signup`, // 회원가입
   userInfo: `/api/v1/member`, // 로그인한 사용자의 정보 조회
   logout: `/api/v1/member/signout`, // 로그아웃
 
-  //  예시 readQuantityAnalysis: `/readQt?authKey=${LIBRARY_KEY}`,
+
+
 });

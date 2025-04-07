@@ -1,12 +1,13 @@
 import ProjectCard from './ProjectCard';
-const ProjectCardListSection = () => {
+import { useState, useEffect } from 'react';
+
+const ProjectCardListSection = ({ data }) => {
+  // console.log(data);
   return (
     <div className="w-[1246px] mx-auto flex flex-wrap justify-between   ">
-      {Array(16)
-        .fill(null)
-        .map((_, index) => (
-          <ProjectCard key={index} />
-        ))}
+      {data.map((item) => (
+        <ProjectCard key={item.id} item={item} />
+      ))}
     </div>
   );
 };
