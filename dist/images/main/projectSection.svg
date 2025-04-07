@@ -1,0 +1,52 @@
+<svg width="2308" height="923" viewBox="0 0 2308 923" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_f_515_5454)">
+<circle cx="445.5" cy="445.5" r="345.5" fill="url(#paint0_radial_515_5454)" fill-opacity="0.2"/>
+</g>
+<g filter="url(#filter1_f_515_5454)">
+<circle cx="1118.5" cy="492.5" r="288.5" fill="url(#paint1_radial_515_5454)" fill-opacity="0.3"/>
+</g>
+<g filter="url(#filter2_f_515_5454)">
+<circle cx="1904.5" cy="463.5" r="303.5" fill="url(#paint2_radial_515_5454)" fill-opacity="0.2"/>
+</g>
+<g filter="url(#filter3_f_515_5454)">
+<circle cx="1332" cy="592" r="231" fill="url(#paint3_radial_515_5454)" fill-opacity="0.2"/>
+</g>
+<defs>
+<filter id="filter0_f_515_5454" x="0" y="0" width="891" height="891" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="50" result="effect1_foregroundBlur_515_5454"/>
+</filter>
+<filter id="filter1_f_515_5454" x="730" y="104" width="777" height="777" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="50" result="effect1_foregroundBlur_515_5454"/>
+</filter>
+<filter id="filter2_f_515_5454" x="1501" y="60" width="807" height="807" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="50" result="effect1_foregroundBlur_515_5454"/>
+</filter>
+<filter id="filter3_f_515_5454" x="1001" y="261" width="662" height="662" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="50" result="effect1_foregroundBlur_515_5454"/>
+</filter>
+<radialGradient id="paint0_radial_515_5454" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(445.5 445.5) rotate(90) scale(345.5)">
+<stop offset="0.405" stop-color="#4BC29D"/>
+<stop offset="1" stop-color="#EBFFEF"/>
+</radialGradient>
+<radialGradient id="paint1_radial_515_5454" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1118.5 492.5) rotate(90) scale(288.5)">
+<stop offset="0.405" stop-color="#4BC29D"/>
+<stop offset="1" stop-color="#EBFFEF"/>
+</radialGradient>
+<radialGradient id="paint2_radial_515_5454" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1904.5 463.5) rotate(90) scale(303.5)">
+<stop offset="0.405" stop-color="#EE5945"/>
+<stop offset="1" stop-color="#FFBF91"/>
+</radialGradient>
+<radialGradient id="paint3_radial_515_5454" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1332 592) rotate(90) scale(231)">
+<stop offset="0.405" stop-color="#EE5945"/>
+<stop offset="1" stop-color="#FFBF91"/>
+</radialGradient>
+</defs>
+</svg>
