@@ -2,27 +2,35 @@ import { Button } from '../ui/button';
 import { motion } from 'framer-motion';
 import { CheckIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/solid';
 import { NavLink } from 'react-router-dom';
-
+import useAuthStore from '@/store/useAuthStore';
+import { useNavigate } from 'react-router-dom';
 // 기존 Button을 motion 컴포넌트로 확장합니다.
 const MotionButton = motion(Button);
 
 const HeroRight = () => {
+  const { isLoggedIn, userInfo, logout, loginWithUserInfo } = useAuthStore();
+  const navigate = useNavigate();
+
   return (
     <div className="w-[784px] h-[333px] bg-white rounded-[10px] relative shadow-[0_3px_4px_rgba(0,0,0,0.2)] ">
       {/* 왼쪽 */}
       <div className="w-[396px] h-[241px] flex flex-col justify-between absolute top-[43px] left-[50px] ">
-        <NavLink to="/careerWrite">
-          {' '}
-          <MotionButton
-            className="w-[124px] h-[34px] bg-[#FFE3DD] text-primary400 hover:bg-[#FFE3DD]"
-            initial={{ scale: 1 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            이력서 등록
-            <ChevronDoubleRightIcon />
-          </MotionButton>
-        </NavLink>
+        <MotionButton
+          onClick={() => {
+            if (isLoggedIn && userInfo?.nickname) {
+              navigate(`/careerWrite/${userInfo.nickname}`);
+            } else {
+              navigate('/login');
+            }
+          }}
+          className="w-[124px] h-[34px] bg-[#FFE3DD] text-primary400 hover:bg-[#FFE3DD]"
+          initial={{ scale: 1 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          이력서 등록
+          <ChevronDoubleRightIcon />
+        </MotionButton>
 
         <div className="flex flex-col">
           <div className="text-[24px] font-semibold">CoTree를 통해 간편하게</div>

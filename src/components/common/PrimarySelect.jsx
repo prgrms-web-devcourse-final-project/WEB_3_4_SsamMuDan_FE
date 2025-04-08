@@ -17,7 +17,7 @@ const PrimarySelect = ({ customstyle, selectList, placeholder, onSelect }) => {
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
-        {selectList.map((item) => (
+        {Object.keys(selectList).map((item) => (
           <SelectItem key={item} value={item}>
             {item}
           </SelectItem>

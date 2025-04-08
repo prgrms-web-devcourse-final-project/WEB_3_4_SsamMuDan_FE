@@ -13,6 +13,7 @@ const StackModal = ({ onSelect }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [techStackOptions, setTechStackOptions] = useState([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchTechStack = async () => {
@@ -65,11 +66,13 @@ const StackModal = ({ onSelect }) => {
   };
 
   const handleApply = () => {
-    onSelect(selectedSkill);
+    const selectedSkillIds = selectedSkill.map((skill) => skill.id);
+    onSelect(selectedSkillIds);
+    setOpen(false);
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="flex flex-row items-center font-bold text-[24px] gap-4">
         <div className="flex flex-row items-center gap-4">
           <span className="font-bold text-[24px]">기술 스택</span>

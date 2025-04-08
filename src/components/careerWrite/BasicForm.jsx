@@ -75,6 +75,22 @@ const BasicForm = ({ setPostData }) => {
     fetchTechStack();
   }, []);
 
+  // 컴포넌트가 마운트될 때, 직무 옵션을 비동기로 불러옵니다.
+  useEffect(() => {
+    const fetchPositions = async () => {
+      try {
+        const options = await getPosition();
+        console.log('Position API Response:', options);
+        setPositionOptions(options);
+        console.log('저장된 옵션', positionOptions);
+      } catch (error) {
+        console.error('Error fetching position options:', error);
+      }
+    };
+
+    fetchPositions();
+  }, []);
+
   // 입력(query)이 바뀔 때마다 추천 검색어(suggestions)를 업데이트합니다.
   useEffect(() => {
     if (query.trim() === '') {
@@ -86,6 +102,16 @@ const BasicForm = ({ setPostData }) => {
     );
     setSuggestions(filtered);
   }, [query, techStackOptions]);
+
+  // 직무 입력값이 바뀔 때마다 추천 검색어를 업데이트합니다.
+  useEffect(() => {
+    if (positionQuery.trim() === '') {
+      setPositionSuggestions([]);
+      return;
+    }
+    const filtered = positionOptions.filter((pos) => pos.name.includes(positionQuery));
+    setPositionSuggestions(filtered);
+  }, [positionQuery, positionOptions]);
 
   // 추천 검색어 클릭 시, 해당 스킬을 선택 목록에 추가하고 추천 목록과 입력값을 초기화합니다.
   const selectSkill = (skill) => {
@@ -105,35 +131,9 @@ const BasicForm = ({ setPostData }) => {
     setSelectedSkill((prev) => prev.filter((item) => item.name !== skillToRemove.name));
   };
 
-  // 컴포넌트가 마운트될 때, 직무 옵션을 비동기로 불러옵니다.
-  useEffect(() => {
-    const fetchPositions = async () => {
-      try {
-        const options = await getPosition();
-        console.log(options);
-        setPositionOptions(options);
-      } catch (error) {
-        console.error('Error fetching position options:', error);
-      }
-    };
-
-    fetchPositions();
-  }, []);
-
-  // 직무 입력값이 바뀔 때마다 추천 검색어를 업데이트합니다.
-  useEffect(() => {
-    if (positionQuery.trim() === '') {
-      setPositionSuggestions([]);
-      return;
-    }
-    const filtered = positionOptions.filter((pos) =>
-      pos.name.toLowerCase().includes(positionQuery.toLowerCase()),
-    );
-    setPositionSuggestions(filtered);
-  }, [positionQuery, positionOptions]);
-
   // 직무 선택 함수
   const selectPosition = (pos) => {
+    console.log('Selected Position:', pos);
     setPosition((prev) => {
       // 중복 방지 (이미 선택된 경우 추가하지 않음)
       if (prev.some((item) => item.id === pos.id)) {
@@ -151,6 +151,7 @@ const BasicForm = ({ setPostData }) => {
     setPosition((prev) => prev.filter((item) => item.id !== posToRemove.id));
   };
 
+  // 키보드 이벤트 처리
   const handlePositionKeyDown = (e) => {
     if (e.key === 'ArrowDown') {
       setActivePositionIndex((prev) => (prev + 1 >= positionSuggestions.length ? 0 : prev + 1));
@@ -167,9 +168,9 @@ const BasicForm = ({ setPostData }) => {
   // 입력값들이 변경될 때마다 부모의 postData.basicInfo 업데이트
   useEffect(() => {
     setPostData((prev) => ({
-      ...prev, // 🔥 기존 careerInfos, portfolioInfos 등 유지
+      ...prev,
       basicInfo: {
-        ...prev.basicInfo, // optional: 기존 값 유지
+        ...prev.basicInfo,
         profileImage: imageUrl,
         email: email,
         years: parseInt(years, 10) || 0,
