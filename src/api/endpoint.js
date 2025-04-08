@@ -25,6 +25,7 @@ export const COTREE_ENDPOINT = Object.freeze({
   signupPhoneVerify: `/api/v1/member/signup/phone/verify`, // 회원가입 휴대폰번호 인증코드 확인
   signupEmail: `/api/v1/email/code`, // 회원가입 이메일 인증코드 전송
   signupEmailVerify: `/api/v1/email/code/verify`, // 회원가입 이메일 인증코드 확인
+  educationCategory: `/api/v1/category/education`, // 교육 카테고리 전체 조회
 
   //  예시 readQuantityAnalysis: `/readQt?authKey=${LIBRARY_KEY}`,
 });
