@@ -20,4 +20,10 @@ export const COTREE_ENDPOINT = Object.freeze({
   signup: `/api/v1/member/signup`, // 회원가입
   userInfo: `/api/v1/member`, // 로그인한 사용자의 정보 조회
   logout: `/api/v1/member/signout`, // 로그아웃
+  signupPhone: `/api/v1/member/signup/phone`, // 회원가입 휴대폰번호 인증코드 전송
+  signupPhoneVerify: `/api/v1/member/signup/phone/verify`, // 회원가입 휴대폰번호 인증코드 확인
+  signupEmail: `/api/v1/email/code`, // 회원가입 이메일 인증코드 전송
+  signupEmailVerify: `/api/v1/email/code/verify`, // 회원가입 이메일 인증코드 확인
+
+  //  예시 readQuantityAnalysis: `/readQt?authKey=${LIBRARY_KEY}`,
 });
