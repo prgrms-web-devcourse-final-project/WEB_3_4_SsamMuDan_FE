@@ -15,7 +15,6 @@ const getCommunityPosts = async ({
     const response = await coTreeAPI.get(COTREE_ENDPOINT.communityPosts, {
       params: { page, size, sort, category, keyword },
     });
-    console.log('게시글 몇 개야', response.data.data.content.length);
 
     return response.data.data.content;
   } catch (error) {
