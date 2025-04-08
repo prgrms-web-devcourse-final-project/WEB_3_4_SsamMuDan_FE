@@ -13,6 +13,7 @@ export const COTREE_ENDPOINT = Object.freeze({
   signin: `/api/v1/member/signin`, // 로그인
   careerWrite: '/api/v1/recruitment/resume?id=1',
   careerPosition: '/api/v1/category/position',
+  careerInfo: '/api/v1/recruitment/resume',
   CareerDetail: '/api/v1/recruitment/resume/1',
   Comment: '/api/v1/comment',
   hotProject: '/api/v1/project/team/hot', // 메인페이지에서 프로젝트 모집글 조회
