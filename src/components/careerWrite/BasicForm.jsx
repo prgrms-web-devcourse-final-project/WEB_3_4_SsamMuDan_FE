@@ -10,7 +10,7 @@ import StackBadge from '@/common/StackBadge';
 import { useState, useEffect } from 'react';
 import getSkillStack from '@/api/careerWrite/getSkillStack';
 import getPosition from '@/api/careerDetail/getPosition';
-const BasicForm = ({ setPostData }) => {
+const BasicForm = ({ setPostData, setResumeImage }) => {
   // 이미지
   const [imageUrl, setImgUrl] = useState('');
   const [postImgRul, setPostImgUrl] = useState('');
@@ -19,16 +19,11 @@ const BasicForm = ({ setPostData }) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
-      // const formData = new FormData();
-      // formData.append('image', file);
-      // // 임시 URL 생성 후 상태 업데이트
-      // setImgUrl(URL.createObjectURL(file));
-      // setPostImgUrl(file);
-
       // 미리보기용 URL 생성
       const previewUrl = URL.createObjectURL(file);
       setImgUrl(previewUrl);
       setPostImgUrl(file); // 실제 파일 객체 저장
+      setResumeImage(file); // 부모 컴포넌트로 파일 전달
     }
   };
 

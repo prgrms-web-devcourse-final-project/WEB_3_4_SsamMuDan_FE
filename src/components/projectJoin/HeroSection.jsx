@@ -1,10 +1,13 @@
 import { Button } from '@/components/ui/button';
 import { ChevronDoubleRightIcon } from '@heroicons/react/24/solid';
 import { motion } from 'framer-motion';
-
+import useAuthStore from '@/store/useAuthStore';
+import { NavLink } from 'react-router-dom';
 // 기존 Button을 motion 컴포넌트로 확장합니다.
 const MotionButton = motion(Button);
 const HeroSection = () => {
+  const { isLoggedIn, userInfo, logout, loginWithUserInfo } = useAuthStore();
+
   return (
     <>
       <div className="w-full h-[397px] bg-primary300">
