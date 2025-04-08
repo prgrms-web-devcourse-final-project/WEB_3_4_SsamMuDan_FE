@@ -71,9 +71,9 @@ const ProjectCard = ({ item }) => {
         {/* 하단 */}
         <div className="w-[250px] h-[44px] mx-auto">
           {' '}
-          <div className="w-[250px] flex flex-row justify-between">
+          <div className="w-[250px] mx-auto flex flex-row justify-between">
             {/* 왼쪽 */}
-            <div className="w-[100px] h-[44px] flex flex-row items-center gap-2">
+            <div className=" h-[44px] flex flex-row items-center gap-2">
               {/* 뱃지 */}
               <Avatar className="w-[35px] h-[35px]">
                 <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
@@ -82,15 +82,15 @@ const ProjectCard = ({ item }) => {
               <div>코트리</div>
             </div>
             {/* 오른쪽 */}
-            <div className="w-[100px] h-[44px] flex flex-row items-center">
+            <div className=" h-[44px] flex flex-row justify-center items-center">
               <div className="flex flex-row items-center gap-3">
                 <div className="flex flex-row items-center gap-2 ">
                   <EyeIcon className="w-[20px] text-black " />
-                  <div className="text-[15px]">12</div>
+                  <div className="text-[15px]">{item.viewCount}</div>
                 </div>
                 <div className="flex flex-row items-center gap-2 ">
                   <HeartIcon className="w-[20px] text-primary400  " />
-                  <div className="text-[15px]">12</div>
+                  <div className="text-[15px]">{item.likeCount}</div>
                 </div>
               </div>
             </div>

@@ -9,6 +9,7 @@ import {
 const PrimarySelect = ({ customstyle, selectList, placeholder, onSelect }) => {
   const handleSelect = (selectedValue) => {
     onSelect(selectedValue);
+    console.log('selectedValue', selectedValue);
   };
 
   return (
