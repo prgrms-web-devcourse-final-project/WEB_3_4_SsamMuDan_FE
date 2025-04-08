@@ -28,6 +28,11 @@ const LoginFormContainer = () => {
     }
   };
 
+  // 카카오 로그인
+  const handleKakaoLogin = () => {
+    window.location.href = 'https://api.cotree.site/oauth2/authorization/kakao';
+  };
+
   return (
     <form
       onSubmit={handleLogin}
@@ -96,7 +101,7 @@ const LoginFormContainer = () => {
       <button
         type="button"
         className="w-full h-[45px] bg-[#FEE500] text-black rounded-[10px] font-semibold relative"
-        onClick={() => alert('카카오 로그인 버튼 클릭됨')}
+        onClick={handleKakaoLogin}
       >
         <img
           src="/icons/login-kakao.svg"
