@@ -1,6 +1,9 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PlusIcon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Checkbox } from '@/components/ui/checkbox';
 import IntroduceInput from '../common/IntroduceInput';
 import IntroduceTextArea from '../common/IntroduceTextArea';
 import StackBadge from '@/common/StackBadge';
@@ -22,14 +25,10 @@ const BasicForm = ({ setPostData }) => {
       // setImgUrl(URL.createObjectURL(file));
       // setPostImgUrl(file);
 
-      // FileReader를 사용하여 Base64로 변환
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result;
-        setImgUrl(base64String); // 미리보기용 URL
-        setPostImgUrl(base64String); // 서버 전송용 Base64 문자열
-      };
-      reader.readAsDataURL(file);
+      // 미리보기용 URL 생성
+      const previewUrl = URL.createObjectURL(file);
+      setImgUrl(previewUrl);
+      setPostImgUrl(file); // 실제 파일 객체 저장
     }
   };
 
@@ -175,7 +174,7 @@ const BasicForm = ({ setPostData }) => {
         email: email,
         years: parseInt(years, 10) || 0,
         introduction,
-        developPositionIds: position,
+        developPositionIds: position.map((pos) => pos.id),
         techStackIds: selectedSkill.map((skill) => skill.id),
       },
     }));
@@ -193,6 +192,8 @@ const BasicForm = ({ setPostData }) => {
       e.preventDefault();
     }
   };
+
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -261,31 +262,49 @@ const BasicForm = ({ setPostData }) => {
                 />
               ))}
             </div>
-            <div className="relative">
-              <Input
-                className="px-14 h-[60px] bg-grey100 placeholder:text-grey400 placeholder:text-[16px] focus-visible:ring-0"
-                placeholder="직무를 입력해 주세요"
-                value={positionQuery}
-                onChange={(e) => setPositionQuery(e.target.value)}
-                onKeyDown={handlePositionKeyDown}
-              />
-              <MagnifyingGlassIcon className="absolute top-[20px] left-[20px] w-[20px]" />
-              {positionSuggestions.length > 0 && (
-                <div className="absolute z-10 w-full bg-white border border-gray-200 mt-2 rounded shadow">
-                  {positionSuggestions.map((pos, index) => (
-                    <div
+            <Popover className="w-full">
+              <PopoverTrigger className="w-full" asChild>
+                <div className="relative w-full">
+                  <div
+                    className="w-full h-[60px] bg-grey100 rounded-lg border px-6 flex items-center justify-between cursor-pointer"
+                    onClick={() => setIsOpen(!isOpen)}
+                  >
+                    <span className="bg-grey100 text-grey400">직무를 선택해주세요</span>
+                    {isOpen ? (
+                      <ChevronUpIcon className="w-5 h-5 text-grey400 transition-transform duration-200" />
+                    ) : (
+                      <ChevronDownIcon className="w-5 h-5 text-grey400 transition-transform duration-200" />
+                    )}
+                  </div>
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-full p-0 bg-white shadow-lg" align="start">
+                <div className="w-full max-h-[400px] overflow-y-auto">
+                  {positionOptions.map((pos) => (
+                    <label
                       key={pos.id}
-                      className={`px-4 py-2 cursor-pointer ${
-                        index === activePositionIndex ? 'bg-gray-100' : 'hover:bg-gray-100'
-                      }`}
-                      onClick={() => selectPosition(pos)}
+                      className="flex items-center w-full hover:bg-mint50 cursor-pointer"
                     >
-                      {pos.name}
-                    </div>
+                      <div className="flex items-center gap-3 px-6 py-4 w-[1213px]">
+                        <Checkbox
+                          id={`position-${pos.id}`}
+                          checked={position.some((p) => p.id === pos.id)}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              selectPosition(pos);
+                            } else {
+                              removePosition(pos);
+                            }
+                          }}
+                          className="h-5 w-5 rounded border-grey300 data-[state=checked]:bg-primary300 data-[state=checked]:border-mint500"
+                        />
+                        <span className="text-[16px] text-grey900">{pos.name}</span>
+                      </div>
+                    </label>
                   ))}
                 </div>
-              )}
-            </div>
+              </PopoverContent>
+            </Popover>
           </div>
           {/* 연차 */}
           <div>
