@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PlusIcon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
-import { ChevronUpIcon } from '@heroicons/react/24/outline';
+import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Checkbox } from '@/components/ui/checkbox';
 import IntroduceInput from '../common/IntroduceInput';
@@ -25,14 +25,10 @@ const BasicForm = ({ setPostData }) => {
       // setImgUrl(URL.createObjectURL(file));
       // setPostImgUrl(file);
 
-      // FileReader를 사용하여 Base64로 변환
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result;
-        setImgUrl(base64String); // 미리보기용 URL
-        setPostImgUrl(base64String); // 서버 전송용 Base64 문자열
-      };
-      reader.readAsDataURL(file);
+      // 미리보기용 URL 생성
+      const previewUrl = URL.createObjectURL(file);
+      setImgUrl(previewUrl);
+      setPostImgUrl(file); // 실제 파일 객체 저장
     }
   };
 
@@ -197,6 +193,8 @@ const BasicForm = ({ setPostData }) => {
     }
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       <div className="w-[1213px] mx-auto">
@@ -267,9 +265,16 @@ const BasicForm = ({ setPostData }) => {
             <Popover className="w-full">
               <PopoverTrigger className="w-full" asChild>
                 <div className="relative w-full">
-                  <div className="w-full h-[60px] bg-grey50 rounded-lg border border-grey200 px-6 flex items-center justify-between cursor-pointer">
-                    <span className="text-grey400">직무를 선택해주세요</span>
-                    <ChevronUpIcon className="w-5 h-5 text-grey400" />
+                  <div
+                    className="w-full h-[60px] bg-grey100 rounded-lg border px-6 flex items-center justify-between cursor-pointer"
+                    onClick={() => setIsOpen(!isOpen)}
+                  >
+                    <span className="bg-grey100 text-grey400">직무를 선택해주세요</span>
+                    {isOpen ? (
+                      <ChevronUpIcon className="w-5 h-5 text-grey400 transition-transform duration-200" />
+                    ) : (
+                      <ChevronDownIcon className="w-5 h-5 text-grey400 transition-transform duration-200" />
+                    )}
                   </div>
                 </div>
               </PopoverTrigger>
