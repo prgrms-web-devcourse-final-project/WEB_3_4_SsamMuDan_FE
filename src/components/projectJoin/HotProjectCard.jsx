@@ -3,11 +3,12 @@ import { UserIcon } from '@heroicons/react/24/solid';
 import StackIcon from './StackIcon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { EyeIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { Link } from 'react-router-dom';
 
 const HotProjectCard = ({ item }) => {
   return (
-    <>
-      <div className="w-[610px] h-[405px] rounded-[30px] bg-grey100 flex flex-col justify-center gap-2  ">
+    <Link to={`/projectJoinDetail/${item.id}`}>
+      <div className="w-[610px] h-[405px] rounded-[30px] bg-grey100 flex flex-col justify-center gap-2 cursor-pointer">
         {/* 상단 => 뱃지, 모집인원  */}
         <div className="w-[540px] h-[44px] mx-auto">
           {' '}
@@ -65,7 +66,7 @@ const HotProjectCard = ({ item }) => {
           {' '}
           <div className="w-[269px] flex flex-row justify-between">
             {/* 왼쪽 */}
-            <div className="w-[100px] h-[44px] flex flex-row items-center gap-2">
+            <div className=" h-[44px] flex flex-row items-center gap-2">
               {/* 뱃지 */}
               <Avatar className="w-[35px] h-[35px]">
                 <AvatarImage src={item.userProfileImageUrl} alt="@shadcn" />
@@ -74,8 +75,8 @@ const HotProjectCard = ({ item }) => {
               <div>{item.username}</div>
             </div>
             {/* 오른쪽 */}
-            <div className="w-[100px] h-[44px] flex flex-row items-center">
-              <div className="flex flex-row items-center gap-3">
+            <div className=" h-[44px] flex flex-row items-center">
+              <div className="flex flex-row items-center gap-3 ">
                 <div className="flex flex-row items-center gap-2 ">
                   <EyeIcon className="w-[20px] text-black " />
                   <div className="text-[15px]">{item.viewCount}</div>
@@ -89,7 +90,7 @@ const HotProjectCard = ({ item }) => {
           </div>
         </div>
       </div>
-    </>
+    </Link>
   );
 };
 

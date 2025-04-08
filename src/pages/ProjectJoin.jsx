@@ -35,15 +35,22 @@ const ProjectJoin = () => {
 
   const [projectList, setProjectList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
-
   const [totalElements, setTotalElements] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 16;
-  const [page, setPage] = useState(0);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage - 1);
+  };
 
   // 리스트 받아오기
   const fetchProjectList = async () => {
-    const projectList = await getProjectList(selectedTechStack, selectedPosition);
+    const projectList = await getProjectList(
+      selectedTechStack,
+      selectedPosition,
+      currentPage,
+      itemsPerPage,
+    );
     setProjectList(projectList.content);
     setFilteredList(projectList.content);
     setTotalElements(projectList.totalElements);
@@ -53,6 +60,7 @@ const ProjectJoin = () => {
   const handleTechStackSelect = (selectedStacks) => {
     console.log('선택된 기술 스택:', selectedStacks);
     setSelectedTechStack(selectedStacks);
+    setCurrentPage(0); // 기술 스택이 변경되면 첫 페이지로 이동
   };
 
   // 정렬 함수
@@ -72,11 +80,11 @@ const ProjectJoin = () => {
     setFilteredList(sortedProjects);
   }, [selectedSort, projectList]);
 
-  // 기술 스택이나 페이지가 변경될 때마다 프로젝트 목록 다시 불러오기
+  // 기술 스택, 페이지, 직무가 변경될 때마다 프로젝트 목록 다시 불러오기
   useEffect(() => {
-    console.log('기술 스택 변경 감지:', selectedTechStack);
+    console.log('페이지 변경 감지:', currentPage);
     fetchProjectList();
-  }, [selectedTechStack, page, selectedPosition]);
+  }, [currentPage, selectedTechStack, selectedPosition]);
 
   // 초기 프로젝트 목록 불러오기
   useEffect(() => {
@@ -90,7 +98,7 @@ const ProjectJoin = () => {
   // 스크롤 맨 위로 이동
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
@@ -114,9 +122,10 @@ const ProjectJoin = () => {
         </div>
         <div className="mt-[133px] mb-[164px] w-[1246px] mx-auto">
           <CustomPagination
-            totalElements={totalElements}
+            totalItems={totalElements}
             itemsPerPage={itemsPerPage}
             currentPage={currentPage + 1}
+            onChangePage={handlePageChange}
           />
         </div>
       </Layout>
