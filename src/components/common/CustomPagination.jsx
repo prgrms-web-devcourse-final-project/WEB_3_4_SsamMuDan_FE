@@ -4,43 +4,42 @@ import {
   PaginationItem,
   PaginationLink,
 } from '@/components/ui/pagination';
-
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import { useEffect, useState } from 'react';
 
 const CustomPagination = ({
-  totalItems,
-  itemsPerPage,
-  pagesPerGroup = 4,
-  currentPage = 1,
-  onChangePage,
+  // totalItems,
+  totalPages, // totalPages (총 페이지버튼개수)
+  pagesPerGroup = 4, // 한페이지에나오는 버튼개수
+  currentPage = 1, // URL page 숫자
+  onChangePage, // url페이지를 관리하는 함수
   style = '',
 }) => {
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const [groupStart, setGroupStart] = useState(1);
+  // const totalPages = Math.ceil(totalItems / itemsPerPage);
+  if (totalPages <= 1) return null;
+  const currentGroup = Math.floor((currentPage - 1) / pagesPerGroup);
+  const groupStart = currentGroup * pagesPerGroup + 1;
+  const groupEnd = Math.min(groupStart + pagesPerGroup - 1, totalPages);
 
-  useEffect(() => {
-    const group = Math.floor((currentPage - 1) / pagesPerGroup);
-    setGroupStart(group * pagesPerGroup + 1);
-  }, [currentPage, pagesPerGroup]);
-
-  const handlePrevGroup = () => {
-    const newStart = Math.max(groupStart - pagesPerGroup, 1);
-    setGroupStart(newStart);
-    onChangePage(newStart);
+  const handlePrevPage = () => {
+    console.log('쿨락');
+    // if (groupStart > 1) {
+    //   onChangePage(groupStart - 1);
+    // }
+    if (currentPage > 1) {
+      onChangePage(currentPage - 1); // ✅ 현재 페이지 기준으로 +1
+    }
   };
 
-  const handleNextGroup = () => {
-    const newStart = groupStart + pagesPerGroup;
-    if (newStart <= totalPages) {
-      setGroupStart(newStart);
-      onChangePage(newStart);
+  const handleNextPage = () => {
+    console.log('클릭');
+    if (currentPage < totalPages) {
+      onChangePage(currentPage + 1); // ✅ 현재 페이지 기준으로 +1
     }
   };
 
   const renderPages = () => {
     const pages = [];
-    for (let i = groupStart; i < groupStart + pagesPerGroup && i <= totalPages; i++) {
+    for (let i = groupStart; i <= groupEnd; i++) {
       pages.push(
         <PaginationLink
           key={i}
@@ -55,16 +54,22 @@ const CustomPagination = ({
     }
     return pages;
   };
+
   return (
     <Pagination className={style}>
       <PaginationContent>
-        <PaginationItem className="cursor-pointer" onClick={handlePrevGroup}>
-          <ChevronLeftIcon className="w-[25px] text-grey300" />
-        </PaginationItem>
+        {totalPages > 1 && currentPage > 1 && (
+          <PaginationItem className="cursor-pointer" onClick={handlePrevPage}>
+            <ChevronLeftIcon className="w-[25px] text-grey300" />
+          </PaginationItem>
+        )}
         <PaginationItem className="flex gap-3">{renderPages()}</PaginationItem>
-        <PaginationItem className="cursor-pointer" onClick={handleNextGroup}>
-          <ChevronRightIcon className="w-[25px] text-grey300" />
-        </PaginationItem>
+
+        {totalPages > 1 && currentPage < totalPages && (
+          <PaginationItem className="cursor-pointer" onClick={handleNextPage}>
+            <ChevronRightIcon className="w-[25px] text-grey300" />
+          </PaginationItem>
+        )}
       </PaginationContent>
     </Pagination>
   );

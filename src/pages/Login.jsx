@@ -2,8 +2,12 @@ import Layout from '@/common/Layout/Layout';
 import LoginBannerContainer from '@/components/login/LoginBannerContainer';
 import LoginFormContainer from '@/components/login/LoginFormContainer';
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 
 const Login = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, []);
   return (
     <Layout>
       <motion.div

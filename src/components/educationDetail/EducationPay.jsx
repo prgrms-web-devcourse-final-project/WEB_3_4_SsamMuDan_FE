@@ -5,26 +5,26 @@ import ActionButton from '../common/ActionButton';
 const EducationPay = ({ techBookInfo, IsLogin }) => {
   const location = useLocation();
   const isTechBook = location.pathname.includes('TECH_BOOK');
+  const navigate = useNavigate();
 
+  //로그인 관련 버튼
   const handleLike = () => {
-    // if (!token) {
-    //   alert('로그인 후 이용가능한 서비스 입니다.');
-    //   navigate('/login');
-    //   return;
-    // }
-    alert('로그인 후 이용가능한 서비스 입니다.');
-    navigate('/login');
-    return;
-  };
-
-  const handlePay = () => {
-    if (!token) {
+    if (!IsLogin) {
       alert('로그인 후 이용가능한 서비스 입니다.');
       navigate('/login');
       return;
     }
   };
 
+  const handlePay = () => {
+    if (!IsLogin) {
+      alert('로그인 후 이용가능한 서비스 입니다.');
+      navigate('/login');
+      return;
+    }
+  };
+
+  //pdf 열기
   const handleOpenPdf = () => {
     window.open(techBookInfo.techBookUrl, '_blank');
   };
@@ -60,18 +60,18 @@ const EducationPay = ({ techBookInfo, IsLogin }) => {
         </div>
       </div>
       <div className="relative ">
-        {/* <ActionButton
-        variant={'payment'}
-        text="결제하기"
-        customeStyle="w-full mb-[14px]"
-        onClick={handlePay}
-      /> */}
         <ActionButton
+          variant={'payment'}
+          text="결제하기"
+          customeStyle="w-full mb-[14px]"
+          onClick={handlePay}
+        />
+        {/* <ActionButton
           variant={'payment'}
           text="PDF 보기"
           customeStyle="w-full mb-[14px]"
           onClick={handleOpenPdf}
-        />
+        /> */}
         <img
           src="/icons/educationdetail-tree.svg"
           alt="포인트"

@@ -10,8 +10,6 @@ import { useParams } from 'react-router-dom';
 
 const TechBook = () => {
   // 좋아요, 결제하기 버튼 상태 테스트
-  const [liked, setLiked] = useState(false);
-  const [isPaid, setIsPaid] = useState(false);
   const [techbook, setTechBook] = useState();
   //로그인하기
   const Islogin = useAuthStore((state) => state.isLoggedIn);
