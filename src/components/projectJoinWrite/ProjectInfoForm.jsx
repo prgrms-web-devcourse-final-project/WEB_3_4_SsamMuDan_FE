@@ -200,6 +200,12 @@ const ProjectInfoForm = () => {
   };
 
   const handleSubmit = () => {
+    // 이메일 형식 검증
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(projectContact)) {
+      alert('올바른 이메일 형식을 입력해주세요.');
+      return;
+    }
+
     const recruitmentPositions = selectedPositions.reduce((acc, { id, count }) => {
       acc[id] = count;
       return acc;
@@ -216,25 +222,10 @@ const ProjectInfoForm = () => {
     };
 
     console.log('--- API Request Structure ---');
-
-    // console.log('postImgUrl:', postImgUrl);
     console.log('requestPayload:', requestPayload);
     console.log('simpleData:', simpleData);
-    postProject(simpleData, postImgUrl);
 
-    // In a real scenario, you would create FormData here:
-    /*
-    const formData = new FormData();
-    if (postImgUrl) {
-      formData.append('projectImage', postImgUrl);
-    }
-    formData.append('request', JSON.stringify(requestPayload));
-
-    // Replace with your actual API call function
-    // api.postProjectTeam(formData)
-    //   .then(response => console.log('Success:', response))
-    //   .catch(error => console.error('Error:', error));
-    */
+    postProject(requestPayload, postImgUrl);
   };
 
   return (
@@ -329,7 +320,11 @@ const ProjectInfoForm = () => {
               height="60px"
               value={projectContact}
               onChange={(e) => setProjectContact(e.target.value)}
+              placeholder="이메일을 입력해주세요 (예: example@email.com)"
             />
+            {projectContact && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(projectContact) && (
+              <p className="text-red-500 text-sm mt-1">올바른 이메일 형식을 입력해주세요.</p>
+            )}
           </div>
 
           {/* 모집 분야 */}

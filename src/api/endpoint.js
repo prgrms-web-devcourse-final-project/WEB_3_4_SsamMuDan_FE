@@ -1,6 +1,7 @@
 import CareerDetail from '@/pages/CareerDetail';
 
 export const COTREE_ENDPOINT = Object.freeze({
+  postImg: '/api/v1/file/upload',
   techSkills: `/api/v1/category/skill`, // 기술 스택 조회
   techbook: `/api/v1/education/techbook`, // 교육 테크북
   communityPosts: `/api/v1/community/board`, // 커뮤니티 게시글 조회
