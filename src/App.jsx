@@ -44,7 +44,7 @@ function App() {
         <Route path="/community/:id" element={<CommunityDetail />} />
         <Route path="/community" element={<Community />} />
         <Route path="/projectJoin" element={<ProjectJoin />} />
-        <Route path="/projectJoinWrite" element={<ProjectJoinWrite />} />
+        <Route path="/projectJoinWrite/:id" element={<ProjectJoinWrite />} />
         <Route path="/communityWrite" element={<CommunityWrite />} />
         <Route path="/projectJoinDetail/:id" element={<ProjectJoinDetail />} />
         <Route path="/login/callback" element={<LoginKakaoCallback />} />

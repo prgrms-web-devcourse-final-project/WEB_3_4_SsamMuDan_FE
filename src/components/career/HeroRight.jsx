@@ -16,10 +16,16 @@ const HeroRight = () => {
       <div className="w-[396px] h-[241px] flex flex-col justify-between absolute top-[43px] left-[50px] ">
         <NavLink
           to={isLoggedIn && userInfo?.nickname ? `/careerWrite/${userInfo.nickname}` : '/login'}
-          className="w-[124px] h-[34px] bg-[#FFE3DD] text-primary400 hover:bg-[#FFE3DD] flex items-center justify-center rounded-md"
         >
-          이력서 등록
-          <ChevronDoubleRightIcon className="w-4 h-4 ml-1" />
+          <MotionButton
+            className="w-[124px] h-[34px] bg-[#FFE3DD] text-primary400 hover:bg-[#FFE3DD] flex items-center justify-center rounded-md"
+            initial={{ scale: 1 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            이력서 등록
+            <ChevronDoubleRightIcon className="w-4 h-4 ml-1" />
+          </MotionButton>
         </NavLink>
 
         <div className="flex flex-col">
