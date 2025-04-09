@@ -7,6 +7,7 @@ import CustomPagination from '../common/CustomPagination';
 import getComment from '@/api/careerDetail/getComment';
 import { useEffect } from 'react';
 import postComment from '@/api/careerDetail/postComment';
+import axios from 'axios';
 
 const CommentSection = ({ id, data }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -21,25 +22,43 @@ const CommentSection = ({ id, data }) => {
   });
 
   // console.log(data);
-  const handleRegister = async () => {
-    if (editorRef.current) {
-      const markdownContent = editorRef.current.getInstance().getMarkdown();
-      setContent(markdownContent);
 
-      try {
-        await postComment({
-          content: markdownContent,
-          category: 'RESUME',
-          whereId: 1,
-          commentId: 1,
-        });
-        console.log(markdownContent);
-        setIsEditing(false);
-      } catch (error) {
-        console.error('Error posting comment:', error);
+  // 이미지 업로드
+  const handleImageUpload = async (blob) => {
+    const formData = new FormData();
+    formData.append('directory', 'COMMUNITY_BOARD');
+    formData.append('file', blob);
+
+    try {
+      const response = await axios.post('', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.data.isSuccess) {
+        const imageUrl = response.data.data.saveUrl;
+        console.log('Uploaded image URL:', imageUrl);
+        return imageUrl;
+      } else {
+        console.error('이미지 업로드 실패');
+        return null;
       }
+    } catch (error) {
+      console.error('이미지 업로드 중 오류 발생:', error);
+      return null;
     }
   };
+
+  const handleRegister = () => {
+    if (editorRef.current) {
+      const markdownContent = editorRef.current.getInstance().getMarkdown();
+      setContent(markdownContent); // 마크다운 저장
+      console.log('Registered markdown content:', markdownContent); // 콘솔에 마크다운 내용 출력
+      setIsEditing(false); // 에디터 닫기
+    }
+  };
+
   return (
     <>
       {/* 댓글 */}
@@ -68,6 +87,14 @@ const CommentSection = ({ id, data }) => {
                 initialEditType="markdown"
                 useCommandShortcut={true}
                 ref={editorRef}
+                hooks={{
+                  addImageBlobHook: async (blob, callback) => {
+                    const imageUrl = await handleImageUpload(blob);
+                    if (imageUrl) {
+                      callback(imageUrl, '');
+                    }
+                  },
+                }}
               />
               <div className="w-full mt-2 flex flex-row  justify-end gap-5">
                 <Button onClick={handleRegister} className="bg-primary300 hover:bg-primary300 ">
