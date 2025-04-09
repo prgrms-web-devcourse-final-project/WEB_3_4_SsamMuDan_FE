@@ -200,37 +200,51 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
         <div className="w-full flex flex-col gap-[42px]">
           {/* 이미지 */}
           <div className="flex flex-col items-center justify-center mt-[80px]">
-            <Label
-              htmlFor="picture"
-              className="group w-[276px] h-[276px] relative flex flex-col items-center justify-center border-gray-300 rounded-lg cursor-pointer bg-grey100 hover:bg-gray-200 transition"
-            >
-              {imageUrl ? (
-                <>
-                  <img
-                    src={imageUrl}
-                    alt="Selected"
-                    className="object-cover w-full h-full rounded-lg"
-                  />
-                  <div className="absolute inset-0 flex items-start justify-end rounded-lg bg-grey500 bg-opacity-0 opacity-0 group-hover:bg-opacity-50 group-hover:opacity-100 transition duration-200">
-                    <XMarkIcon
-                      onClick={(e) => {
-                        // 부모 요소의 클릭 이벤트가 실행되지 않도록 방지
-                        e.stopPropagation();
-                        // imageUrl 삭제
-                        setImgUrl('');
-                      }}
-                      className="w-[20px] m-3 text-white "
+            <div className="relative group">
+              <Label
+                htmlFor="picture"
+                className="block w-[276px] h-[276px] relative flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-grey100 hover:bg-gray-200 transition"
+              >
+                {imageUrl ? (
+                  <>
+                    <img
+                      src={imageUrl}
+                      alt="Selected"
+                      className="object-cover w-full h-full rounded-lg"
                     />
+                    <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black bg-opacity-0 opacity-0 group-hover:bg-opacity-50 group-hover:opacity-100 transition duration-200">
+                      <div className="text-white text-center">
+                        <p className="text-sm">이미지 변경</p>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex flex-col items-center justify-center">
+                    <PlusIcon className="text-gray-500 w-[40px] h-[40px] mb-2" />
+                    <p className="text-gray-500 text-sm">이미지 선택</p>
                   </div>
-                </>
-              ) : (
-                <PlusIcon className="text-gray-500 w-[40px] stroke-[5]" />
+                )}
+              </Label>
+              {imageUrl && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setImgUrl('');
+                    setPostImgUrl('');
+                    setResumeImage(null);
+                  }}
+                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                >
+                  <XMarkIcon className="w-4 h-4" />
+                </button>
               )}
-            </Label>
+            </div>
             <Input
               id="picture"
               type="file"
-              className="hidden w-[276px] h-[276px]"
+              accept="image/*"
+              className="hidden"
               onChange={handleImageChange}
             />
           </div>

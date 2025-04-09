@@ -21,15 +21,24 @@ const HeroSection = () => {
             </div>
 
             {/* 버튼 */}
-            <MotionButton
-              className="absolute w-[164px] h-[57px] bottom-[51px] right-0 rounded-[10px] flex flex-row justify-center items-center bg-white hover:bg-white"
-              initial={{ scale: 1 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <NavLink
+              to={
+                isLoggedIn && userInfo?.nickname
+                  ? `/projectJoinWrite/${userInfo.nickname}`
+                  : '/login'
+              }
             >
-              <span className="text-[20px] text-primary300">등록하기</span>
-              <ChevronDoubleRightIcon className="text-primary300" />
-            </MotionButton>
+              {' '}
+              <MotionButton
+                className="absolute w-[164px] h-[57px] bottom-[51px] right-0 rounded-[10px] flex flex-row justify-center items-center bg-white hover:bg-white"
+                initial={{ scale: 1 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="text-[20px] text-primary300">등록하기</span>
+                <ChevronDoubleRightIcon className="text-primary300" />
+              </MotionButton>
+            </NavLink>
           </div>
 
           {/* 오른쪽 */}

@@ -6,6 +6,7 @@ import { EyeIcon, HeartIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 
 const ProjectCard = ({ item }) => {
+  console.log('item:', item);
   const navigate = useNavigate();
 
   const handleCardClick = () => {
@@ -24,7 +25,7 @@ const ProjectCard = ({ item }) => {
           {' '}
           <div className="w-[250px] h-[44px] flex flex-row justify-between items-center">
             <Badge
-              text="모집중"
+              text={item.isOpen ? '모집중' : '모집완료'}
               className="w-[72px] h-[27px] bg-[#3FC22E]  text-white text-[13px] font-bold"
             />
             <div className="w-[88px] h-[27px] flex flex-row items-center ">
