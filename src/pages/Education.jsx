@@ -23,6 +23,7 @@ const Education = () => {
   const [techbookList, setTechBookList] = useState([]);
   const [totalList, setTotalList] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState();
   const keyword = searchParams.get('keyword') || '';
   const page = Number(searchParams.get('page')) || 0;
   const category = searchParams.get('category') || 'techtube';
@@ -104,6 +105,7 @@ const Education = () => {
 
         setTechBookList(result?.data.content || []);
         setTotalList(result?.data.totalElements || []);
+        setTotalPages(result?.data.totalPages || []);
       } catch (error) {
         console.error('Error fetching data:', error);
         setTechBookList([]);
@@ -173,7 +175,11 @@ const Education = () => {
                     transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                     key={item.id}
                   >
-                    <NavLink to={`/TECH_BOOK/${item.id}`}>
+                    <NavLink
+                      to={
+                        category === 'techtube' ? `/TECH_TUBE/${item.id}` : `/TECH_BOOK/${item.id}`
+                      }
+                    >
                       <LectureCard
                         id={item.id}
                         title={item.title}
@@ -187,13 +193,14 @@ const Education = () => {
                 ))}
         </div>
 
-        <CustomPagination
-          totalItems={totalList}
-          itemsPerPage={pagesize}
-          currentPage={Number(page) + 1}
-          onChangePage={handlepagination}
-          style="mt-[67px]"
-        />
+        {techbookList.length > 0 && (
+          <CustomPagination
+            totalPages={totalPages}
+            currentPage={Number(page) + 1}
+            onChangePage={handlepagination}
+            style="mt-[67px]"
+          />
+        )}
         <img src="/images/education-ad.png" alt="교육" className="mt-[117px] mb-[143px]" />
       </div>
     </Layout>
