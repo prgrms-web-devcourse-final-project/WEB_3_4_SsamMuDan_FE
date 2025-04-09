@@ -35,7 +35,7 @@ const ProjectJoin = () => {
 
   const [projectList, setProjectList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
-  const [totalElements, setTotalElements] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 16;
 
@@ -53,7 +53,8 @@ const ProjectJoin = () => {
     );
     setProjectList(projectList.content);
     setFilteredList(projectList.content);
-    setTotalElements(projectList.totalElements);
+    setTotalPages(projectList.totalPages);
+    console.log('totalPages', totalPages);
   };
 
   // 기술 스택 선택
@@ -122,8 +123,7 @@ const ProjectJoin = () => {
         </div>
         <div className="mt-[133px] mb-[164px] w-[1246px] mx-auto">
           <CustomPagination
-            totalItems={totalElements}
-            itemsPerPage={itemsPerPage}
+            totalPages={totalPages}
             currentPage={currentPage + 1}
             onChangePage={handlePageChange}
           />

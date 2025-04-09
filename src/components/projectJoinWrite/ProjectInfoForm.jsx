@@ -195,38 +195,32 @@ const ProjectInfoForm = () => {
     contact: 'test@example.com',
     partnerType: '열정과 노력이 있으신분 지향합니 다',
     techStackIds: [1, 2, 3],
-    recruitmentPositions: { 1: 4, 2: 3 },
+    recruitmentPositions: { 1: 4 },
     startDate: '2025-04-08',
   };
+
   const handleSubmit = () => {
     const recruitmentPositions = selectedPositions.reduce((acc, { id, count }) => {
-      acc[String(id)] = count;
+      acc[id] = count;
       return acc;
     }, {});
 
     const requestPayload = {
       title: projectTitle,
       description: projectDescription,
-      contact: projectContact,
+      contact: String(projectContact),
       partnerType: qualifications.length > 0 ? qualifications[0] : '',
       techStackIds: selectedSkill.map((skill) => skill.id),
       recruitmentPositions: recruitmentPositions,
       startDate: postData.startDate,
-      // Add endDate and isWorking if needed by the API
-      // endDate: postData.endDate,
-      // isWorking: postData.isWorking,
     };
 
     console.log('--- API Request Structure ---');
-    console.log('Image File (projectImage):', postImgUrl);
-    console.log(
-      'Request Data (request - JSON stringified):',
-      JSON.stringify(requestPayload, null, 2),
-    );
+
     // console.log('postImgUrl:', postImgUrl);
     console.log('requestPayload:', requestPayload);
-    // console.log('simpleData:', simpleData);
-    postProject(requestPayload, postImgUrl);
+    console.log('simpleData:', simpleData);
+    postProject(simpleData, postImgUrl);
 
     // In a real scenario, you would create FormData here:
     /*
