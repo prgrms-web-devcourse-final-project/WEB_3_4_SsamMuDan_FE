@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import ActionButton from '../common/ActionButton';
 import EditProfileModal from './EditProfileModal';
+import useAuthStore from '@/store/useAuthStore';
 
 const MypageInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { userInfo } = useAuthStore();
 
   return (
     <div className="h-[291px] w-full px-[49px] py-[46px] border border-grey200 rounded-[20px] mt-10 mb-24">
@@ -19,8 +21,8 @@ const MypageInfo = () => {
           {/* <div className="w-[105.74px] h-[29.18px] rounded-[30px] mb-[26px] bg-[#FFEBE9] flex items-center justify-center text-[14px] font-semibold text-primary400">
             헤드헌터
           </div> */}
-          <div className="text-[36px] font-medium">코트리 님</div>
-          <div className="text-[20px] font-light text-grey400">Cotree@gmail.com</div>
+          <div className="text-[36px] font-medium">{userInfo?.nickname}</div>
+          <div className="text-[20px] font-light text-grey400">{userInfo?.email}</div>
         </div>
 
         <div className="flex flex-col justify-end items-end gap-5 mb-8">
