@@ -1,65 +1,93 @@
-import Badge from '@/common/Badge';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import TechTubeList from './TechTubeList';
 import SlideButton from './SlideButton';
+import TechTubeList from './TechTubeList';
+import Badge from '@/common/Badge';
+
+import getTechtubeMain from '@/api/main/getTechtubeMain';
+import getEducationCategory from '@/api/main/getEducationCategory';
 
 const TechTubeSection = () => {
-  const categoryList = ['프론트엔드', '백엔드', '풀스택'];
+  const [categoryList, setCategoryList] = useState([]); // getEducationCategory로 불러온 카테고리
+  const [currentCategoryId, setCurrentCategoryId] = useState(null); // 선택된 카테고리 id
+  const [techTubeList, setTechTubeList] = useState([]);
+  const swiperRef = useRef(null);
 
-  const [currentCategory, setCurrentCategory] = useState(categoryList[0]);
+  // 카테고리 가져오기
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await getEducationCategory();
+        // id가 5 이하인 카테고리만 필터링 (프로그래밍 언어 카테고리까지)
+        const filteredCategories = res.data.filter((category) => category.id <= 5);
+        setCategoryList(filteredCategories);
+        if (filteredCategories.length > 0) {
+          setCurrentCategoryId(filteredCategories[0].id); // 첫번째 카테고리(백엔드) default
+        }
+      } catch (err) {
+        console.error('카테고리 조회 실패:', err);
+      }
+    };
 
-  const handleCategory = (index) => {
-    setCurrentCategory(categoryList[index]);
-  };
+    fetchCategories();
+  }, []);
+
+  // 카테고리가 바뀔 때마다 테크튜브 불러오기
+  useEffect(() => {
+    if (!currentCategoryId) return;
+
+    const fetchTechTube = async () => {
+      try {
+        const data = await getTechtubeMain({ categoryId: currentCategoryId });
+        setTechTubeList(data);
+      } catch (err) {
+        console.error('TechTube 불러오기 실패:', err);
+      }
+    };
+
+    fetchTechTube();
+  }, [currentCategoryId]);
 
   return (
-    <>
-      <div className="flex flex-col">
-        {/* 제목 */}
-        <div className="font-esamanru text-[25px] mt-[70px]"> 지금 HOT한 TechTube</div>
-        {/* 카테고리 섹션*/}
-        <div className="mt-[33px] flex justify-between items-center">
-          {/* 카테고라 */}
-          <div className="flex flex-row gap-4 relative">
-            {categoryList.map((item, index) => (
-              <div
-                key={item}
-                onClick={() => handleCategory(index)}
-                className="relative hover:cursor-pointer"
-              >
-                <Badge
-                  text={item}
-                  className={`p-[20px] h-[40px] text-[20px]  ${
-                    item === currentCategory ? 'text-white' : 'text-black'
-                  }`}
-                />
-                {/* 애니메이션 백그라운드 */}
-                {item === currentCategory && (
-                  <motion.div
-                    layoutId="categoryHighlight"
-                    className="absolute top-0 left-0 w-full h-full bg-primary300 rounded-[999px] -z-10 "
-                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+    <div className="flex flex-col">
+      <div className="font-esamanru text-[25px] mt-[70px]"> 지금 HOT한 TechTube</div>
 
-                    /*스프링 애니메이션 효과 
-                    stiffness가 높을수록 더 빠르고 단단한 느낌 
-                    damping이 높을수록 덜 튐 (너무 낮으면 튕기는 느낌 남) 
-                  */
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="">
-            <SlideButton />
-          </div>
+      <div className="mt-[33px] flex justify-between items-center">
+        <div className="flex flex-row gap-4 relative">
+          {categoryList.map((category) => (
+            <div
+              key={category.id}
+              onClick={() => setCurrentCategoryId(category.id)}
+              className="relative hover:cursor-pointer"
+            >
+              <Badge
+                text={category.name}
+                className={`p-[20px] h-[40px] text-[20px] ${
+                  currentCategoryId === category.id ? 'text-white' : 'text-black'
+                }`}
+              />
+              {currentCategoryId === category.id && (
+                <motion.div
+                  layoutId="categoryHighlight"
+                  className="absolute top-0 left-0 w-full h-full bg-primary300 rounded-[999px] -z-10"
+                  transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                />
+              )}
+            </div>
+          ))}
         </div>
-        {/* 리스트 */}
-        <div className="mt-[54px]">
-          <TechTubeList />
-        </div>
+
+        <SlideButton
+          onPrev={() => swiperRef.current?.slidePrev()}
+          onNext={() => swiperRef.current?.slideNext()}
+          linkTo="/education"
+        />
       </div>
-    </>
+
+      <div className="mt-[54px]">
+        <TechTubeList data={techTubeList} swiperRef={swiperRef} />
+      </div>
+    </div>
   );
 };
 

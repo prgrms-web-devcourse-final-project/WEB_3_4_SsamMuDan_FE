@@ -21,6 +21,7 @@ import ProjectJoinWrite from './pages/ProjectJoinWrite';
 import ProjectJoinDetail from './pages/ProjectJoinDetail';
 import PageNotFound from './pages/PageNotFound';
 import CommunityWrite from './pages/CommunityWrite';
+import LoginKakaoCallback from './pages/LoginKakaoCallback';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         <Route path="/projectJoinWrite" element={<ProjectJoinWrite />} />
         <Route path="/communityWrite" element={<CommunityWrite />} />
         <Route path="/projectJoinDetail/:id" element={<ProjectJoinDetail />} />
+        <Route path="/login/callback" element={<LoginKakaoCallback />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>

@@ -1,13 +1,11 @@
 import ProfileCard from '@/components/career/ProfileCard';
 
-const CardList = () => {
+const CardList = ({ careerInfo }) => {
   return (
-    <div className="w-full flex flex-wrap justify-between   ">
-      {Array(16)
-        .fill(null)
-        .map((_, index) => (
-          <ProfileCard key={index} />
-        ))}
+    <div className="w-full flex flex-wrap gap-3">
+      {careerInfo.map((item, index) => (
+        <ProfileCard key={index} data={item} />
+      ))}
     </div>
   );
 };

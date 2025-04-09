@@ -6,12 +6,12 @@ const CategorySection = () => {
     {
       img: '/images/main/categorySection/techTube.svg',
       text: 'TechTube',
-      link: '/education', // 수정할 예정
+      link: '/education?category=techtube',
     },
     {
       img: '/images/main/categorySection/techBook.svg',
       text: 'TechBook',
-      link: '/education', // 수정할 예정
+      link: '/education?category=techbook',
     },
     {
       img: '/images/main/categorySection/job.svg',

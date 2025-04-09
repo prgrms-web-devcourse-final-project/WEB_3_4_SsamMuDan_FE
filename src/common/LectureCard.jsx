@@ -11,6 +11,7 @@ const LectureCard = ({ title, instructor, likes, price, imageUrl, style, stylemg
       </div>
       {/* 타이틀 */}
       <p className="text-lg font-bold leading-none pl-1 mb-2 line-clamp-2 leading-[1.5]">{title}</p>
+
       {/* 강사&좋아요 */}
       <div className="flex items-center mb-1">
         <span className="text-grey300 font-regular mr-2 ml-1 ">{instructor}</span>

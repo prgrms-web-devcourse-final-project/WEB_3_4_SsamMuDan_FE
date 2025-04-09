@@ -48,7 +48,7 @@ const CareerContentForm = ({ onCareerChange, onDelete, canDelete }) => {
         companyName: company,
         position: position,
         careerDescription: introduction,
-        techStackIds: selectedSkill.map((item) => item.name),
+        techStackIds: selectedSkill.map((item) => item.id),
       });
     }
   }, [company, position, introduction, selectedSkill]);
