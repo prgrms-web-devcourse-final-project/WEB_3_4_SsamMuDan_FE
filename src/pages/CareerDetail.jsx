@@ -1,5 +1,5 @@
 import Layout from '@/common/Layout/Layout';
-import IntroduceSection from '@/components/careerDetail/introduceSection';
+import IntroduceSection from '@/components/careerDetail/IntroduceSection';
 import CareerDetailSection from '@/components/careerDetail/CareerDetailSection';
 import ProjectDetailSection from '@/components/careerDetail/ProjectDetailSection';
 import { Button } from '@/components/ui/button';

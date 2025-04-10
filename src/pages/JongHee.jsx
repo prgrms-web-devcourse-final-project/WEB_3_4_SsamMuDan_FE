@@ -1,7 +1,7 @@
 import PrimarySelect from '@/components/common/PrimarySelect';
 import SearchBar from '@/components/common/SearchBar';
 import CommunityFloating from '@/components/communityDetail/CommunityFloating';
-import EducationPay from '@/components/educationDetail/educationPay';
+import EducationPay from '@/components/educationDetail/EducationPay';
 import EducationRelatedVideos from '@/components/educationDetail/EducationRelatedVideos';
 import ReactPlayer from 'react-player';
 
