@@ -19,6 +19,7 @@ const SignupFormContainer = () => {
     username: '',
     nickname: '',
     phoneNumber: '',
+    role: 'user', // default는 일반 회원
   });
 
   const [errors, setErrors] = useState({});
@@ -35,6 +36,15 @@ const SignupFormContainer = () => {
   const [emailCode, setEmailCode] = useState(''); // 이메일 인증번호 입력값
   const [emailVerified, setEmailVerified] = useState(false); // 이메일 인증 여부
   const [emailVerifyMsg, setEmailVerifyMsg] = useState(''); // 이메일 인증 메시지
+
+  // 회원 유형 선택
+  const handleUserTypeChange = (selectedUserType) => {
+    setUserType(selectedUserType); // UI 표시용
+    setForm((prev) => ({
+      ...prev,
+      role: selectedUserType === 'general' ? 'user' : 'hunter', // 실제 서버 전송용 (무조건 소문자!!!)
+    }));
+  };
 
   // 유효성 검사
   const validateField = (name, value) => {
@@ -114,7 +124,22 @@ const SignupFormContainer = () => {
     }
 
     try {
-      const res = await postSignup({ email, password, username, nickname, phoneNumber });
+      console.log('보내는 바디:', {
+        email,
+        password,
+        username,
+        nickname,
+        phoneNumber,
+        role: form.role,
+      });
+      const res = await postSignup({
+        email,
+        password,
+        username,
+        nickname,
+        phoneNumber,
+        role: form.role,
+      });
 
       if (res.isSuccess) {
         alert('회원가입이 완료되었습니다!');
@@ -209,12 +234,6 @@ const SignupFormContainer = () => {
     }
   };
 
-  // 기존 handleSignup 내에서 이메일 인증도 확인 필요 시 아래 추가:
-  // if (!emailVerified) {
-  //   alert('이메일 인증을 완료해주세요!');
-  //   return;
-  // }
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -229,10 +248,10 @@ const SignupFormContainer = () => {
         {/* 회원 유형 */}
         <div className="flex justify-center mb-6">
           <div className="relative w-[275px] h-[48px] flex justify-center bg-white p-1 rounded-[10px] border border-gray-100 shadow-sm shadow-gray-200">
-            {['general', 'headhunter'].map((tab) => (
+            {['general', 'hunter'].map((tab) => (
               <button
                 key={tab}
-                onClick={() => setUserType(tab)}
+                onClick={() => handleUserTypeChange(tab)}
                 className={`relative w-full py-2 rounded-[8px] text-sm font-semibold transition-colors duration-150 z-10
                   ${userType === tab ? 'text-white' : 'text-gray-600'}`}
               >
