@@ -6,7 +6,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-const PrimarySelect = ({ customstyle, selectList, placeholder, onSortChange, 1 }) => {
+const PrimarySelect = ({ customstyle, selectList, placeholder, onSortChange, value }) => {
   const handleSortChange = (selectedValue) => {
     onSortChange(selectList[selectedValue]); // 직접 매핑해서 보냄
   };
