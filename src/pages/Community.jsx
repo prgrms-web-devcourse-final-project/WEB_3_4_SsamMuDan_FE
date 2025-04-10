@@ -1,4 +1,4 @@
-import getCommunity from '@/api/community/getcommunity';
+import getCommunity from '@/api/community/getCommunity';
 import Layout from '@/common/Layout/Layout';
 import CustomPagination from '@/components/common/CustomPagination';
 import CommunityBestSection from '@/components/community/CommunityBestSection';

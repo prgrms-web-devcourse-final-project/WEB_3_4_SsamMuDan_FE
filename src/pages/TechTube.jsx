@@ -35,7 +35,7 @@ const TechTube = () => {
         <div className="flex">
           <EducationDetailContent techTubeInfo={techtube} code={id} />
           <div className="mt-[80px] ml-[21px]">
-            <EducationPay techBookInfo={techtube} IsLogin={Islogin} />
+            <EducationPay techBookInfo={techtube} IsLogin={Islogin} id={id} />
             <EducationRelatedVideos />
           </div>
         </div>

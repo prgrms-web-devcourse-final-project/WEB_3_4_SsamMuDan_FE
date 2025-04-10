@@ -61,17 +61,14 @@ const EducationDetailBanner = ({ techTubeInfo }) => {
           onClick={() => setOpenVideo(true)}
           className="w-[400px] h-[288px] rounded-[20px] overflow-hidden shadow-md relative cursor-pointer"
         >
-          <img
-            src="/images/dummy-lecture.png"
-            alt="썸네일"
-            className="w-full h-full object-cover"
-          />
+          <img src={techTubeInfo?.thumbnailUrl} alt="techtube썸네일" className="h-full" />
           <img
             src="/icons/video-button.svg"
             alt="재생"
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95px] h-[90px]"
           />
         </div>
+        <div className="">{/* <ReactPlayer url={techTubeInfo?.thumbnailUrl} controls /> */}</div>
         {openVideo && (
           <div
             className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center"
