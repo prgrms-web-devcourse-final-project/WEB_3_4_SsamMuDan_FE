@@ -8,6 +8,7 @@ import AddButton from '@/components/common/AddButton';
 import IntroduceBar from '@/components/common/IntroduceBar';
 import FloatingButton from '@/components/common/FloatingButton';
 import CategoryTab from '@/components/common/CategoryTab';
+import MyProjectCard from '@/components/mypage/MyProjectCard';
 
 const Jungseok = () => {
   const techStack = [
@@ -25,26 +26,8 @@ const Jungseok = () => {
 
   return (
     <>
-      <StackModal data={techStack} />
-      <PositionModal position={position} />
-      <CustomPagination />
-      <div className="my-5">
-        <IntroduceInput text="자기소개" width="500px" />
-      </div>
-      <div className="my-5">
-        <IntroduceTextArea width="500px" />
-      </div>
-      <div>
-        <AddButton text="경력 추가하기" />
-      </div>
-      <div className="m-10">
-        <IntroduceBar />
-      </div>
-      <div>
-        <FloatingButton />
-      </div>
-      <div>
-        <CategoryTab />
+      <div className="m-[10px]">
+        <MyProjectCard />
       </div>
     </>
   );
