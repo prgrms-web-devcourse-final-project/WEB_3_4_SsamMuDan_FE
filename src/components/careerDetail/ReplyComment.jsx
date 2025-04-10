@@ -7,10 +7,28 @@ import { COTREE_ENDPOINT } from '@/api/endpoint';
 import coTreeAPI from '@/config/cotree';
 import postComment from '@/api/careerDetail/postComment';
 
-const ReplyComment = ({ parentId, whereId, fetchComments }) => {
+const ReplyComment = ({ parentId, whereId, fetchComments, createdAt }) => {
   const editorRef = useRef(null);
   const [content, setContent] = useState('');
   const [isEditing, setIsEditing] = useState(true);
+
+  const formatDate = (dateString) => {
+    const [date, time] = dateString.split('T');
+    const postTime = new Date(dateString);
+    const currentTime = new Date();
+    const diffInMinutes = Math.floor((currentTime - postTime) / (1000 * 60));
+
+    if (diffInMinutes < 60) {
+      return `${date} ${diffInMinutes}분 전`;
+    } else if (diffInMinutes < 1440) {
+      // 24시간 = 1440분
+      const diffInHours = Math.floor(diffInMinutes / 60);
+      return `${date} ${diffInHours}시간 전`;
+    } else {
+      const diffInDays = Math.floor(diffInMinutes / 1440);
+      return `${date} ${diffInDays}일 전`;
+    }
+  };
 
   const handleEditorClose = useCallback(() => {
     setIsEditing(false);
@@ -72,14 +90,14 @@ const ReplyComment = ({ parentId, whereId, fetchComments }) => {
     <div className="mb-[27px]">
       <div className="flex ml-[20px] mt-[-20px]">
         <img src="/icons/reply-arrow.svg" alt="답글방향키" className="w-[20px]" />
-        <div className="h-[66px] flex flow-row items-end gap-5 ml-[15px] items-center mb-[10px]">
+        <div className="h-[66px] flex flow-row items-end gap-5 ml-[15px] mb-[10px]">
           <Avatar className="w-[50px] h-[50px]">
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
             <span className="text-[18px] font-semibold">밥밥띠라라</span>
-            <span className="text-[18px] text-grey300 font-normal">2024.11.15</span>
+            <span className="text-[18px] text-grey300 font-normal">{formatDate(createdAt)}</span>
           </div>
         </div>
       </div>

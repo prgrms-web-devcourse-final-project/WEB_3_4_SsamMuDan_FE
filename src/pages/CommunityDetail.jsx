@@ -14,7 +14,7 @@ const CommunityDetail = () => {
   const [postData, setPostData] = useState(null);
   const { userInfo } = useAuthStore();
   const navigate = useNavigate();
-
+  const category = 'COMMUNITY';
   const [floatingBadge, setFloatingBadge] = useState({
     viwer: { text: 0 },
     like: { text: 0 },
@@ -74,7 +74,7 @@ const CommunityDetail = () => {
         />
         <CommunityDetailContens content={postData.content} image={postData.imageUrl} />
         {/* 댓글 영역*/}
-        <CommentSection />
+        <CommentSection id={id} category={category} />
         <div className="fixed top-[300px] right-[100px] max-w-[800px] ">
           <CommunityFloating text={postData.viewCount} type="viwer" />
           <CommunityFloating text={postData.likeCount} type="like" />

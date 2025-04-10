@@ -10,7 +10,7 @@ import getComment from '@/api/careerDetail/getComment';
 import { useParams } from 'react-router-dom';
 import postComment from '@/api/careerDetail/postComment';
 
-const CommentSection = ({ id }) => {
+const CommentSection = ({ id, category }) => {
   const { id: whereId } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const editorRef = useRef(null);
@@ -20,14 +20,14 @@ const CommentSection = ({ id }) => {
   const [commentTotalPages, setCommentTotalPages] = useState(0);
   const [commentState, setCommentState] = useState({
     content: '',
-    category: 'RESUME',
+    category: category,
     whereId,
     commentId: '',
   });
 
   const commentFetchData = async () => {
     try {
-      const getData = await getComment(whereId, commentPage);
+      const getData = await getComment(whereId, commentPage, category);
       setCommentData(getData.content);
       setCommentTotalElements(getData.totalElements);
       setCommentTotalPages(getData.totalPages);

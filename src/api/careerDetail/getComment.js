@@ -1,10 +1,10 @@
 import coTreeAPI from '@/config/cotree';
 import { COTREE_ENDPOINT } from '../endpoint';
 
-const getComment = async (itemId, page) => {
+const getComment = async (itemId, page, category) => {
   try {
     const response = await coTreeAPI.get(
-      COTREE_ENDPOINT.Comment + `?itemId=${itemId}&category=RESUME&size=2&page=${page}`,
+      COTREE_ENDPOINT.Comment + `?itemId=${itemId}&category=${category}&size=2&page=${page}`,
     );
     console.log();
     return response.data.data;

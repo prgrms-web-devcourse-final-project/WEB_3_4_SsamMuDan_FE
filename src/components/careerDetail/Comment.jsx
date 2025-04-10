@@ -13,6 +13,24 @@ const Comment = ({ data, isSubComment = false, whereId, fetchComments }) => {
   const toggleReply = () => setReply(!reply);
   const toggleSubComments = () => setShowSubComments(!showSubComments);
 
+  const formatDate = (dateString) => {
+    const [date, time] = dateString.split('T');
+    const postTime = new Date(dateString);
+    const currentTime = new Date();
+    const diffInMinutes = Math.floor((currentTime - postTime) / (1000 * 60));
+
+    if (diffInMinutes < 60) {
+      return `${date} ${diffInMinutes}분 전`;
+    } else if (diffInMinutes < 1440) {
+      // 24시간 = 1440분
+      const diffInHours = Math.floor(diffInMinutes / 60);
+      return `${date} ${diffInHours}시간 전`;
+    } else {
+      const diffInDays = Math.floor(diffInMinutes / 1440);
+      return `${date} ${diffInDays}일 전`;
+    }
+  };
+
   return (
     <div className={`${isSubComment ? 'ml-10' : ''} w-full`}>
       <div className={`flex flex-col gap-9  mt-[50px]`}>
@@ -28,7 +46,9 @@ const Comment = ({ data, isSubComment = false, whereId, fetchComments }) => {
           </Avatar>
           <div className="flex flex-col">
             <span className="text-[20px] font-semibold">{data.author}</span>
-            <span className="text-[20px] text-grey300 font-normal">{data.createdAt}</span>
+            <span className="text-[20px] text-grey300 font-normal">
+              {formatDate(data.createdAt)}
+            </span>
           </div>
         </div>
 
