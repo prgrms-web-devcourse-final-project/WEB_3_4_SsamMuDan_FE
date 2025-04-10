@@ -3,6 +3,7 @@ import { COTREE_ENDPOINT } from '../endpoint';
 
 const postComment = async (request) => {
   try {
+    console.log(request);
     const response = await coTreeAPI.post(COTREE_ENDPOINT.Comment, request);
     console.log(response.data);
   } catch (error) {

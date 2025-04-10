@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import PrimarySelect from '@/components/common/PrimarySelect';
 import CommunityFloating from '@/components/communityDetail/CommunityFloating';
+import getImgUrl from '@/api/careerDetail/getImgUrl';
 
 const CommunityWrite = () => {
   const [category, setCategory] = useState('게시판');
@@ -46,6 +47,17 @@ const CommunityWrite = () => {
     },
   };
 
+  // 이미지 업로드 핸들러
+  const handleImageUpload = async (blob) => {
+    try {
+      const imageUrl = await getImgUrl(blob);
+      return imageUrl;
+    } catch (error) {
+      console.error('이미지 업로드 중 오류 발생:', error);
+      return null;
+    }
+  };
+
   return (
     <Layout>
       <div className="w-[1246px] mx-auto mt-10 mb-20 flex">
@@ -85,6 +97,14 @@ const CommunityWrite = () => {
                 initialEditType="markdown"
                 useCommandShortcut={true}
                 ref={editorRef}
+                hooks={{
+                  addImageBlobHook: async (blob, callback) => {
+                    const imageUrl = await handleImageUpload(blob);
+                    if (imageUrl) {
+                      callback(imageUrl, '');
+                    }
+                  },
+                }}
               />
             )}
           </motion.div>
@@ -107,6 +127,7 @@ const CommunityWrite = () => {
               text={floatingBadge.completed.text}
               type="completed"
               style={floatingBadge.completed.style}
+              onClick={handleRegister}
             />
           </div>
         </div>
