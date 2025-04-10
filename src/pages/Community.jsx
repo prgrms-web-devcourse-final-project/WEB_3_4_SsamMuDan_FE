@@ -6,8 +6,9 @@ import CommunityPostList from '@/components/community/CommunityPostList';
 import CommunityRuleBanner from '@/components/community/CommunityRuleBanner';
 import { useEffect, useState } from 'react';
 import getBestCommunity from '@/api/community/getBestCommunity';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
+import useAuthStore from '@/store/useAuthStore';
 
 const Community = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,11 +22,26 @@ const Community = () => {
   const keyword = searchParams.get('keyword') || '';
   const category = searchParams.get('category') || 'TOTAL';
   const sortOption = searchParams.get('sort') || 'LATEST';
-  // const pagesize = 16; // 페이지안에 아이템 수
+  const [selectedSortLabel, setSelectedSortLabel] = useState('최신순');
   const sortName = {
     최신순: 'LATEST',
     댓글순: 'COMMENT',
     좋아요순: 'LIKE',
+  };
+  //로그인하기
+  const IsLogin = useAuthStore((state) => state.isLoggedIn);
+  // const { id } = useParams();
+  const navigate = useNavigate();
+
+  //로그인 관련 버튼
+  const handlewrite = () => {
+    if (!IsLogin) {
+      alert('로그인 후 이용가능한 서비스 입니다.');
+      navigate('/login');
+      return;
+    } else {
+      navigate('/communityWrite');
+    }
   };
 
   // 탭 변경 핸들러
@@ -33,8 +49,10 @@ const Community = () => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set('category', tabValue);
     newParams.set('page', '0');
+    newParams.set('sort', 'LATEST');
     newParams.delete('keyword');
 
+    setSelectedSortLabel('최신순');
     setSearchParams(newParams);
   };
 
@@ -52,6 +70,9 @@ const Community = () => {
     newParams.set('sort', newSortValue);
     newParams.set('page', '0');
     setSearchParams(newParams);
+
+    const newLabel = Object.keys(sortName).find((key) => sortName[key] === newSortValue); // 추가 해놓음
+    setSelectedSortLabel(newLabel); //추가
   };
 
   //페이지네이션 핸들러
@@ -88,20 +109,24 @@ const Community = () => {
   useEffect(() => {
     async function fetchcommunity() {
       try {
-        const data = await getCommunity(page, sortOption, 'TOTAL', keyword);
         const bestdata = await getBestCommunity();
-        const postdata = await getCommunity(page, sortOption, 'BOARD', keyword);
-        const codedata = await getCommunity(page, sortOption, 'CODE_REVIEW', keyword);
+        let result;
+        if (category === 'TOTAL') {
+          result = await getCommunity(page, sortOption, 'TOTAL', keyword);
+        }
+        if (category === 'BOARD') {
+          result = await getCommunity(page, sortOption, 'BOARD', keyword);
+        }
+        if (category === 'CODE_REVIEW') {
+          result = await getCommunity(page, sortOption, 'CODE_REVIEW', keyword);
+        }
         // const data = await getCommunity(0, sort, category, keyword);
         // setTechBook(data.data);
-        setCommunityList(data.data.content);
+        setCommunityList(result?.data.content);
         setBestCommunity(bestdata.data.content);
-        setCommunityPostList(postdata.data.content);
-        setCommunityCodeList(codedata.data.content);
-        setTotalPages();
-        console.log('ㅇㅁㅇㄴ', data.data.content);
-        console.log('rrrrrrr', postdata.data.content);
-        console.log('코드리뷰', bestdata.data.content);
+        setCommunityPostList(result?.data.content);
+        setCommunityCodeList(result?.data.content);
+        setTotalPages(result?.data.totalPages);
       } catch (error) {
         console.error('Error fetching tech book:', error);
       }
@@ -111,7 +136,7 @@ const Community = () => {
 
   return (
     <Layout>
-      <div className="w-[1246px] mx-auto mb-20">
+      <div className="w-[1246px] mx-auto mb-20 relative">
         {/* 커뮤니티 Rule 섹션 */}
         <CommunityRuleBanner />
         {/* 커뮤니티 베스트 섹션 */}
@@ -134,6 +159,7 @@ const Community = () => {
             placeholder: '최신순',
             customstyle: 'h-[46px]',
             onSortChange: handleSortChange,
+            selectvalue: selectedSortLabel,
           }}
           paginationData={{
             totalPages: totalPages,
@@ -145,7 +171,7 @@ const Community = () => {
 
         {/* 글쓰기 버튼 (페이지네이션 우측 고정) */}
         <button
-          onClick={() => navigate('/communityWrite')}
+          onClick={handlewrite}
           className="absolute right-8 w-[150px] h-[51px] bg-primary300 text-white font-semibold rounded-[10px] transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-lg hover:scale-105"
         >
           <PencilSquareIcon className="w-6 h-6 text-white" />

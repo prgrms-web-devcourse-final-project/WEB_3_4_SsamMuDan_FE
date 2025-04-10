@@ -6,14 +6,14 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-const PrimarySelect = ({ customstyle, selectList, placeholder, onSelect }) => {
-  const handleSelect = (selectedValue) => {
-    onSelect(selectedValue);
-    console.log('selectedValue', selectedValue);
+const PrimarySelect = ({ customstyle, selectList, placeholder, onSortChange, 1 }) => {
+  const handleSortChange = (selectedValue) => {
+    onSortChange(selectList[selectedValue]); // 직접 매핑해서 보냄
   };
 
+  // value={value} 추가
   return (
-    <Select onValueChange={handleSelect}>
+    <Select onValueChange={handleSortChange} value={value}>
       <SelectTrigger className={customstyle}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
@@ -27,5 +27,4 @@ const PrimarySelect = ({ customstyle, selectList, placeholder, onSelect }) => {
     </Select>
   );
 };
-
 export default PrimarySelect;

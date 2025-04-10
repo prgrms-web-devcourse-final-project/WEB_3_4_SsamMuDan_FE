@@ -28,6 +28,8 @@ const Education = () => {
   const page = Number(searchParams.get('page')) || 0;
   const category = searchParams.get('category') || 'techtube';
   const sortOption = searchParams.get('sort') || 'LATEST';
+  const [selectedSortLabel, setSelectedSortLabel] = useState('최신순'); // select 박스 value 를 보여줄수잇께 해놓음
+
   const pagesize = 16; // 페이지안에 아이템 수
   const sortName = {
     최신순: 'LATEST',
@@ -38,10 +40,12 @@ const Education = () => {
   const handleTabChange = (tabValue) => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set('category', tabValue);
+    newParams.set('sort', 'LATEST');
     newParams.set('page', '0');
     newParams.delete('keyword');
 
     setSearchParams(newParams);
+    setSelectedSortLabel('최신순'); //추가 초기 셀렉트 value  값 설정
   };
 
   // 검색 핸들러
@@ -66,6 +70,9 @@ const Education = () => {
     newParams.set('sort', newSortValue);
     newParams.set('page', '0');
     setSearchParams(newParams);
+
+    const newLabel = Object.keys(sortName).find((key) => sortName[key] === newSortValue); // 추가 해놓음
+    setSelectedSortLabel(newLabel); //추가
   };
 
   //  초기 진입 시 기본값 세팅
@@ -160,6 +167,7 @@ const Education = () => {
               placeholder="최신순"
               customstyle="h-[46px]"
               onSortChange={handleSortChange}
+              value={selectedSortLabel} // 추가
             />
           </div>
         </div>

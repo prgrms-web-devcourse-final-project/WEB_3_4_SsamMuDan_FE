@@ -17,7 +17,7 @@ const getCommunity = async (page, sort, category, keyword) => {
     console.log('커뮤ㅜ니티', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error fetching career info:', error);
+    console.error('Error fetching  community info:', error);
     throw error;
   }
 };

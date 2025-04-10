@@ -2,47 +2,127 @@ import Layout from '@/common/Layout/Layout';
 import { Editor } from '@toast-ui/react-editor';
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import PrimarySelect from '@/components/common/PrimarySelect';
 import CommunityFloating from '@/components/communityDetail/CommunityFloating';
+import postCreateCommunity from '@/api/community/postCreateCommunity';
+import getCommunityCategory from '@/api/community/getCommunityCategory';
+import EditProfileModal from '@/components/mypage/EditProfileModal';
+import ActionButton from '@/components/common/ActionButton';
+import useAuthStore from '@/store/useAuthStore';
 
 const CommunityWrite = () => {
-  const [category, setCategory] = useState('게시판');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [categoryItem, setCategoryItem] = useState({});
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isEditing, setIsEditing] = useState(true);
+  const [title, setTitle] = useState();
   const [content, setContent] = useState('');
+  const [selectedCategoryName, setSelectedCategoryName] = useState('');
+  const selectList = ['게시판', '코드 리뷰'];
   const editorRef = useRef(null);
+  const IsLogin = useAuthStore((state) => state.isLoggedIn);
   const navigate = useNavigate();
 
-  // 스크롤 맨 위로 이동
+  //  초기 진입 시 기본값 세팅
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  }, []);
+    const newParams = new URLSearchParams(searchParams);
+    let changed = false;
 
-  const handleRegister = () => {
-    if (editorRef.current) {
-      const markdown = editorRef.current.getInstance().getMarkdown();
-      setContent(markdown);
-      setIsEditing(false);
+    if (!searchParams.get('category')) {
+      newParams.set('category', '게시판');
+      changed = true;
+    }
 
-      alert('게시글이 작성되었습니다.');
-      navigate('/community');
+    if (changed) setSearchParams(newParams);
+
+    if (!IsLogin) {
+      alert('로그인 후 이용가능한 서비스입니다.');
+      navigate('/login');
+    }
+  }, [IsLogin]);
+
+  //정렬 핸들러
+  const handleCateChange = (categoryId) => {
+    const categoryName = Object.entries(categoryItem).find(
+      ([_, value]) => value === Number(categoryId),
+    )?.[0];
+
+    if (categoryName) {
+      setSearchParams({ category: categoryName });
+      setSelectedCategoryName(categoryName);
+      console.log('선택된 카테고리 이름:', categoryName);
+    } else {
+      console.warn('유효하지 않은 카테고리 ID입니다:', categoryId);
     }
   };
 
-  const selectList = ['게시판', '코드 리뷰'];
+  // 타이틀
+
+  // 카테고리 가져오기
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    const apiCategory = async () => {
+      try {
+        const response = await getCommunityCategory();
+        // console.log('response', response);
+        const map = {};
+        response.data.forEach((item) => {
+          map[item.name] = item.id;
+        });
+        setCategoryItem(map);
+        console.log(map);
+
+        // URL에 category 없으면 기본값 추가
+        const currentCategory = searchParams.get('category');
+        if (!currentCategory) {
+          setSearchParams({ category: Object.keys(map)[0] }); // '게시판' 등
+          setSelectedCategoryName(Object.keys(map)[0]);
+        } else {
+          setSelectedCategoryName(currentCategory);
+        }
+      } catch (error) {
+        console.error('Error fetching career info:', error);
+        throw error;
+      }
+    };
+    apiCategory();
+  }, []);
+
+  // 완료
+
+  const handleComplete = async () => {
+    const categoryId = categoryItem[selectedCategoryName]; // ex: '게시판' → 1
+    const markdown = editorRef.current?.getInstance().getMarkdown();
+
+    if (!title || !markdown) {
+      alert('제목과 내용을 모두 입력해주세요!');
+      return;
+    }
+    console.log('categoryId', categoryId);
+    try {
+      await postCreateCommunity({
+        communityCategoryId: categoryId,
+        title: title,
+        content: markdown,
+      });
+
+      alert('게시글이 성공적으로 작성되었습니다!');
+
+      setTitle('');
+      editorRef.current?.getInstance().setMarkdown('');
+      setSelectedCategoryName('게시판');
+      setSearchParams({ category: '게시판' });
+    } catch (error) {}
+  };
 
   const floatingBadge = {
-    delete: {
-      style: '!border-[#9E3131] !bg-primary400 text-white cursor-pointer',
-      text: '삭제하기',
-    },
-    modify: {
-      style: '!border-[#0C8C5F] !bg-primary300 text-white cursor-pointer',
-      text: '수정하기',
-    },
     completed: {
       style: '!border-[#4A4747] !bg-[#393838] text-white cursor-pointer',
       text: '완료하기',
+    },
+    cancel: {
+      text: '취소',
     },
   };
 
@@ -57,9 +137,10 @@ const CommunityWrite = () => {
           >
             {/* 카테고리 선택 */}
             <PrimarySelect
-              selectList={selectList}
+              selectList={categoryItem}
               placeholder="게시판"
               customstyle="h-[35px] font-medium mb-7"
+              onSortChange={handleCateChange}
             />
 
             {/* 제목 */}
@@ -67,6 +148,8 @@ const CommunityWrite = () => {
               type="text"
               placeholder="제목을 입력해 주세요."
               className="w-full text-[40px] font-semibold mb-6 placeholder:text-gray-400 focus:outline-none focus:border-primary300 focus:ring-1 focus:ring-primary300 transition-all duration-200 ease-in-out"
+              value={title || ''}
+              onChange={(e) => setTitle(e.target.value)}
             />
 
             {/* 안내 문구(?) */}
@@ -94,23 +177,54 @@ const CommunityWrite = () => {
         <div className="flex-col">
           <div className="fixed top-[300px] right-[100px] max-w-[800px] space-y-3">
             <CommunityFloating
-              text={floatingBadge.modify.text}
-              type="modify"
-              style={floatingBadge.modify.style}
-            />
-            <CommunityFloating
-              text={floatingBadge.delete.text}
-              type="delete"
-              style={floatingBadge.delete.style}
-            />
-            <CommunityFloating
               text={floatingBadge.completed.text}
               type="completed"
               style={floatingBadge.completed.style}
+              eventhandler={handleComplete}
+            />
+            <CommunityFloating
+              text={floatingBadge.cancel.text}
+              type="cancel"
+              eventhandler={() => setIsModalOpen(true)}
             />
           </div>
         </div>
       </div>
+      {/* 나가기 모달 */}
+      {/* {isModalOpen && <EditProfileModal onClose={() => setIsModalOpen(false)} />} */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+          <div
+            className="bg-white rounded-2xl p-8 w-[521px] text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="font-esamanru text-2xl mb-2">작성 취소</h2>
+
+            <div className="text-sm text-grey700 font-medium mb-8">
+              앗! 작성 중인 글이 있어요. 정말 이동하시겠어요?
+            </div>
+            <div className="flex justify-between">
+              <ActionButton
+                text="나가기"
+                customeStyle="!w-[220px] h-[42px] font-semibold !text-grey300 !border-black bg-white"
+                onClick={() => {
+                  navigate('/community');
+                }}
+              />
+              <ActionButton
+                text="취소"
+                customeStyle="!w-[220px] h-[42px] font-semibold text-primary300 border border-primary300"
+                onClick={() => {
+                  setIsModalOpen(false);
+                }}
+              />
+            </div>
+            {/* <button className="mt-4 text-sm font-semibold text-gray-400" onClick={onClose}>
+              닫기
+            </button> */}
+          </div>
+        </div>
+      )}
     </Layout>
   );
 };
