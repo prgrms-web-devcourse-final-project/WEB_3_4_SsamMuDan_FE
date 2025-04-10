@@ -3,11 +3,13 @@
 import coTreeAPI from '@/config/cotree';
 import { COTREE_ENDPOINT } from '../endpoint';
 
-const getProjectPostsMain = async () => {
+const getProjectPostsMain = async ({ page = 0, size = 4 } = {}) => {
   try {
-    const response = await coTreeAPI.get(COTREE_ENDPOINT.projectPostsMain);
+    const response = await coTreeAPI.get(COTREE_ENDPOINT.projectPostsMain, {
+      params: { page, size },
+    });
 
-    return response.data;
+    return response.data.data.content;
   } catch (error) {
     console.error('HOT 프로젝트 조회 실패:', error);
     throw error;
