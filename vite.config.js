@@ -15,14 +15,36 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: false,
+    chunkSizeWarningLimit: 1500,
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, 'index.html'),
       },
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          framer: ['framer-motion'],
+          'react-vendor': ['react', 'react-dom'],
+          'router-vendor': ['react-router-dom'],
+          'ui-vendor': [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-select',
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-avatar',
+            '@radix-ui/react-checkbox',
+            '@radix-ui/react-label',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-slider',
+            '@radix-ui/react-slot',
+          ],
+          'animation-vendor': ['framer-motion'],
+          'pdf-vendor': [
+            '@react-pdf-viewer/core',
+            '@react-pdf/renderer',
+            'react-pdf',
+            'pdfjs-dist',
+          ],
+          'editor-vendor': ['@toast-ui/react-editor'],
+          'player-vendor': ['react-player'],
+          'utils-vendor': ['axios', 'zustand', 'clsx', 'tailwind-merge'],
         },
         assetFileNames: (assetInfo) => {
           let extType = assetInfo.name.split('.').at(1);

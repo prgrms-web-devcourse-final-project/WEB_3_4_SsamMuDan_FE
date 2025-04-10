@@ -2,7 +2,6 @@ import PrimarySelect from '@/components/common/PrimarySelect';
 import SearchBar from '@/components/common/SearchBar';
 import CommunityFloating from '@/components/communityDetail/CommunityFloating';
 import EducationPay from '@/components/educationDetail/educationPay';
-// import PdfViewer from '@/components/educationDetail/EducationPdf';
 import EducationRelatedVideos from '@/components/educationDetail/EducationRelatedVideos';
 
 const JongHee = () => {
