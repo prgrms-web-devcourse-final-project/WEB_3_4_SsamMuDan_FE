@@ -11,7 +11,6 @@ import EditProfileModal from '@/components/mypage/EditProfileModal';
 import ActionButton from '@/components/common/ActionButton';
 import useAuthStore from '@/store/useAuthStore';
 
-
 const CommunityWrite = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categoryItem, setCategoryItem] = useState({});
@@ -114,7 +113,9 @@ const CommunityWrite = () => {
       editorRef.current?.getInstance().setMarkdown('');
       setSelectedCategoryName('게시판');
       setSearchParams({ category: '게시판' });
-    } catch (error) {}
+    } catch (error) {
+      console.log('community write 실패');
+    }
   };
 
   const floatingBadge = {
