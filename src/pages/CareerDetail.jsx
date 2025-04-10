@@ -7,7 +7,6 @@ import CommentSection from '@/components/careerDetail/CommentSection';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import getCareerDetail from '@/api/careerDetail/getCareerDetail';
-import getComment from '@/api/careerDetail/getComment';
 
 const CareerDetail = () => {
   const { id } = useParams();
@@ -22,7 +21,6 @@ const CareerDetail = () => {
 
   const [careerData, setCareerData] = useState({});
   const [projectData, setProjectData] = useState({});
-  const [commentData, setCommentData] = useState([]);
 
   const infoFetchData = async () => {
     try {
@@ -35,18 +33,8 @@ const CareerDetail = () => {
     }
   };
 
-  const commentFetchData = async () => {
-    try {
-      const getData = await getComment(id);
-      setCommentData(getData);
-    } catch (error) {
-      console.error('Error fetching tech stack options:', error);
-    }
-  };
-
   useEffect(() => {
     infoFetchData();
-    commentFetchData();
   }, []);
 
   return (
@@ -63,7 +51,7 @@ const CareerDetail = () => {
         </div>
         {/* 댓글 */}
         <div className="mt-[50px]">
-          <CommentSection id={id} data={commentData} />
+          <CommentSection id={id} />
         </div>
         <div className="mt-[40px]"></div>
       </Layout>

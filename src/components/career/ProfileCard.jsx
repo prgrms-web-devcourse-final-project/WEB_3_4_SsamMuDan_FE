@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const ProfileCard = ({ data }) => {
   return (
     <>
-      <Link to={`/careerDetail/${data.resumdId}`}>
+      <Link to={`/careerDetail/${data.resumeId}`}>
         <div className="w-[300px] h-[440px] border rounded-t-[15px] rounded-[8px] mb-[15px]">
           {/* 이미지 */}
           <div className="w-[300px] h-[278px] rounded-t-[8px] bg-slate-600 overflow-hidden relative">
