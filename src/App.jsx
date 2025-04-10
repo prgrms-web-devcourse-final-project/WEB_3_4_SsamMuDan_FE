@@ -41,7 +41,7 @@ function App() {
         <Route path="/careerWrite/:id" element={<CareerWrite />} />
         <Route path="/TECH_TUBE/:id" element={<TechTube />} />
         <Route path="/TECH_BOOK/:id" element={<TechBook />} />
-        <Route path="/community/:id" element={<CommunityDetail />} />
+        <Route path="/communityDetail/:id" element={<CommunityDetail />} />
         <Route path="/community" element={<Community />} />
         <Route path="/projectJoin" element={<ProjectJoin />} />
         <Route path="/projectJoinWrite/:id" element={<ProjectJoinWrite />} />
