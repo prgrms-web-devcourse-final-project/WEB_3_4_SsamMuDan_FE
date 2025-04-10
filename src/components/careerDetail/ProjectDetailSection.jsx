@@ -1,4 +1,4 @@
-import IntroduceProjectForm from './introduceProjectForm';
+import IntroduceProjectForm from './IntroduceProjectForm';
 
 const ProjectDetailSection = ({ data }) => {
   return (
