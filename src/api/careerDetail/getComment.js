@@ -6,6 +6,7 @@ const getComment = async (itemId, page) => {
     const response = await coTreeAPI.get(
       COTREE_ENDPOINT.Comment + `?itemId=${itemId}&category=RESUME&size=2&page=${page}`,
     );
+    console.log();
     return response.data.data;
   } catch (error) {
     console.error('Error fetching career info:', error);

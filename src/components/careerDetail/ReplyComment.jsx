@@ -1,15 +1,20 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { Button } from '../ui/button';
 import { COTREE_ENDPOINT } from '@/api/endpoint';
 import coTreeAPI from '@/config/cotree';
+import postComment from '@/api/careerDetail/postComment';
 
-const ReplyComment = ({ parentId }) => {
+const ReplyComment = ({ parentId, whereId, fetchComments }) => {
   const editorRef = useRef(null);
   const [content, setContent] = useState('');
   const [isEditing, setIsEditing] = useState(true);
+
+  const handleEditorClose = useCallback(() => {
+    setIsEditing(false);
+  }, []);
 
   const handleImageUpload = async (file) => {
     const formData = new FormData();
@@ -38,25 +43,30 @@ const ReplyComment = ({ parentId }) => {
     if (!editorRef.current) return;
 
     const markdownContent = editorRef.current.getInstance().getMarkdown();
-    console.log('Reply content:', markdownContent);
     setContent(markdownContent);
-    setIsEditing(false);
 
-    // TODO: API 호출하여 대댓글 등록
     try {
-      const response = await coTreeAPI.post(COTREE_ENDPOINT.postReply, {
-        parentId,
+      const response = await postComment({
+        whereId: Number(whereId),
+        category: 'RESUME',
         content: markdownContent,
+        commentId: parentId,
       });
+      console.log(response);
 
-      if (response.data.isSuccess) {
-        // 성공 시 처리
+      if (response.isSuccess) {
         console.log('대댓글 등록 성공');
+        fetchComments();
+        setIsEditing(false);
       }
     } catch (error) {
       console.error('대댓글 등록 실패:', error);
     }
   };
+
+  if (!isEditing) {
+    return null;
+  }
 
   return (
     <div className="mb-[27px]">
@@ -94,10 +104,7 @@ const ReplyComment = ({ parentId }) => {
           <Button onClick={handleRegister} className="bg-primary300 hover:bg-primary300">
             등록하기
           </Button>
-          <Button
-            onClick={() => setIsEditing(false)}
-            className="bg-white text-black hover:bg-white"
-          >
+          <Button onClick={handleEditorClose} className="bg-white text-black hover:bg-white">
             닫기
           </Button>
         </div>

@@ -6,6 +6,7 @@ const postComment = async (request) => {
     console.log(request);
     const response = await coTreeAPI.post(COTREE_ENDPOINT.Comment, request);
     console.log(response.data);
+    return response.data;
   } catch (error) {
     console.error('Error fetching career info:', error);
     throw error;

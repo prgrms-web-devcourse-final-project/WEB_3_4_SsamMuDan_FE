@@ -20,7 +20,7 @@ const CustomPagination = ({
   const groupStart = currentGroup * pagesPerGroup + 1;
   const groupEnd = Math.min(groupStart + pagesPerGroup - 1, totalPages);
 
-  console.log('totalPages', totalPages, 'pagesPerGroup', pagesPerGroup, 'currentPage', currentPage);
+  // console.log('totalPages', totalPages, 'pagesPerGroup', pagesPerGroup, 'currentPage', currentPage);
 
   const handlePrevPage = () => {
     console.log('쿨락');
