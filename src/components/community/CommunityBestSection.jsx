@@ -1,8 +1,11 @@
 import { ChatBubbleOvalLeftEllipsisIcon, EyeIcon, HeartIcon } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const CommunityBestSection = ({ bestCommunity }) => {
   const profileThum = bestCommunity.profileImage;
+  const navigate = useNavigate();
+
   return (
     <div className="mb-24">
       <div className="font-esamanru text-2xl mb-10">👑 커뮤니티 Best</div>
@@ -13,8 +16,8 @@ const CommunityBestSection = ({ bestCommunity }) => {
             className="w-[431px] cursor-pointer"
             whileHover={{ scale: 1.03, y: -6 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            onClick={() => navigate(`/communityDetail/${item.id}`)}
           >
-            {' '}
             {/* 썸네일 이미지 */}
             <div className="relative w-full h-[244px] rounded-[20px] overflow-hidden">
               {profileThum ? (

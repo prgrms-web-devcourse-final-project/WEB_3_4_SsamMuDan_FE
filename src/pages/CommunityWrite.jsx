@@ -1,5 +1,8 @@
 import Layout from '@/common/Layout/Layout';
 import { Editor } from '@toast-ui/react-editor';
+import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+import Prism from 'prismjs';
+import 'prismjs/themes/prism.css';
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -10,6 +13,8 @@ import getCommunityCategory from '@/api/community/getCommunityCategory';
 import EditProfileModal from '@/components/mypage/EditProfileModal';
 import ActionButton from '@/components/common/ActionButton';
 import useAuthStore from '@/store/useAuthStore';
+import getCommunityDetail from '@/api/community/getCommunityDetail';
+import editCommunityPost from '@/api/community/editCommunityPost';
 
 const CommunityWrite = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,6 +28,7 @@ const CommunityWrite = () => {
   const editorRef = useRef(null);
   const IsLogin = useAuthStore((state) => state.isLoggedIn);
   const navigate = useNavigate();
+  const [postId, setPostId] = useState(null); // 게시글 수정을 위해 게시글 id 저장
 
   //  초기 진입 시 기본값 세팅
   useEffect(() => {
@@ -99,22 +105,28 @@ const CommunityWrite = () => {
       alert('제목과 내용을 모두 입력해주세요!');
       return;
     }
-    console.log('categoryId', categoryId);
+
     try {
-      await postCreateCommunity({
-        communityCategoryId: categoryId,
-        title: title,
-        content: markdown,
-      });
-
-      alert('게시글이 성공적으로 작성되었습니다!');
-
-      setTitle('');
-      editorRef.current?.getInstance().setMarkdown('');
-      setSelectedCategoryName('게시판');
-      setSearchParams({ category: '게시판' });
+      if (postId) {
+        // 게시글 수정
+        await editCommunityPost(postId, {
+          communityCategoryId: categoryId,
+          title,
+          content: markdown,
+        });
+        alert('게시글이 수정되었습니다!');
+      } else {
+        // 게시글 작성
+        await postCreateCommunity({
+          communityCategoryId: categoryId,
+          title,
+          content: markdown,
+        });
+        alert('게시글이 성공적으로 작성되었습니다!');
+      }
+      navigate('/community');
     } catch (error) {
-      console.log('community write 실패');
+      console.error('게시글 처리 실패:', error);
     }
   };
 
@@ -138,6 +150,25 @@ const CommunityWrite = () => {
       return null;
     }
   };
+
+  // 게시글 수정 모드일 때 기존 데이터 가져오기
+  useEffect(() => {
+    const boardId = searchParams.get('id'); // URL에서 id 추출
+    if (boardId) {
+      setPostId(boardId); // 저장해두기
+      const fetchDetail = async () => {
+        try {
+          const res = await getCommunityDetail(boardId);
+          setTitle(res.title);
+          setSelectedCategoryName(res.categoryName);
+          editorRef.current?.getInstance().setMarkdown(res.content);
+        } catch (error) {
+          console.error('수정용 게시글 불러오기 실패:', error);
+        }
+      };
+      fetchDetail();
+    }
+  }, []);
 
   return (
     <Layout>
@@ -175,6 +206,7 @@ const CommunityWrite = () => {
             {/* 마크다운 에디터 */}
             {isEditing && (
               <Editor
+                plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
                 initialValue=""
                 previewStyle="vertical"
                 height="500px"

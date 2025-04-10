@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+/* 마크다운 에디터 Heading 구분선 제거 */
+.toastui-editor-contents h1,
+.toastui-editor-contents h2,
+.toastui-editor-contents h3,
+.toastui-editor-contents h4,
+.toastui-editor-contents h5,
+.toastui-editor-contents h6 {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 0.5em;
+}
