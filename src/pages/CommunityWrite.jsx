@@ -3,7 +3,7 @@ import { Editor } from '@toast-ui/react-editor';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism.css';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import PrimarySelect from '@/components/common/PrimarySelect';
@@ -15,6 +15,9 @@ import ActionButton from '@/components/common/ActionButton';
 import useAuthStore from '@/store/useAuthStore';
 import getCommunityDetail from '@/api/community/getCommunityDetail';
 import editCommunityPost from '@/api/community/editCommunityPost';
+import { COTREE_ENDPOINT } from '@/api/endpoint';
+import coTreeAPI from '@/config/cotree';
+import { PlusIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 const CommunityWrite = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,7 +31,7 @@ const CommunityWrite = () => {
   const editorRef = useRef(null);
   const IsLogin = useAuthStore((state) => state.isLoggedIn);
   const navigate = useNavigate();
-  const [postId, setPostId] = useState(null); // 게시글 수정을 위해 게시글 id 저장
+  const [postId, setPostId] = useState(null);
 
   //  초기 진입 시 기본값 세팅
   useEffect(() => {
@@ -97,8 +100,31 @@ const CommunityWrite = () => {
 
   // 완료
 
+  const handleImageUpload = useCallback(async (file) => {
+    const formData = new FormData();
+    formData.append('directory', 'COMMUNITY_BOARD');
+    formData.append('file', file);
+
+    try {
+      const response = await coTreeAPI.post(COTREE_ENDPOINT.postImg, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.data.isSuccess) {
+        return response.data.data.saveUrl;
+      }
+      console.error('파일 업로드 실패');
+      return null;
+    } catch (error) {
+      console.error('업로드 중 오류 발생:', error);
+      return null;
+    }
+  }, []);
+
   const handleComplete = async () => {
-    const categoryId = categoryItem[selectedCategoryName]; // ex: '게시판' → 1
+    const categoryId = categoryItem[selectedCategoryName];
     const markdown = editorRef.current?.getInstance().getMarkdown();
 
     if (!title || !markdown) {
@@ -138,17 +164,6 @@ const CommunityWrite = () => {
     cancel: {
       text: '취소',
     },
-  };
-
-  // 이미지 업로드 핸들러
-  const handleImageUpload = async (blob) => {
-    try {
-      const imageUrl = await getImgUrl(blob);
-      return imageUrl;
-    } catch (error) {
-      console.error('이미지 업로드 중 오류 발생:', error);
-      return null;
-    }
   };
 
   // 게시글 수정 모드일 때 기존 데이터 가져오기
@@ -244,7 +259,6 @@ const CommunityWrite = () => {
         </div>
       </div>
       {/* 나가기 모달 */}
-      {/* {isModalOpen && <EditProfileModal onClose={() => setIsModalOpen(false)} />} */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
           <div
@@ -272,9 +286,6 @@ const CommunityWrite = () => {
                 }}
               />
             </div>
-            {/* <button className="mt-4 text-sm font-semibold text-gray-400" onClick={onClose}>
-              닫기
-            </button> */}
           </div>
         </div>
       )}
