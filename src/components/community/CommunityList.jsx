@@ -2,6 +2,26 @@ import { ChatBubbleOvalLeftEllipsisIcon, EyeIcon, HeartIcon } from '@heroicons/r
 import CustomPagination from '../common/CustomPagination';
 
 const CommunityList = ({ communityinfo }) => {
+  // new 뱃지
+  const isNew = (createdAt) => {
+    console.log('와우', createdAt);
+    const now = new Date();
+    const created = new Date(createdAt);
+    const diffInHours = (now - created) / (1000 * 60 * 60); // ms → hour
+
+    return diffInHours < 24;
+  };
+
+  // 날짜 형식 변하기
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 0부터 시작하므로 +1
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}.${month}.${day}`;
+  };
+
   return (
     <div>
       {communityinfo.map((item, index) => (
@@ -22,8 +42,13 @@ const CommunityList = ({ communityinfo }) => {
               <div>
                 {/* 작성자 & 작성일 */}
                 <div className="flex items-center gap-4 text-base text-gray-400 mb-1">
-                  <span className="font-semibold text-black">{item.author}</span>
-                  <span>{item.createdAt}</span>
+                  <span className="">{item.author}</span>
+                  <span>{formatDate(item.createdAt)}</span>
+                  {isNew(item.createdAt) && (
+                    <span className="text-xs bg-[#FFDBDB] text-primary400 px-2 py-1 rounded-[5px]">
+                      NEW
+                    </span>
+                  )}
                 </div>
                 {/* 제목 */}
                 <div className="text-xl font-bold text-black mb-2 line-clamp-1">{item.title}</div>

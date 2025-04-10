@@ -11,7 +11,7 @@ const CommunityPostList = ({ postData, onTabChange, searchProps, selectData, pag
   // const categoryList = ['전체', '게시글', '코드리뷰'];
   const { communityList, communityPostList, communityCodeList, currentTab } = postData;
   const { value, onSearchChange } = searchProps;
-  const { selectList, placeholder, customstyle, onSortChange } = selectData;
+  const { selectList, placeholder, customstyle, onSortChange, selectvalue } = selectData;
   const { totalPages, currentPage, onChangePage, style } = paginationData;
 
   const categorytabs = [
@@ -62,42 +62,20 @@ const CommunityPostList = ({ postData, onTabChange, searchProps, selectData, pag
               placeholder={placeholder}
               customstyle={customstyle}
               onSortChange={onSortChange}
+              value={selectvalue}
             />
           </div>
         </div>
 
         {/* 게시글 카드 리스트 */}
-        {/* 게시글 카드 리스트 */}
-        {/* {currentTab === 'TOTAL' &&
-          (communityList.length > 0 ? (
-            <CommunityList communityinfo={communityList} />
-          ) : (
-            <h1>없습니다</h1>
-          ))}
-
-        {currentTab === 'BOARD' &&
-          (communityPostList.length > 0 ? (
-            <CommunityList communityinfo={communityPostList} />
-          ) : (
-            <h1>없습니다</h1>
-          ))}
-
-        {currentTab === 'CODE_REVIEW' &&
-          (communityCodeList.length > 0 ? (
-            <CommunityList communityinfo={communityCodeList} />
-          ) : (
-            <h1>없습니다</h1>
-          ))} */}
         {currentList.length > 0 ? <CommunityList communityinfo={currentList} /> : <h1>없습니다</h1>}
       </div>
-      {currentList.length > 0 && (
-        <CustomPagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onChangePage={onChangePage}
-          style={style}
-        />
-      )}
+      <CustomPagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onChangePage={onChangePage}
+        style={style}
+      />
     </div>
   );
 };

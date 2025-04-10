@@ -20,20 +20,22 @@ const CustomPagination = ({
   const groupStart = currentGroup * pagesPerGroup + 1;
   const groupEnd = Math.min(groupStart + pagesPerGroup - 1, totalPages);
 
+  console.log('totalPages', totalPages, 'pagesPerGroup', pagesPerGroup, 'currentPage', currentPage);
+
   const handlePrevPage = () => {
     console.log('쿨락');
     // if (groupStart > 1) {
     //   onChangePage(groupStart - 1);
     // }
     if (currentPage > 1) {
-      onChangePage(currentPage - 1); // ✅ 현재 페이지 기준으로 +1
+      onChangePage(currentPage - 1);
     }
   };
 
   const handleNextPage = () => {
     console.log('클릭');
     if (currentPage < totalPages) {
-      onChangePage(currentPage + 1); // ✅ 현재 페이지 기준으로 +1
+      onChangePage(currentPage + 1);
     }
   };
 
@@ -57,6 +59,20 @@ const CustomPagination = ({
 
   return (
     <Pagination className={style}>
+      {/* <PaginationContent>
+        {totalPages > 1 && currentPage > 1 && (
+          <PaginationItem className="cursor-pointer" onClick={handlePrevPage}>
+            <ChevronLeftIcon className="w-[25px] text-grey300" />
+          </PaginationItem>
+        )}
+        <PaginationItem className="flex gap-3">{renderPages()}</PaginationItem>
+
+        {totalPages > 1 && currentPage < totalPages && (
+          <PaginationItem className="cursor-pointer" onClick={handleNextPage}>
+            <ChevronRightIcon className="w-[25px] text-grey300" />
+          </PaginationItem>
+        )}
+      </PaginationContent> */}
       <PaginationContent>
         {totalPages > 1 && currentPage > 1 && (
           <PaginationItem className="cursor-pointer" onClick={handlePrevPage}>
