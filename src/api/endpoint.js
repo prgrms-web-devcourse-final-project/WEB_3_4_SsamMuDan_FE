@@ -1,6 +1,7 @@
 import CareerDetail from '@/pages/CareerDetail';
 
 export const COTREE_ENDPOINT = Object.freeze({
+  postImg: '/api/v1/file/upload',
   techSkills: `/api/v1/category/skill`, // 기술 스택 조회
   techbook: `/api/v1/education/techbook`, // 교육 테크북
   communityPosts: `/api/v1/community/board`, // 커뮤니티 게시글 조회
@@ -20,6 +21,9 @@ export const COTREE_ENDPOINT = Object.freeze({
   Comment: '/api/v1/comment',
   hotProject: '/api/v1/project/team/hot', // 메인페이지에서 프로젝트 모집글 조회
   projectList: 'api/v1/project/team', // 메인페이지에서 프로젝트 모집글 조회
+  projectMake: 'api/v1/project/team/', // 메인페이지에서 프로젝트 모집글 조회
+  projectDetail: (projectId) => `/api/v1/project/team/${projectId}`, // 프로젝트 상세 조회
+  projectStatus: (projectId) => `/api/v1/project/team/${projectId}/status`, // 프로젝트 모집 상태 변경
   signup: `/api/v1/member/signup`, // 회원가입
   userInfo: `/api/v1/member`, // 로그인한 사용자의 정보 조회
   logout: `/api/v1/member/signout`, // 로그아웃

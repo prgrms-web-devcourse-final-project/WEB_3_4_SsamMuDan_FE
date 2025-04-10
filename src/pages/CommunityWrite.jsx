@@ -11,6 +11,7 @@ import EditProfileModal from '@/components/mypage/EditProfileModal';
 import ActionButton from '@/components/common/ActionButton';
 import useAuthStore from '@/store/useAuthStore';
 
+
 const CommunityWrite = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categoryItem, setCategoryItem] = useState({});
@@ -126,6 +127,17 @@ const CommunityWrite = () => {
     },
   };
 
+  // 이미지 업로드 핸들러
+  const handleImageUpload = async (blob) => {
+    try {
+      const imageUrl = await getImgUrl(blob);
+      return imageUrl;
+    } catch (error) {
+      console.error('이미지 업로드 중 오류 발생:', error);
+      return null;
+    }
+  };
+
   return (
     <Layout>
       <div className="w-[1246px] mx-auto mt-10 mb-20 flex">
@@ -168,6 +180,14 @@ const CommunityWrite = () => {
                 initialEditType="markdown"
                 useCommandShortcut={true}
                 ref={editorRef}
+                hooks={{
+                  addImageBlobHook: async (blob, callback) => {
+                    const imageUrl = await handleImageUpload(blob);
+                    if (imageUrl) {
+                      callback(imageUrl, '');
+                    }
+                  },
+                }}
               />
             )}
           </motion.div>

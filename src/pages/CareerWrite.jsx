@@ -7,22 +7,45 @@ import PrimaryButton from '@/components/common/PrimaryButton';
 import FloatingButton from '@/components/common/FloatingButton';
 import { useState } from 'react';
 import postRecruitment from '@/api/careerWrite/postRecruitment';
+import { useNavigate } from 'react-router-dom';
 
 const CareerWrite = () => {
+  const navigate = useNavigate();
+
+  // 이력서 데이터 상태 관리
   const [postData, setPostData] = useState({
     basicInfo: {
       profileImage: '',
       email: '',
       years: 0,
       introduction: '',
-      developPositionIds: [1],
+      developPositionIds: [],
       techStackIds: [],
     },
-    careerInfos: [],
-    portfolioInfos: [],
+    careerInfos: [
+      {
+        startDate: '',
+        endDate: '',
+        isWorking: false,
+        companyName: '',
+        position: '',
+        careerDescription: '',
+        techStackIds: [],
+      },
+    ],
+    portfolioInfos: [
+      {
+        startDate: '',
+        endDate: '',
+        projectName: '',
+        projectDescription: '',
+        techStackIds: [],
+      },
+    ],
   });
 
   const [resumeImage, setResumeImage] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // 경력 추가
   const handleAddCareer = () => {
@@ -62,6 +85,7 @@ const CareerWrite = () => {
 
   // 경력 삭제
   const handleDeleteCareer = (deleteIndex) => {
+    if (postData.careerInfos.length <= 1) return; // 최소 1개는 유지
     setPostData((prev) => ({
       ...prev,
       careerInfos: prev.careerInfos.filter((_, index) => index !== deleteIndex),
@@ -70,21 +94,58 @@ const CareerWrite = () => {
 
   // 프로젝트 삭제
   const handleDeleteProject = (deleteIndex) => {
+    if (postData.portfolioInfos.length <= 1) return; // 최소 1개는 유지
     setPostData((prev) => ({
       ...prev,
       portfolioInfos: prev.portfolioInfos.filter((_, index) => index !== deleteIndex),
     }));
   };
 
+  // 데이터 유효성 검사
+  const validateData = () => {
+    const { basicInfo, careerInfos, portfolioInfos } = postData;
+
+    // 기본 정보 검사
+    if (!basicInfo.email || !basicInfo.introduction || basicInfo.developPositionIds.length === 0) {
+      alert('기본 정보를 모두 입력해주세요.');
+      return false;
+    }
+
+    // 경력 정보 검사
+    if (
+      !careerInfos.every(
+        (career) => career.companyName && career.position && career.careerDescription,
+      )
+    ) {
+      alert('경력 정보를 모두 입력해주세요.');
+      return false;
+    }
+
+    // 프로젝트 정보 검사
+    if (!portfolioInfos.every((project) => project.projectName && project.projectDescription)) {
+      alert('프로젝트 정보를 모두 입력해주세요.');
+      return false;
+    }
+
+    return true;
+  };
+
   // 등록하기 버튼 클릭 시 실행되는 함수
   const handleRegister = async () => {
+    if (isSubmitting) return; // 중복 제출 방지
+
+    if (!validateData()) return;
+
     try {
+      setIsSubmitting(true);
       await postRecruitment(postData, resumeImage);
-      // 성공 시 처리 (예: 알림 표시, 페이지 이동 등)
-      console.log('이력서가 성공적으로 등록되었습니다.');
+      alert('이력서가 성공적으로 등록되었습니다.');
+      navigate('/career'); // 이력서 목록 페이지로 이동
     } catch (error) {
-      // 에러 처리
       console.error('이력서 등록 중 오류가 발생했습니다:', error);
+      alert('이력서 등록에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -142,7 +203,13 @@ const CareerWrite = () => {
 
         {/* 등록 버튼 */}
         <div className="w-[1213px] mx-auto flex flex-row justify-end mt-[204px] mb-[111px]">
-          <PrimaryButton text="등록하기" width="239px" height="40px" onClick={handleRegister} />
+          <PrimaryButton
+            text={isSubmitting ? '등록 중...' : '등록하기'}
+            width="239px"
+            height="40px"
+            onClick={handleRegister}
+            disabled={isSubmitting}
+          />
         </div>
 
         <div className="fixed bottom-[350px] right-[1%]">

@@ -21,7 +21,7 @@ const Career = () => {
   const [position, setPosition] = useState([]);
   const [history, setHistory] = useState([]);
 
-  const [totalElements, setTotalElements] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 16; // 한 페이지당 보여줄 아이템 수
 
@@ -30,7 +30,7 @@ const Career = () => {
       const res = await getCareerInfo(currentPage);
       setCareerInfo(res.data.content);
       setFilteredCareerInfo(res.data.content);
-      setTotalElements(res.data.totalElements);
+      setTotalElements(res.data.totalPages);
     };
     fetchCareerInfo();
   }, [currentPage]);
@@ -131,8 +131,7 @@ const Career = () => {
           </div>
           <div className="w-full mx-auto mt-[103px] mb-[152px]">
             <CustomPagination
-              totalItems={totalElements}
-              itemsPerPage={itemsPerPage}
+              totalPages={totalPages}
               currentPage={currentPage + 1}
               onChangePage={handlePageChange}
             />

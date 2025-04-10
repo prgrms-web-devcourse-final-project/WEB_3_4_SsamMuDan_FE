@@ -8,7 +8,6 @@ const getCareerInfo = async (page) => {
         page: page,
       },
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching career info:', error);
