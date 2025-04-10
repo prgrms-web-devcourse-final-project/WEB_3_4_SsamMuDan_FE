@@ -60,7 +60,7 @@ export default {
       },
       fontFamily: {
         pretendard: ['Pretendard', 'sans-serif'],
-        esamanru: ['GongGothicMedium', 'sans-serif'],
+        esamanru: ['esamanru', 'sans-serif'],
       },
       fontWeight: {
         'esamanru-light': 300,
@@ -92,5 +92,5 @@ export default {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/line-clamp')],
+  plugins: [require('tailwindcss-animate')],
 };
