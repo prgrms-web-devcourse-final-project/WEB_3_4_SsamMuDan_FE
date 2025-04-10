@@ -10,7 +10,7 @@ import getCareerDetail from '@/api/careerDetail/getCareerDetail';
 
 const CareerDetail = () => {
   const { id } = useParams();
-  const [totalElements, setTotalElements] = useState(0);
+  const category = 'RESUME';
   const [introduceData, setIntroduceData] = useState({
     name: '',
     imageUrl: '',
@@ -52,7 +52,7 @@ const CareerDetail = () => {
         </div>
         {/* 댓글 */}
         <div className="mt-[50px]">
-          <CommentSection id={id} totalElements={totalElements} />
+          <CommentSection id={id} category={category} />
         </div>
         <div className="mt-[40px]"></div>
       </Layout>
