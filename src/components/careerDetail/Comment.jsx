@@ -6,7 +6,7 @@ import ReplyComment from './ReplyComment';
 import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 
-const Comment = ({ data, isSubComment = false }) => {
+const Comment = ({ data, isSubComment = false, whereId, fetchComments }) => {
   const [reply, setReply] = useState(false);
   const [showSubComments, setShowSubComments] = useState(false);
 
@@ -71,7 +71,14 @@ const Comment = ({ data, isSubComment = false }) => {
         )}
 
         {/* 대댓글 입력 폼 */}
-        {!isSubComment && reply && <ReplyComment reply={reply} parentId={data.id} />}
+        {!isSubComment && reply && (
+          <ReplyComment
+            reply={reply}
+            parentId={data.id}
+            whereId={whereId}
+            fetchComments={fetchComments}
+          />
+        )}
       </div>
     </div>
   );

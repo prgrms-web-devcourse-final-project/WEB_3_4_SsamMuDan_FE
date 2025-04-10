@@ -10,13 +10,14 @@ import getComment from '@/api/careerDetail/getComment';
 import { useParams } from 'react-router-dom';
 import postComment from '@/api/careerDetail/postComment';
 
-const CommentSection = ({ id, data }) => {
+const CommentSection = ({ id }) => {
   const { id: whereId } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const editorRef = useRef(null);
   const [commentData, setCommentData] = useState([]);
   const [commentPage, setCommentPage] = useState(0);
-
+  const [commentTotalElements, setCommentTotalElements] = useState(0);
+  const [commentTotalPages, setCommentTotalPages] = useState(0);
   const [commentState, setCommentState] = useState({
     content: '',
     category: 'RESUME',
@@ -26,17 +27,23 @@ const CommentSection = ({ id, data }) => {
 
   const commentFetchData = async () => {
     try {
-      const getData = await getComment(1, commentPage);
+      const getData = await getComment(whereId, commentPage);
       setCommentData(getData.content);
-      console.log(getData);
+      setCommentTotalElements(getData.totalElements);
+      setCommentTotalPages(getData.totalPages);
+      console.log(getData.totalPages);
     } catch (error) {
       console.error('Error fetching tech stack options:', error);
     }
   };
 
+  const handlePageChange = (newPage) => {
+    setCommentPage(newPage - 1);
+  };
+
   useEffect(() => {
     commentFetchData();
-  }, []);
+  }, [commentPage]);
 
   const handleImageUpload = useCallback(async (file) => {
     const formData = new FormData();
@@ -65,29 +72,19 @@ const CommentSection = ({ id, data }) => {
     if (!editorRef.current) return;
 
     const markdownContent = editorRef.current.getInstance().getMarkdown();
-    const commentId = `${commentPage}-${index}`;
-
-    setCommentState((prevState) => ({
-      ...prevState,
-      content: markdownContent,
-      commentId,
-    }));
-
-    console.log('Comment State:', {
-      ...commentState,
-      content: markdownContent,
-      commentId,
-    });
 
     try {
       const response = await postComment({
-        ...commentState,
         content: markdownContent,
-        commentId,
+        category: 'RESUME',
+        whereId: Number(whereId),
+        commentId: '',
       });
-      if (response.data.isSuccess) {
+
+      if (response.isSuccess) {
         console.log('댓글 등록 성공');
-        // 댓글 등록 후 필요한 로직 추가
+        // 댓글 등록 후 목록 새로고침
+        commentFetchData();
       }
     } catch (error) {
       console.error('댓글 등록 실패:', error);
@@ -160,14 +157,7 @@ const CommentSection = ({ id, data }) => {
 
     return commentData.map((comment, index) => (
       <div key={comment.id} className="w-full">
-        <Comment data={comment} />
-        {comment.subComment && comment.subComment.length > 0 && (
-          <div className="ml-10 mt-4">
-            {comment.subComment.map((subComment) => (
-              <Comment key={subComment.id} data={subComment} isSubComment />
-            ))}
-          </div>
-        )}
+        <Comment data={comment} whereId={whereId} fetchComments={commentFetchData} />
       </div>
     ));
   };
@@ -176,7 +166,7 @@ const CommentSection = ({ id, data }) => {
     <div className="w-[1246px] mx-auto">
       <div className="w-full border-b border-black h-[50px]">
         <div className="text-[20px] font-[500]">
-          댓글 <span className="text-primary300 font-semibold">{data?.totalElements || 0}</span>
+          댓글 <span className="text-primary300 font-semibold">{commentTotalElements || 0}</span>
         </div>
       </div>
 
@@ -185,7 +175,11 @@ const CommentSection = ({ id, data }) => {
         {renderComments()}
 
         <div className="my-[80px]">
-          <CustomPagination />
+          <CustomPagination
+            totalPages={commentTotalPages}
+            currentPage={commentPage + 1}
+            onChangePage={handlePageChange}
+          />
         </div>
       </div>
     </div>
