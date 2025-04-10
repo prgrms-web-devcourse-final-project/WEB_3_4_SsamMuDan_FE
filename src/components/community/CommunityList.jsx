@@ -1,7 +1,10 @@
 import { ChatBubbleOvalLeftEllipsisIcon, EyeIcon, HeartIcon } from '@heroicons/react/24/outline';
 import CustomPagination from '../common/CustomPagination';
+import { useNavigate } from 'react-router-dom';
 
 const CommunityList = ({ communityinfo }) => {
+  const navigate = useNavigate();
+
   // new 뱃지
   const isNew = (createdAt) => {
     console.log('와우', createdAt);
@@ -27,9 +30,10 @@ const CommunityList = ({ communityinfo }) => {
       {communityinfo.map((item, index) => (
         <div
           key={item.id}
-          className={`w-[1251px] h-[220px] flex items-center border-gray-200 ${
-            index === 0 ? 'border-t border-b' : 'border-b'
-          }`}
+          onClick={() => navigate(`/communityDetail/${item.id}`)}
+          className={`w-[1251px] h-[220px] flex items-center border-gray-200 transition-colors duration-200 
+                      ${index === 0 ? 'border-t border-b' : 'border-b'} 
+                      cursor-pointer hover:bg-gray-50`}
         >
           <div className="w-[872px] h-[146px] ml-2">
             {/* 프로필사진 */}
