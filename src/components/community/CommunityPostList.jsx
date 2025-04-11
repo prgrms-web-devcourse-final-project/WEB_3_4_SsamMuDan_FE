@@ -35,7 +35,7 @@ const CommunityPostList = ({ postData, onTabChange, searchProps, selectData, pag
               return (
                 <div key={value} onClick={() => onTabChange(value)} className="relative z-10">
                   <div
-                    className={`w-[100px] h-[40px] flex items-center justify-center text-base font-semibold rounded-full transition-colors duration-200 ${
+                    className={`w-[100px] h-[40px] flex items-center justify-center text-base font-semibold rounded-full transition-colors duration-200 hover:cursor-pointer ${
                       isActive ? 'text-white' : 'text-black'
                     }`}
                   >
@@ -44,7 +44,7 @@ const CommunityPostList = ({ postData, onTabChange, searchProps, selectData, pag
                   {isActive && (
                     <motion.div
                       layoutId="categoryHighlight"
-                      className="absolute top-0 left-0 w-full h-full bg-primary300 rounded-full -z-10"
+                      className="absolute top-0 left-0 w-full h-full bg-primary300 rounded-full -z-10 "
                       transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                     />
                   )}
