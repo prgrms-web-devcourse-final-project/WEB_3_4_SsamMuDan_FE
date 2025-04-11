@@ -25,14 +25,10 @@ const MypageInfo = () => {
           <div className="text-[20px] font-light text-grey400">{userInfo?.email}</div>
         </div>
 
-        <div className="flex flex-col justify-end items-end gap-5 mb-8">
-          <div className="flex items-center">
-            <img src="/icons/mypage-coin.svg" alt="마이페이지 코인" className="mr-[18px]" />
-            <span className="text-[32px] font-semibold">25,000</span>
-          </div>
+        <div className="mt-[80px]">
           <ActionButton
             text="회원정보 수정"
-            customeStyle="w-[203px] h-[50px] font-semibold text-primary300 border border-primary300"
+            customeStyle="w-[201px] h-[50px] font-semibold text-primary300 border border-primary300"
             onClick={() => setIsModalOpen(true)}
           />
         </div>

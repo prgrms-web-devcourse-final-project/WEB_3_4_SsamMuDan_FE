@@ -28,7 +28,7 @@ const CommunitySection = () => {
   return (
     <div className="w-[1246px] mx-auto h-auto">
       <div className="flex items-center justify-between mb-[35px]">
-        <div className="text-[25px] font-esamanru">커뮤니티에서 지금 만나요</div>
+        <div className="text-[25px] font-esamanru">🙌 커뮤니티에서 지금 만나요</div>
         <SlideButton
           onPrev={() => swiperRef.current?.slidePrev()}
           onNext={() => swiperRef.current?.slideNext()}

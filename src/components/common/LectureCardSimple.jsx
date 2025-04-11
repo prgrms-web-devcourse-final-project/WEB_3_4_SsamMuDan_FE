@@ -24,7 +24,9 @@ const LectureCardSimple = ({
 
       {/* 강사 & 가격 */}
       <div className="flex items-center mb-1">
-        <span className="text-sm text-grey600 font-medium mr-3 ml-1">{instructor}</span>
+        <span className="text-sm text-grey600 font-medium mr-3 ml-1 line-clamp-1">
+          {instructor}
+        </span>
         {showPrice && (
           <span className="text-sm text-primary400 font-bold ml-1">{price.toLocaleString()}원</span>
         )}

@@ -1,14 +1,29 @@
-// 작성자만 가능한 인원수 변경 및 삭제 -> 아직 미완성
+// 작성자만 가능한 인원수 변경 및 삭제
 
 import { useState } from 'react';
 import { UsersIcon, TrashIcon } from '@heroicons/react/24/outline';
 
-const PositionUpdate = ({ text, count }) => {
+const PositionUpdate = ({ text, count, onUpdate, onDelete }) => {
   const [num, setNum] = useState(count);
 
-  const plus = () => setNum(num + 1);
+  const plus = () => {
+    const updated = num + 1;
+    setNum(updated);
+    onUpdate(updated);
+  };
+
   const minus = () => {
-    if (num > 1) setNum(num - 1);
+    const updated = num - 1;
+    if (updated >= 0) {
+      setNum(updated);
+      onUpdate(updated);
+    }
+  };
+
+  const handleDelete = () => {
+    if (confirm(`"${text}" 포지션을 삭제하시겠습니까?`)) {
+      onDelete();
+    }
   };
 
   return (
@@ -19,9 +34,9 @@ const PositionUpdate = ({ text, count }) => {
         <div className="text-[18px]">{text}</div>
       </div>
 
-      {/* 인원설정 */}
+      {/* 인원 설정 */}
       <div className="flex items-center gap-2">
-        <div className="w-[26px] h-[26px] hover: cursor-pointer" onClick={minus}>
+        <div className="w-[26px] h-[26px] cursor-pointer" onClick={minus}>
           <img src="/images/projectJoinWrite/Minus.svg" alt="minus" />
         </div>
         <div className="text-[18px] font-bold">{num}</div>
@@ -29,7 +44,6 @@ const PositionUpdate = ({ text, count }) => {
           <img src="/images/projectJoinWrite/Plus.svg" alt="plus" />
         </div>
         <div className="text-[18px] font-bold">명</div>
-        <TrashIcon className="w-[26px] cursor-pointer" />
       </div>
     </div>
   );

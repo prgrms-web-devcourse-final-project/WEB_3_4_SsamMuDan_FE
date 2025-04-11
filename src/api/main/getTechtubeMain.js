@@ -17,7 +17,7 @@ const getTechtubeMain = async ({
 
     return response.data.data.content;
   } catch (error) {
-    console.error('Error fetching community posts:', error);
+    console.error('테크튜브 조회 실패:', error);
     throw error;
   }
 };

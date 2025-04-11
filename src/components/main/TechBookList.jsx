@@ -1,20 +1,23 @@
 import { useEffect, useState } from 'react';
-import getTechBook from '@/api/education/getTechBook';
 import getTechBookDetail from '@/api/education/getTechBookDetail';
+import getTechbookMain from '@/api/main/getTechbookMain';
 
-const TechBookList = () => {
+const TechBookList = ({ categoryId }) => {
   const [bookList, setBookList] = useState([]);
 
   useEffect(() => {
+    if (!categoryId) return;
+
     const fetchTechBooks = async () => {
       try {
-        const res = await getTechBook();
-        const top3 = res.data.content
-          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .slice(0, 3);
-
+        const books = await getTechbookMain({
+          sort: 'LATEST',
+          size: 12,
+          categoryId,
+        });
+        const top3 = books.slice(0, 3);
         // getTechBookDetail로 상세 데이터 불러와 해당 id의 introduction(내용)만 붙이기
-        const withIntroduction = await Promise.all(
+        const withIntro = await Promise.all(
           top3.map(async (book) => {
             try {
               const detail = await getTechBookDetail(book.id);
@@ -26,14 +29,14 @@ const TechBookList = () => {
           }),
         );
 
-        setBookList(withIntroduction);
+        setBookList(withIntro);
       } catch (err) {
         console.error('TechBook 리스트 로딩 실패:', err);
       }
     };
 
     fetchTechBooks();
-  }, []);
+  }, [categoryId]);
 
   return (
     <div className="flex flex-col gap-3 border-r">

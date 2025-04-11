@@ -9,7 +9,7 @@ export const COTREE_ENDPOINT = Object.freeze({
   techbookDetail: `/api/v1/education/techbook`, // 교육 테크북 상세페이지
   techbookReview: `/api/v1/education/review`, // 교육 테크북 리뷰
   techLike: `/api/v1/like`, // 교육 좋아요
-  projectPostsMain: `/api/v1/project/team/hot`, // 메인페이지에서 프로젝트 모집글 조회
+  projectPostsMain: `/api/v1/project/team/hot/main`, // 메인페이지에서 프로젝트 모집글 조회
   signin: `/api/v1/member/signin`, // 로그인
   careerWrite: '/api/v1/recruitment/resume?id=1',
   community: '/api/v1/community/board',
@@ -26,9 +26,11 @@ export const COTREE_ENDPOINT = Object.freeze({
   projectMake: 'api/v1/project/team/', // 메인페이지에서 프로젝트 모집글 조회
   projectDetail: (projectId) => `/api/v1/project/team/${projectId}`, // 프로젝트 상세 조회
   projectStatus: (projectId) => `/api/v1/project/team/${projectId}/status`, // 프로젝트 모집 상태 변경
+  projectPosition: (projectId) => `/api/v1/project/team/${projectId}/position`, // 프로젝트 직무별 모집 인원 수정
   signup: `/api/v1/member/signup`, // 회원가입
   userInfo: `/api/v1/member`, // 로그인한 사용자의 정보 조회
   logout: `/api/v1/member/signout`, // 로그아웃
+  orderList: `/api/v1/member/order`, // 회원 구매목록 조회
   signupPhone: `/api/v1/member/signup/phone`, // 회원가입 휴대폰번호 인증코드 전송
   signupPhoneVerify: `/api/v1/member/signup/phone/verify`, // 회원가입 휴대폰번호 인증코드 확인
   signupEmail: `/api/v1/email/code`, // 회원가입 이메일 인증코드 전송
