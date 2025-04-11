@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CategoryTab from '../common/CategoryTab';
 import { StarIcon } from '@heroicons/react/24/solid';
 import PrimarySelect from '@/components/common/PrimarySelect';
@@ -8,6 +8,8 @@ import EducationDetailIntro from './EducationDetailIntro';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import getTechBookReview from '@/api/techbookDetail/techbookReview';
 import getTechTubeReview from '@/api/techbookDetail/techtubeReview';
+import { Editor } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
 
 const EducationDetailContent = ({ techTubeInfo, code }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,6 +30,8 @@ const EducationDetailContent = ({ techTubeInfo, code }) => {
   const category = searchParams.get('category') || '강의소개';
   const sortOption = searchParams.get('sort') || 'LATEST';
   const page = Number(searchParams.get('page')) || 0;
+  const [isEditing, setIsEditing] = useState(true);
+  const editorRef = useRef(null);
 
   // 탭 변경 핸들러
   const handleTabChange = (tabValue) => {
@@ -150,6 +154,27 @@ const EducationDetailContent = ({ techTubeInfo, code }) => {
               onSortChange={handleSortChange}
             />
           </div>
+          {/* 수강평쓰기 */}
+          {isEditing && (
+            <Editor
+              // plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
+              initialValue=""
+              previewStyle="none"
+              height="300px"
+              initialEditType="markdown"
+              useCommandShortcut={true}
+              ref={editorRef}
+              hideModeSwitch={true} // 🔥 위에 모드 선택 탭 숨김
+              // hooks={{
+              //   addImageBlobHook: async (blob, callback) => {
+              //     const imageUrl = await handleImageUpload(blob);
+              //     if (imageUrl) {
+              //       callback(imageUrl, '');
+              //     }
+              //   },
+              // }}
+            />
+          )}
 
           {/* 수강평 리스트 */}
           <div className=" text-sm text-gray-700 min-h-[500.5px]">

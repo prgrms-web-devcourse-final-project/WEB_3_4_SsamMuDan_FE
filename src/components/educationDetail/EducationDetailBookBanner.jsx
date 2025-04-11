@@ -7,8 +7,9 @@ const EducationDetailBookBanner = ({ techBookInfo }) => {
     window.open(techBookInfo.techBookUrl, '_blank');
   };
   const rawRating = techBookInfo?.avgRating;
+  console.log('rawRating', rawRating);
   const rating = Number.isFinite(rawRating) ? Math.floor(rawRating) : 0;
-  console.log('rating', rating);
+  console.log('rating', techBookInfo);
 
   return (
     <div
@@ -22,11 +23,12 @@ const EducationDetailBookBanner = ({ techBookInfo }) => {
               text={techBookInfo?.educationLevel}
               className="px-[20px] h-[32px] bg-[#FFEBE9] text-primary400"
             />
-            {techBookInfo?.educationCategories.map((item) => (
+            {techBookInfo?.educationCategoryList.map((item) => (
               <Badge
                 id={item}
                 text={item}
                 className="px-[20px] h-[32px] bg-[#DAF8E6] text-[#1A8245]"
+                key={item.id}
               />
             ))}
           </div>

@@ -1,8 +1,32 @@
+import getTechsPay from '@/api/techtubeDetail/getTechsPay';
 import Layout from '@/common/Layout/Layout';
 import ActionButton from '@/components/common/ActionButton';
-import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 
 const Payment = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const paymentKey = searchParams.get('paymentKey');
+  const orderId = searchParams.get('orderId');
+  const amount = searchParams.get('amount');
+  console.log('amount', typeof amount);
+  useEffect(() => {
+    if (orderId && paymentKey && amount) {
+      async function tosspayconfirm() {
+        try {
+          const data = await getTechsPay(orderId, paymentKey, amount);
+          console.log('결제 승인 성공:', data);
+          // navigate('/education');s
+        } catch (err) {
+          console.error('결제 승인 실패', err);
+          // navigate('/payfail');
+        }
+      }
+      tosspayconfirm();
+    }
+  }, []);
   return (
     <Layout>
       <div className="w-[1246px] h-[825px] p-[30px] mx-auto flex justify-center  pt-[170px]">
