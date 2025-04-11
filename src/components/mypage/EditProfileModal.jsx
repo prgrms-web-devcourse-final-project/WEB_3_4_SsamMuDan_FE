@@ -8,7 +8,8 @@ const EditProfileModal = ({ onClose }) => {
   const { userInfo, loginWithUserInfo } = useAuthStore();
   const [username, setUsername] = useState(userInfo?.username || '');
   const [nickname, setNickname] = useState(userInfo?.nickname || '');
-  const [preview, setPreview] = useState(userInfo?.profileImageUrl || '/images/mypage-user.png');
+  const defaultImage = '/images/default-avatar.svg';
+  const [preview, setPreview] = useState(userInfo?.profileImageUrl || defaultImage);
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -55,7 +56,7 @@ const EditProfileModal = ({ onClose }) => {
             <img
               src={preview}
               alt="유저 썸네일"
-              className="w-full h-full object-cover rounded-full"
+              className="w-full h-full object-cover rounded-full border"
             />
             {/* 프로필 이미지 수정 아이콘 */}
             <label
