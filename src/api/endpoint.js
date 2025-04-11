@@ -19,7 +19,7 @@ export const COTREE_ENDPOINT = Object.freeze({
   communityCreate: '/api/v1/community/board', // 커뮤니티 작성
   careerPosition: '/api/v1/category/position',
   careerInfo: '/api/v1/recruitment/resume',
-  CareerDetail: '/api/v1/recruitment/resume/1',
+  CareerDetail: '/api/v1/recruitment/resume',
   Comment: '/api/v1/comment',
   hotProject: '/api/v1/project/team/hot', // 메인페이지에서 프로젝트 모집글 조회
   projectList: 'api/v1/project/team', // 메인페이지에서 프로젝트 모집글 조회

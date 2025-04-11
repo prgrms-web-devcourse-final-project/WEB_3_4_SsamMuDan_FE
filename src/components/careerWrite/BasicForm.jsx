@@ -29,6 +29,23 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
 
   // 이메일
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+
+  const validateEmail = (value) => {
+    if (!value.trim()) {
+      setEmailError('이메일을 입력해주세요.');
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      setEmailError('올바른 이메일 형식을 입력해주세요.');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    validateEmail(value);
+  };
 
   //직무
   const [position, setPosition] = useState([]);
@@ -254,9 +271,11 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
             <IntroduceInput
               width="1213px"
               height="60px"
-              value={email} // ✅ value props 추가
-              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              onChange={handleEmailChange}
+              placeholder="이메일을 입력해주세요 (예: example@email.com)"
             />
+            {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
           </div>
           {/* 직무 */}
           <div>

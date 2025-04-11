@@ -14,8 +14,12 @@ import { useState, useEffect } from 'react';
 import getSkillStack from '@/api/careerWrite/getSkillStack';
 import getPosition from '@/api/projectJoin/getPosition';
 import postProject from '@/api/projectJoinWrite/postProject';
+import { toast } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const ProjectInfoForm = () => {
+  const navigate = useNavigate();
   // 이미지
   const [imageUrl, setImgUrl] = useState('');
   const [postImgUrl, setPostImgUrl] = useState('');
@@ -189,7 +193,7 @@ const ProjectInfoForm = () => {
     );
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // 이메일 형식 검증
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(projectContact)) {
       alert('올바른 이메일 형식을 입력해주세요.');
@@ -215,11 +219,19 @@ const ProjectInfoForm = () => {
     console.log('--- API Request Structure ---');
     console.log('requestPayload:', requestPayload);
 
-    postProject(requestPayload, postImgUrl);
+    const response = await postProject(requestPayload, postImgUrl);
+    console.log('response', response);
+    if (response.isSuccess) {
+      toast.success('프로젝트가 성공적으로 생성되었습니다.');
+      navigate('/projectJoin');
+    } else {
+      toast.error('프로젝트 생성 중 오류가 발생했습니다.');
+    }
   };
 
   return (
     <>
+      <Toaster />
       <div className="w-[1213px] mx-auto">
         <div className="w-[1213px] h-[44px] mx-auto border-b">
           <div className="text-[22px] font-semibold">📌 프로젝트</div>

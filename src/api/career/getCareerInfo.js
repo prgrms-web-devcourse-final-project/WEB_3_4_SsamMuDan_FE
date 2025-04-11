@@ -25,7 +25,6 @@ const getCareerInfo = async (page, skills, positions, history, sort) => {
       queryString += `&sort=${sort}`;
     }
 
-    // console.log('queryString', queryString);
     const response = await coTreeAPI.get(COTREE_ENDPOINT.careerInfo + queryString);
     return response.data;
   } catch (error) {

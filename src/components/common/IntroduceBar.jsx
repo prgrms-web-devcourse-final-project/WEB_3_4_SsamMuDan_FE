@@ -7,7 +7,7 @@ const IntroduceBar = ({ text }) => {
         <div className="text-[16px] text-grey300">
           <div>{text.teamName}</div>
           <div>
-            {text.startDate} ~ {text.endDate}
+            {text.startDate} ~ {text.endDate ? text.endDate : '재직중'}
           </div>
         </div>
         <div className="text-[16px] mb-3">{text.careerDescription}</div>
