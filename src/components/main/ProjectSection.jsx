@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import getProjectPostsMain from '@/api/main/getProjectPostsMain';
 import JoinCard from './JoinCard';
 import PrimaryButton from '../common/PrimaryButton';
 import { Link } from 'react-router-dom';
+import getProjectPostsMain from '@/api/main/getProjectPostsMain';
 
 const ProjectSection = () => {
   const [projects, setProjects] = useState([]);
@@ -11,7 +11,7 @@ const ProjectSection = () => {
     const fetchProjects = async () => {
       try {
         const res = await getProjectPostsMain();
-        setProjects(res.data);
+        setProjects(res);
       } catch (error) {
         console.error('❌ HOT 프로젝트 조회 실패:', error);
       }
@@ -22,7 +22,7 @@ const ProjectSection = () => {
 
   return (
     <>
-      <div className="text-[25px] font-esamanru w-[1246px] mx-auto ">🔥 프로젝트 같이 하자..!!</div>
+      <div className="text-[25px] font-esamanru w-[1246px] mx-auto ">🔥 프로젝트 같이 하자!</div>
 
       <div className="relative w-full mx-w-[1920px] h-[800px] mx-auto overflow-hidden">
         {/* 배경이미지 */}

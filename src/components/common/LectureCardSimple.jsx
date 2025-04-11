@@ -20,11 +20,13 @@ const LectureCardSimple = ({
       </div>
 
       {/* 타이틀 */}
-      <p className="font-bold leading-none pl-1 mb-2">{title}</p>
+      <p className="font-bold leading-none pl-1 mb-2 line-clamp-2">{title}</p>
 
       {/* 강사 & 가격 */}
       <div className="flex items-center mb-1">
-        <span className="text-sm text-grey600 font-medium mr-3 ml-1">{instructor}</span>
+        <span className="text-sm text-grey600 font-medium mr-3 ml-1 line-clamp-1">
+          {instructor}
+        </span>
         {showPrice && (
           <span className="text-sm text-primary400 font-bold ml-1">{price.toLocaleString()}원</span>
         )}

@@ -1,7 +1,6 @@
 import getUserInfo from '@/api/login/getUserInfo';
 import logoutUser from '@/api/login/logoutUser';
 import useAuthStore from '@/store/useAuthStore';
-import { PowerIcon } from '@heroicons/react/24/outline';
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 
@@ -80,34 +79,34 @@ const Header = () => {
           {isLoggedIn ? (
             <>
               <span className="text-[13px] font-medium">{userInfo?.nickname}</span>
-
-              {/* 프로필 이미지 -> 클릭 시 드롭다운 */}
-              <button onClick={() => setDropdownOpen((prev) => !prev)} className="ml-[20px]">
-                <img
-                  src={userInfo?.profileImageUrl || '/images/mypage-user.png'}
-                  alt="프로필"
-                  className="w-[36px] h-[36px] rounded-full object-cover"
-                />
-              </button>
-
-              {/* 드롭다운 메뉴 */}
-              {dropdownOpen && (
-                <div className="absolute top-[70px] right-[40px] w-[150px] bg-white shadow-md border rounded-[10px] z-50">
-                  <Link
-                    to="/mypage"
-                    className="block px-4 py-2 m-1 text-sm font-semibold text-gray-700 rounded-[10px] hover:bg-[#E5F9F1] text-center"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    마이페이지
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="block w-[140px] px-4 py-2 m-1 text-sm font-semibold text-gray-700 rounded-[10px] hover:bg-[#FFEDED] text-center"
-                  >
-                    로그아웃
-                  </button>
-                </div>
-              )}
+              {/* 드롭다운 전체를 감싸는 컨테이너 */}
+              <div className="relative ml-[20px]">
+                <button onClick={() => setDropdownOpen((prev) => !prev)}>
+                  <img
+                    src={userInfo?.profileImageUrl || '/images/mypage-user.png'}
+                    alt="프로필"
+                    className="w-[36px] h-[36px] rounded-full object-cover"
+                  />
+                </button>
+                {/* 드롭다운 메뉴 */}
+                {dropdownOpen && (
+                  <div className="absolute top-full right-0 w-[150px] bg-white shadow-md border rounded-[10px] z-50">
+                    <Link
+                      to="/mypage"
+                      className="block px-4 py-2 m-1 text-sm font-semibold text-gray-700 rounded-[10px] hover:bg-[#E5F9F1] text-center"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      마이페이지
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="block w-[140px] px-4 py-2 m-1 text-sm font-semibold text-gray-700 rounded-[10px] hover:bg-[#FFEDED] text-center"
+                    >
+                      로그아웃
+                    </button>
+                  </div>
+                )}
+              </div>
             </>
           ) : (
             <>
