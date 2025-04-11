@@ -3,9 +3,9 @@
 import coTreeAPI from '@/config/cotree';
 import { COTREE_ENDPOINT } from '../endpoint';
 
-const getProjectList = async (techStacks, position, page) => {
+const getProjectList = async (techStacks, position, page, size, sort) => {
   try {
-    let queryString = `?page=${page}&size=16`;
+    let queryString = `?page=${page}&size=${size}`;
 
     // 기술 스택이 선택된 경우, 각각의 ID를 쿼리 파라미터로 추가
     if (techStacks && techStacks.length > 0) {
@@ -17,6 +17,9 @@ const getProjectList = async (techStacks, position, page) => {
       position.forEach((posId) => {
         queryString += `&jobPosition=${posId}`;
       });
+    }
+    if (sort) {
+      queryString += `&sort=${sort}`;
     }
 
     const response = await coTreeAPI.get(COTREE_ENDPOINT.projectList + queryString);

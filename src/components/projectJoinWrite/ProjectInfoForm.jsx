@@ -189,16 +189,6 @@ const ProjectInfoForm = () => {
     );
   };
 
-  const simpleData = {
-    title: '프로젝트 제목',
-    description: '설명',
-    contact: 'test@example.com',
-    partnerType: '열정과 노력이 있으신분 지향합니 다',
-    techStackIds: [1, 2, 3],
-    recruitmentPositions: { 1: 4 },
-    startDate: '2025-04-08',
-  };
-
   const handleSubmit = () => {
     // 이메일 형식 검증
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(projectContact)) {
@@ -219,11 +209,11 @@ const ProjectInfoForm = () => {
       techStackIds: selectedSkill.map((skill) => skill.id),
       recruitmentPositions: recruitmentPositions,
       startDate: postData.startDate,
+      endDate: postData.endDate,
     };
 
     console.log('--- API Request Structure ---');
     console.log('requestPayload:', requestPayload);
-    console.log('simpleData:', simpleData);
 
     postProject(requestPayload, postImgUrl);
   };
