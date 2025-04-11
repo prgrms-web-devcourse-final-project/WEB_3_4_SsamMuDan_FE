@@ -83,9 +83,9 @@ const Header = () => {
               <div className="relative ml-[20px]">
                 <button onClick={() => setDropdownOpen((prev) => !prev)}>
                   <img
-                    src={userInfo?.profileImageUrl || '/images/mypage-user.png'}
+                    src={userInfo?.profileImageUrl || '/images/default-avatar.svg'}
                     alt="프로필"
-                    className="w-[36px] h-[36px] rounded-full object-cover"
+                    className="w-[36px] h-[36px] rounded-full object-cover border"
                   />
                 </button>
                 {/* 드롭다운 메뉴 */}
