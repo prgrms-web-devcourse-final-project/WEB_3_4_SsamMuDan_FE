@@ -15,7 +15,7 @@ const getProjectList = async (techStacks, position, page, size, sort) => {
     }
     if (position && position.length > 0) {
       position.forEach((posId) => {
-        queryString += `&jobPosition=${posId}`;
+        queryString += `&devPosition=${posId}`;
       });
     }
     if (sort) {

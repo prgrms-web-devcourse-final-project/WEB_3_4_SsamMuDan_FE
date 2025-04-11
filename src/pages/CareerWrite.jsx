@@ -8,7 +8,7 @@ import FloatingButton from '@/components/common/FloatingButton';
 import { useState } from 'react';
 import postRecruitment from '@/api/careerWrite/postRecruitment';
 import { useNavigate } from 'react-router-dom';
-
+import { Toaster, toast } from 'react-hot-toast';
 const CareerWrite = () => {
   const navigate = useNavigate();
 
@@ -138,12 +138,17 @@ const CareerWrite = () => {
 
     try {
       setIsSubmitting(true);
-      await postRecruitment(postData, resumeImage);
-      alert('이력서가 성공적으로 등록되었습니다.');
-      navigate('/career'); // 이력서 목록 페이지로 이동
+
+      const response = await postRecruitment(postData, resumeImage);
+      console.log('response', response);
+      if (response.isSuccess) {
+        toast.success('이력서가 성공적으로 등록되었습니다.');
+        navigate('/career'); // 이력서 목록 페이지로 이동
+      } else {
+        alert('이력서 등록에 실패했습니다. 다시 시도해주세요.');
+      }
     } catch (error) {
-      console.error('이력서 등록 중 오류가 발생했습니다:', error);
-      alert('이력서 등록에 실패했습니다. 다시 시도해주세요.');
+      toast.error('이력서 등록에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setIsSubmitting(false);
     }
@@ -151,6 +156,7 @@ const CareerWrite = () => {
 
   return (
     <Layout>
+      <Toaster />
       <div className="w-[1246px] mx-auto mt-[129px] relative">
         {/* 이름 */}
         <div className="font-esamanru text-[24px]">

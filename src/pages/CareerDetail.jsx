@@ -10,6 +10,7 @@ import getCareerDetail from '@/api/careerDetail/getCareerDetail';
 
 const CareerDetail = () => {
   const { id } = useParams();
+  console.log('id', id);
   const category = 'RESUME';
   const [introduceData, setIntroduceData] = useState({
     name: '',
@@ -25,7 +26,8 @@ const CareerDetail = () => {
 
   const infoFetchData = async () => {
     try {
-      const getData = await getCareerDetail();
+      const getData = await getCareerDetail(id);
+      console.log('getData', getData);
       setIntroduceData(getData.basicInfoResponse);
       setCareerData(getData.careerInfos);
       setProjectData(getData.portfolioInfos);
