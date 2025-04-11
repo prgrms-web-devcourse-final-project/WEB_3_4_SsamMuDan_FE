@@ -2,8 +2,7 @@ import Layout from '@/common/Layout/Layout';
 import HeroSection from '@/components/projectJoin/HeroSection';
 import HotProject from '@/components/projectJoin/HotProject';
 import StackModal from '@/components/common/StackModal';
-import PositionModal from '@/components/common/PositionModal';
-import PrimarySelect from '@/components/common/PrimarySelect';
+import DateSelect from '@/components/career/DateSelect';
 import ProjectCardListSection from '@/components/projectJoin/ProjectListSection';
 import CustomPagination from '@/components/common/CustomPagination';
 import { useEffect, useState } from 'react';
@@ -11,27 +10,14 @@ import getProjectList from '@/api/projectJoin/getProjectList';
 import ProjectPositionModal from '@/components/projectJoin/projectPositionModal';
 
 const ProjectJoin = () => {
-  const techStack = [
-    'Python',
-    'SpringFramework',
-    'AWS',
-    'Git',
-    'iOS',
-    'HTML',
-    'JavaScript',
-    'MySQL',
-    'SQL',
+  const dateSelectList = [
+    { label: '최신순', value: 'createdAt' },
+    { label: '좋아요순', value: 'like' },
   ];
-  const position = ['전체', '프론트엔드', '벡엔드', '풀스택', 'iOS'];
-
-  const selectList = {
-    최신순: 'LATEST',
-    조회순: 'VIEW',
-  };
 
   const [selectedPosition, setSelectedPosition] = useState([]);
   const [selectedTechStack, setSelectedTechStack] = useState([]);
-  const [selectedSort, setSelectedSort] = useState('최신순');
+  const [selectedSort, setSelectedSort] = useState('createdAt');
 
   const [projectList, setProjectList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
@@ -50,42 +36,24 @@ const ProjectJoin = () => {
       selectedPosition,
       currentPage,
       itemsPerPage,
+      selectedSort,
     );
     setProjectList(projectList.content);
     setFilteredList(projectList.content);
     setTotalPages(projectList.totalPages);
-    console.log('totalPages', totalPages);
   };
 
   // 기술 스택 선택
   const handleTechStackSelect = (selectedStacks) => {
-    console.log('선택된 기술 스택:', selectedStacks);
     setSelectedTechStack(selectedStacks);
     setCurrentPage(0); // 기술 스택이 변경되면 첫 페이지로 이동
   };
 
-  // 정렬 함수
-  const sortProjects = (projects, sortType) => {
-    const sortedProjects = [...projects];
-    if (sortType === '최신순') {
-      sortedProjects.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
-    } else if (sortType === '조회순') {
-      sortedProjects.sort((a, b) => b.viewCount - a.viewCount);
-    }
-    return sortedProjects;
-  };
-
-  // 정렬 상태가 변경될 때마다 프로젝트 목록 정렬
-  useEffect(() => {
-    const sortedProjects = sortProjects(projectList, selectedSort);
-    setFilteredList(sortedProjects);
-  }, [selectedSort, projectList]);
-
-  // 기술 스택, 페이지, 직무가 변경될 때마다 프로젝트 목록 다시 불러오기
+  // 정렬 상태가 변경될 때마다 프로젝트 목록 다시 불러오기
   useEffect(() => {
     console.log('페이지 변경 감지:', currentPage);
     fetchProjectList();
-  }, [currentPage, selectedTechStack, selectedPosition]);
+  }, [currentPage, selectedTechStack, selectedPosition, selectedSort]);
 
   // 초기 프로젝트 목록 불러오기
   useEffect(() => {
@@ -112,10 +80,12 @@ const ProjectJoin = () => {
             <StackModal onSelect={handleTechStackSelect} />
             <ProjectPositionModal onSelect={setSelectedPosition} />
           </div>
-          <PrimarySelect
-            selectList={selectList}
-            placeholder={'최신순'}
-            onSelect={(sort) => setSelectedSort(sort)}
+          <DateSelect
+            customstyle="w-[120px] h-[42px]"
+            selectList={dateSelectList}
+            placeholder="최신순"
+            onSortChange={setSelectedSort}
+            value={selectedSort}
           />
         </div>
         <div className="mt-[31px]">

@@ -13,6 +13,8 @@ const ReplyComment = ({ parentId, whereId, fetchComments, createdAt }) => {
   const [isEditing, setIsEditing] = useState(true);
 
   const formatDate = (dateString) => {
+    if (!dateString) return '';
+
     const [date, time] = dateString.split('T');
     const postTime = new Date(dateString);
     const currentTime = new Date();
