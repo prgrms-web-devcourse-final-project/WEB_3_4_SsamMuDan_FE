@@ -26,6 +26,7 @@ export const COTREE_ENDPOINT = Object.freeze({
   projectMake: 'api/v1/project/team/', // 메인페이지에서 프로젝트 모집글 조회
   projectDetail: (projectId) => `/api/v1/project/team/${projectId}`, // 프로젝트 상세 조회
   projectStatus: (projectId) => `/api/v1/project/team/${projectId}/status`, // 프로젝트 모집 상태 변경
+  projectPosition: (projectId) => `/api/v1/project/team/${projectId}/position`, // 프로젝트 직무별 모집 인원 수정
   signup: `/api/v1/member/signup`, // 회원가입
   userInfo: `/api/v1/member`, // 로그인한 사용자의 정보 조회
   logout: `/api/v1/member/signout`, // 로그아웃

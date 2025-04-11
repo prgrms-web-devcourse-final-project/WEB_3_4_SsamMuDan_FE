@@ -32,7 +32,7 @@ const FindPeople = ({ partnerType, isOwner, isOpen, setIsOpen, projectId }) => {
           <PrimaryButton
             width="135px"
             height="50px"
-            text={isOpen ? '모집 마감' : '모집 중으로 변경'}
+            text={isOpen ? '모집 중으로 변경' : '모집마감'}
             onClick={handleRecruitStatus}
           />
         </div>

@@ -11,6 +11,7 @@ import ProjectFloating from '@/components/ProjectDetail/ProjectFloating';
 
 const ProjectJoinDetail = () => {
   const { id } = useParams(); // URL에서 projectId 추출
+  const projectId = Number(id);
   const [data, setData] = useState(null);
   const [isOpen, setIsOpen] = useState(null);
 
@@ -19,12 +20,10 @@ const ProjectJoinDetail = () => {
       try {
         const detail = await getProjectDetail(id);
         setData(detail);
-        setIsOpen(detail.isOpen); // 초기값 세팅
       } catch (error) {
         console.error('상세 조회 실패:', error);
       }
     };
-
     fetchData();
   }, [id]);
 
@@ -37,7 +36,11 @@ const ProjectJoinDetail = () => {
     <Layout>
       <div className="w-[1246px] border mx-auto flex flex-col mt-[68px] rounded-[8px] mb-[55px] relative">
         <ProjectIntroduce data={data} />
-        <PositionSection devPositionsInfo={data.devPositionsInfo} isOwner={data.isOwner} />
+        <PositionSection
+          devPositionsInfo={data.devPositionsInfo}
+          isOwner={data.isOwner}
+          projectId={projectId}
+        />
         <ProjectStack techStacks={data.techStacks} />
         <FindPeople
           partnerType={data.partnerType}
@@ -49,10 +52,10 @@ const ProjectJoinDetail = () => {
         {/* 플로팅 뱃지 */}
         <div className="fixed top-[300px] right-[100px] max-w-[800px] z-50">
           <ProjectFloating
-            text={isOpen ? '모집중' : '모집마감'}
+            text={isOpen ? '모집마감' : '모집중'}
             type="status"
             style={`${
-              isOpen ? '!bg-primary300 !border-primary300' : '!bg-[#C4C4C4] !border-[#C4C4C4]'
+              isOpen ? '!bg-[#C4C4C4] !border-[#C4C4C4]' : '!bg-primary300 !border-primary300'
             }`}
           />
           <ProjectFloating text={data.viewCount} type="viwer" />
