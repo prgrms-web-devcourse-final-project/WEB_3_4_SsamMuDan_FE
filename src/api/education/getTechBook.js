@@ -1,9 +1,8 @@
 import coTreeAPI from '@/config/cotree';
 import { COTREE_ENDPOINT } from '../endpoint';
 
-const getTechBook = async (page, sort, keyword) => {
+const getTechBook = async (page, size = 16, sort, keyword) => {
   console.log('keyword', keyword);
-  const size = 16;
   try {
     const response = await coTreeAPI.get(COTREE_ENDPOINT.techbook, {
       params: {

@@ -1,3 +1,4 @@
+import getTechBook from '@/api/education/getTechBook';
 import getTechBookInfo from '@/api/techbookDetail/techbookDetail';
 import Layout from '@/common/Layout/Layout';
 import EducationDetailBookBanner from '@/components/educationDetail/EducationDetailBookBanner';
@@ -14,10 +15,15 @@ const TechBook = () => {
   //로그인하기
   const Islogin = useAuthStore((state) => state.isLoggedIn);
   const { id } = useParams();
+  const educationType = 'TECH_BOOK';
+  const [techbookList, setTechbookList] = useState([]);
   useEffect(() => {
     async function fetchTechBookList() {
       try {
         const data = await getTechBookInfo(id);
+        const educationdata = await getTechBook(0, 3, 'LIKES');
+        setTechbookList(educationdata.data.content);
+        console.log('로그인입니다', educationdata.data.content);
         setTechBook(data.data);
       } catch (error) {
         console.error('Error fetching tech book:', error);
@@ -25,7 +31,6 @@ const TechBook = () => {
     }
     fetchTechBookList();
   }, []);
-  console.log('로그인입니다', Islogin);
   return (
     <Layout>
       <div className="relative w-full max-w-[1246px] mx-auto py-10">
@@ -33,8 +38,13 @@ const TechBook = () => {
         <div className="flex">
           <EducationDetailBookContent techBookInfo={techbook} code={id} />
           <div className="mt-[80px] ml-[21px]">
-            <EducationPay techBookInfo={techbook} IsLogin={Islogin} />
-            <EducationRelatedVideos />
+            <EducationPay
+              techBookInfo={techbook}
+              IsLogin={Islogin}
+              id={id}
+              educationType={educationType}
+            />
+            <EducationRelatedVideos techbookList={techbookList} educationType={educationType} />
           </div>
         </div>
       </div>

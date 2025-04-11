@@ -29,6 +29,7 @@ const Education = () => {
   const category = searchParams.get('category') || 'techtube';
   const sortOption = searchParams.get('sort') || 'LATEST';
   const [selectedSortLabel, setSelectedSortLabel] = useState('최신순'); // select 박스 value 를 보여줄수잇께 해놓음
+  const [newTechtube, setNewTechtube] = useState([]);
 
   const pagesize = 16; // 페이지안에 아이템 수
   const sortName = {
@@ -103,16 +104,20 @@ const Education = () => {
       try {
         setTechBookList([]);
         let result;
-
+        // let newtechtubelist ;
+        const newtechtubelist = await getTechTube(0, 3, 'LATEST');
         if (category === 'techbook') {
-          result = await getTechBook(page, sortOption, keyword);
+          result = await getTechBook(page, '', sortOption, keyword);
         } else {
-          result = await getTechTube(page, sortOption, keyword);
+          result = await getTechTube(page, '', sortOption, keyword);
         }
 
         setTechBookList(result?.data.content || []);
         setTotalList(result?.data.totalElements || []);
         setTotalPages(result?.data.totalPages || []);
+        setNewTechtube(newtechtubelist?.data.content || []);
+
+        console.log('newTechtubenewTechtube', newtechtubelist?.data.content);
       } catch (error) {
         console.error('Error fetching data:', error);
         setTechBookList([]);
@@ -148,7 +153,7 @@ const Education = () => {
 
   return (
     <Layout>
-      <EducationBanner />
+      <EducationBanner newTechtube={newTechtube} />
       <div className="max-w-[1246px] mx-auto">
         <div className="mb-[85px]">
           <CategoryTab
@@ -194,7 +199,11 @@ const Education = () => {
                         instructor={item.writer}
                         likes={item.likeCount}
                         price={item.price}
-                        imageUrl={item.techBookThumbnailUrl}
+                        imageUrl={
+                          category === 'techtube'
+                            ? item.techTubeThumbnailUrl
+                            : item.techBookThumbnailUrl
+                        }
                       />
                     </NavLink>
                   </motion.div>

@@ -1,22 +1,37 @@
 import LectureCard from '@/common/LectureCard';
 import { NavLink } from 'react-router-dom';
 
-const EducationRelatedVideos = () => {
+const EducationRelatedVideos = ({ techtubeList, educationType, techbookList }) => {
   return (
     <div className="w-[400px] h-[1207px] rounded-[12px] bg-[#F9F9F9] py-[27px] px-[44px] shadow-lg">
       {/* 타이틀 */}
-      <div className="font-esamanru text-[24px] mb-[39px]">🔥 TechTube와 연관 영상</div>
-      {/* 더미로 설정하고 dummy로 돌림 */}
-      {Array(3)
-        .fill(null)
-        .map((_, index) => (
-          <NavLink className="mb-[48px]" key={index}>
+      <div className="font-esamanru text-[24px] mb-[39px]">
+        🔥 {educationType == 'TECH_TUBE' ? 'TechTube 와' : 'TechBook 과'} 연관 영상
+      </div>
+      {/* 콘텐츠 테크뷰트*/}
+      {educationType == 'TECH_TUBE' &&
+        techtubeList.map((item) => (
+          <NavLink to={`/TECH_TUBE/${item.id}`} className="mb-[48px]" key={item.id}>
             <LectureCard
-              title="React 완벽 마스터: 기초 개념부터 린캔버스 프로젝트까지"
-              instructor="김코딩"
-              likes="77"
-              price="16,800"
-              imageUrl="/images/education-image1.png"
+              title={item.title}
+              instructor={item.writer}
+              likes={item.likeCount}
+              price={item.price}
+              imageUrl={item.techTubeThumbnailUrl}
+              style="w-[342px] h-[195px]"
+              stylemg="mb-[47px]"
+            />
+          </NavLink>
+        ))}
+      {educationType == 'TECH_BOOK' &&
+        techbookList.map((item) => (
+          <NavLink to={`/TECH_BOOK/${item.id}`} className="mb-[48px]" key={item.id}>
+            <LectureCard
+              title={item.title}
+              instructor={item.writer}
+              likes={item.likeCount}
+              price={item.price}
+              imageUrl={item.techBookThumbnailUrl}
               style="w-[342px] h-[195px]"
               stylemg="mb-[47px]"
             />

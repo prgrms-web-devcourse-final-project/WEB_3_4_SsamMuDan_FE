@@ -1,18 +1,94 @@
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import ActionButton from '../common/ActionButton';
 import { useState } from 'react';
-import postTechTubePay from '@/api/techtubeDetail/postTechTubePay';
+import postTechTubePay from '@/api/techtubeDetail/postTechTubeLike';
+import postTechsPay from '@/api/techtubeDetail/postTechsPay';
+import { loadTossPayments } from '@tosspayments/payment-sdk';
+import useAuthStore from '@/store/useAuthStore';
 
 // props로 techInfo 를 들고온다 *테크튜브랑 테크북 동일
-const EducationPay = ({ techBookInfo, IsLogin, id }) => {
+const EducationPay = ({ techBookInfo, IsLogin, id, educationType }) => {
+  const tosspaykey = import.meta.env.VITE_TOSSPAYMENT_KEY;
+  console.log('toss', tosspaykey);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
   const isTechBook = location.pathname.includes('TECH_BOOK');
+  const isTechTube = location.pathname.includes('TECH_TUBE');
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const userInfo = useAuthStore((state) => state.userInfo);
+  console.log('아아아아이디', userInfo);
+
+  console.log('isTechTube', isTechTube);
+  // "techEducationType": "TECH_BOOK",
+  // "itemId": 1,
+  // "amount": 1073741824,
+  // "productName": "string"
+
+  // 결제를 위해 정보 posts
+
+  console.log('amount:', techBookInfo?.price, 'productName: ', techBookInfo?.title);
+  const handleOrderId = async () => {
+    if (isLoading) return; // 중복 실행 방지
+    setIsLoading(true); // 즉시 로딩 시작
+    console.log('클릭');
+    try {
+      const response = await postTechsPay({
+        techEducationType: educationType,
+        itemId: id,
+        amount: techBookInfo?.price,
+        productName: techBookInfo?.title,
+      });
+
+      console.log('리스폰즈', response);
+
+      const orderId = response.data?.orderId;
+      console.log('받은 orderId:', orderId);
+
+      const tossPayments = await loadTossPayments(tosspaykey);
+
+      // await tossPayments.requestPayment('카드', {
+      //   amount: techBookInfo.price,
+      //   orderId,
+      //   orderName: techBookInfo.title,
+      //   customerName: '홍길동', // 실제 사용자 정보로 바꾸기
+      //   // successUrl: `http://localhost:3000/payment/success`,
+      //   // failUrl: `http://localhost:3000/payment/fail`,
+      //   successUrl: `http://localhost:3000/loading`,
+      //   failUrl: `http://localhost:3000/loading`,
+      // });
+
+      tossPayments.requestPayment('CARD', {
+        amount: techBookInfo.price,
+        orderId: orderId,
+        orderName: techBookInfo.title,
+        customerName: userInfo.username,
+        successUrl: `http://localhost:3000/payment`,
+        // successUrl: `http://api.cotree.site/api/v1/payment/confirm`,
+        // failUrl: `http://api.cotree.site/api/v1/payment/confirm`,
+        failUrl: `http://localhost:3000/payfail`,
+      });
+    } catch (error) {
+      console.log('토스페이 실패');
+    } finally {
+      setIsLoading(false); // 무조건 초기화
+    }
+  };
+
+  // const handleTossPay = async () => {
+  //   const tossPayments = await loadTossPayments(tosspaykey);
+
+  //   tossPayments.requestPayment('카드', {
+  //     amount: techBookInfo?.price,
+  //     orderId: 'order_123',
+  //     orderName: '프론트엔드 강의',
+  //     customerName: '홍길동',
+  //     successUrl: 'http://localhost:3000/success',
+  //     failUrl: 'http://localhost:3000/fail',
+  //   });
+  // };
 
   const ffa = Number(id);
-  console.log('아이디가 뭐야', typeof ffa);
-
   // like 보내기
   const handleComplete = () => {
     try {
@@ -45,6 +121,8 @@ const EducationPay = ({ techBookInfo, IsLogin, id }) => {
   return (
     <div className="w-[400px] h-[355px] rounded-[12px] bg-white border border-[#D9D9D9] shadow-md  p-[24px] mb-[28px]">
       <button onClick={handleComplete}> 버튼 눌러볼까~?</button>
+      <br></br>
+      <button onClick={handleOrderId}>토스페이를 위해~</button>
       <div className="font-semibold  text-[35px] mt-[20px] mb-[26px]">
         {techBookInfo?.price.toLocaleString()}원
       </div>

@@ -6,8 +6,8 @@ import ReactPlayer from 'react-player';
 const EducationDetailBanner = ({ techTubeInfo }) => {
   const [openVideo, setOpenVideo] = useState(false); // 비디오 모달 열림 상태
 
-  console.log('Dasdsads', techTubeInfo);
   const rawRating = techTubeInfo?.avgRating;
+  console.log('rawRating', rawRating);
   const rating = Number.isFinite(rawRating) ? Math.floor(rawRating) : 0;
   console.log('rating', rating);
   return (
@@ -31,8 +31,7 @@ const EducationDetailBanner = ({ techTubeInfo }) => {
             />
             {techTubeInfo?.educationCategoryList.map((item) => (
               <Badge
-                key={item.title}
-                id={item}
+                key={item.id}
                 text={item}
                 className="px-[20px] h-[32px] bg-[#DAF8E6] text-[#1A8245]"
               />

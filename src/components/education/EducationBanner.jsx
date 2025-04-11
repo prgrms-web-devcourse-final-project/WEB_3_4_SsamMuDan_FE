@@ -1,6 +1,7 @@
+import { NavLink } from 'react-router-dom';
 import LectureCardSimple from '../common/LectureCardSimple';
 
-const EducationBanner = () => {
+const EducationBanner = ({ newTechtube }) => {
   return (
     <div className="h-[377px] w-full relative bg-[url(/images/education-banner.svg)] bg-no-repeat bg-cover mb-[88px]">
       <div className="w-[1246px] flex pt-[60px] mx-auto">
@@ -16,19 +17,17 @@ const EducationBanner = () => {
           </div>
         </div>
         <div className="flex mt-[20px]">
-          {Array(3)
-            .fill(null)
-            .map((_, index) => (
-              <div className="mr-[16px]" key={index}>
-                <LectureCardSimple
-                  imageUrl="images/education-image1.png"
-                  title="Jenkins를 이용한 CI/CD Pipeline 구축"
-                  price="70,400원"
-                  instructor="Dowon Lee "
-                  customstyle="!h-[187px]"
-                />
-              </div>
-            ))}
+          {newTechtube?.map((item) => (
+            <NavLink to={`/TECH_TUBE/${item.id}`} className="mr-[16px]" key={item.id}>
+              <LectureCardSimple
+                imageUrl={item.techTubeThumbnailUrl}
+                title={item.title}
+                price={item.price}
+                instructor={item.writer}
+                customstyle="!h-[187px]"
+              />
+            </NavLink>
+          ))}
         </div>
       </div>
     </div>
