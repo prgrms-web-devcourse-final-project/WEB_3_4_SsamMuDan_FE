@@ -10,7 +10,7 @@ const ProjectIntroduce = ({ data }) => {
             <img
               src={data.imageUrl}
               alt="프로젝트 썸네일"
-              className="h-full object-cover rounded-[15px]"
+              className="w-full h-full object-cover rounded-[15px]"
             />
           </div>
 
@@ -23,14 +23,12 @@ const ProjectIntroduce = ({ data }) => {
               <div className="flex flex-row gap-2 w-[48%]">
                 <div className="text-grey300 w-[72px] shrink-0">모집분야</div>
                 <div className="flex-1">
-                  {Object.keys(
-                    data.devPositionsInfo.reduce((acc, cur) => ({ ...acc, ...cur }), {}),
-                  ).join(', ')}
+                  {data.devPositionsInfo.map((pos) => pos.positionName).join(', ')}
                 </div>
               </div>
               <div className="flex flex-row gap-2 w-[48%]">
                 <div className="text-grey300 w-[72px] shrink-0">작성자</div>
-                <div className="flex-1">{data.creatorName}</div>
+                <div className="flex-1 truncate">{data.creatorName}</div>
               </div>
               <div className="flex flex-row gap-2 w-[48%]">
                 <div className="text-grey300 w-[72px] shrink-0">시작일자</div>
