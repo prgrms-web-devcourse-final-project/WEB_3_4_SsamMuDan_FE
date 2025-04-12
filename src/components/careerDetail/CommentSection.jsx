@@ -9,8 +9,10 @@ import coTreeAPI from '@/config/cotree';
 import getComment from '@/api/careerDetail/getComment';
 import { useParams } from 'react-router-dom';
 import postComment from '@/api/careerDetail/postComment';
+import useAuthStore from '@/store/useAuthStore';
 
 const CommentSection = ({ id, category }) => {
+  const { isLoggedIn, userInfo, logout, loginWithUserInfo } = useAuthStore();
   const { id: whereId } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const editorRef = useRef(null);
@@ -107,6 +109,13 @@ const CommentSection = ({ id, category }) => {
   }, []);
 
   const renderEditor = () => {
+    if (!isLoggedIn) {
+      return (
+        <div className="w-[1246px] h-[57px] rounded-[10px] border flex flex-col justify-center mt-2 cursor-pointer">
+          <span className="ml-7">로그인 후 댓글을 작성할 수 있습니다.</span>
+        </div>
+      );
+    }
     if (!isEditing) {
       return (
         <div
