@@ -5,8 +5,10 @@ import { useState } from 'react';
 import ReplyComment from './ReplyComment';
 import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import useAuthStore from '@/store/useAuthStore';
 
 const Comment = ({ data, isSubComment = false, whereId, fetchComments }) => {
+  const { isLoggedIn } = useAuthStore();
   const [reply, setReply] = useState(false);
   const [showSubComments, setShowSubComments] = useState(false);
 
@@ -71,13 +73,15 @@ const Comment = ({ data, isSubComment = false, whereId, fetchComments }) => {
                 </span>
               </Button>
             )}
-            <Button
-              className="bg-white rounded-[20px] hover:bg-white border border-grey100"
-              onClick={toggleReply}
-            >
-              <ChatBubbleOvalLeftIcon className="w-[24px] text-primary300" />
-              <span className="text-[16px] text-black">댓글쓰기</span>
-            </Button>
+            {isLoggedIn && (
+              <Button
+                className="bg-white rounded-[20px] hover:bg-white border border-grey100"
+                onClick={toggleReply}
+              >
+                <ChatBubbleOvalLeftIcon className="w-[24px] text-primary300" />
+                <span className="text-[16px] text-black">댓글쓰기</span>
+              </Button>
+            )}
           </div>
         )}
 
