@@ -24,6 +24,10 @@ const CareerDetail = () => {
   const [careerData, setCareerData] = useState({});
   const [projectData, setProjectData] = useState({});
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const infoFetchData = async () => {
     try {
       const getData = await getCareerDetail(id);
