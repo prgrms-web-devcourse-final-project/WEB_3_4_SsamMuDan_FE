@@ -3,12 +3,11 @@ import { motion } from 'framer-motion';
 import { CheckIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/solid';
 import { NavLink } from 'react-router-dom';
 import useAuthStore from '@/store/useAuthStore';
-import { useNavigate } from 'react-router-dom';
 // 기존 Button을 motion 컴포넌트로 확장합니다.
 const MotionButton = motion(Button);
 
 const HeroRight = () => {
-  const { isLoggedIn, userInfo, logout, loginWithUserInfo } = useAuthStore();
+  const { isLoggedIn, userInfo } = useAuthStore();
 
   return (
     <div className="w-[784px] h-[333px] bg-white rounded-[10px] relative shadow-[0_3px_4px_rgba(0,0,0,0.2)] ">
@@ -51,7 +50,7 @@ const HeroRight = () => {
 
       {/* 오른쪽 */}
       <div className="w-[400px] h-[241px] absolute top-[45px] right-0">
-        <img src="/public/images/career/careerHero.svg" alt="" className="w-[400px] object-cover" />
+        <img src="/images/career/careerHero.svg" alt="" className="w-[400px] object-cover" />
       </div>
     </div>
   );

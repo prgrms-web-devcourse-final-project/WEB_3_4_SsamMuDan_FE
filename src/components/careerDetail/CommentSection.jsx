@@ -76,7 +76,7 @@ const CommentSection = ({ id, category }) => {
     try {
       const response = await postComment({
         content: markdownContent,
-        category: 'RESUME',
+        category: category,
         whereId: Number(whereId),
         commentId: '',
       });

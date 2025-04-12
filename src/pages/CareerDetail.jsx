@@ -10,7 +10,6 @@ import getCareerDetail from '@/api/careerDetail/getCareerDetail';
 
 const CareerDetail = () => {
   const { id } = useParams();
-  console.log('id', id);
   const category = 'RESUME';
   const [introduceData, setIntroduceData] = useState({
     name: '',
@@ -23,6 +22,10 @@ const CareerDetail = () => {
 
   const [careerData, setCareerData] = useState({});
   const [projectData, setProjectData] = useState({});
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const infoFetchData = async () => {
     try {

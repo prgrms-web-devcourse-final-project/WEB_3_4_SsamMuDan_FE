@@ -44,9 +44,9 @@ const HeroSection = () => {
           {/* 오른쪽 */}
           <div className="w-[548px] h-[297px] absolute bottom-0 right-0">
             <img
-              src="/public/images/projectJoin/projectJoinHero.svg"
+              src="/images/projectJoin/projectJoinHero.svg"
               alt=""
-              className="w-full object-cover"
+              className="w-[548px] object-cover"
             />
           </div>
         </div>
