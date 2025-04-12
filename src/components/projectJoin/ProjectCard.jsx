@@ -12,7 +12,6 @@ const ProjectCard = ({ item }) => {
     navigate(`/projectJoinDetail/${item.id}`);
   };
 
-  // console.log(item);
   return (
     <>
       <div
@@ -27,7 +26,7 @@ const ProjectCard = ({ item }) => {
               text={item.isOpen ? '모집중' : '모집완료'}
               className="w-[72px] h-[27px] bg-[#3FC22E]  text-white text-[13px] font-bold"
             />
-            <div className="w-[88px] h-[27px] flex flex-row items-center ">
+            <div className=" h-[27px] flex flex-row items-center gap-2 ">
               <UserIcon className="w-[16px]" />
               <div className="text-[14px]">모집인원 : {item.recruitmentCount}</div>
             </div>
