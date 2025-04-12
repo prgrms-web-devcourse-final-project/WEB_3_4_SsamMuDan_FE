@@ -16,7 +16,7 @@ const PositionSetting = ({ positionName, count, onIncrement, onDecrement }) => {
               disabled={count <= 1}
             >
               <img
-                src="/public/images/projectJoinWrite/Minus.svg"
+                src="/images/projectJoinWrite/Minus.svg"
                 alt="Decrement"
                 className="w-full object-cover"
               />
@@ -24,7 +24,7 @@ const PositionSetting = ({ positionName, count, onIncrement, onDecrement }) => {
             <div className="text-[16px] font-medium">{count}</div>
             <button onClick={onIncrement} className="w-[26px] h-[26px] hover:cursor-pointer">
               <img
-                src="/public/images/projectJoinWrite/Plus.svg"
+                src="/images/projectJoinWrite/Plus.svg"
                 alt="Increment"
                 className="w-full object-cover"
               />
