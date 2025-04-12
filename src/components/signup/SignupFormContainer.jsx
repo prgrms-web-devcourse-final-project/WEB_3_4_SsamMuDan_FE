@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
@@ -37,6 +37,12 @@ const SignupFormContainer = () => {
   const [emailCode, setEmailCode] = useState(''); // 이메일 인증번호 입력값
   const [emailVerified, setEmailVerified] = useState(false); // 이메일 인증 여부
   const [emailVerifyMsg, setEmailVerifyMsg] = useState(''); // 이메일 인증 메시지
+
+  // 타이머 관련 상태
+  const [phoneTimer, setPhoneTimer] = useState(0);
+  const [emailTimer, setEmailTimer] = useState(0);
+  const phoneTimerRef = useRef(null);
+  const emailTimerRef = useRef(null);
 
   // 회원 유형 선택
   const handleUserTypeChange = (selectedUserType) => {
@@ -144,8 +150,7 @@ const SignupFormContainer = () => {
 
       if (res.isSuccess) {
         toast.success('회원가입이 완료되었습니다!');
-
-        navigate('/');
+        navigate('/signupSuccess');
       } else {
         toast.error(`회원가입 실패: ${res.message}`);
       }
@@ -160,7 +165,7 @@ const SignupFormContainer = () => {
     }
   };
 
-  // 휴대폰번호 인증코드 전송 함수
+  // 휴대폰번호 인증코드 전송 함수 (타이머 추가)
   const handleSendCode = async () => {
     if (!form.phoneNumber || errors.phoneNumber) {
       toast.error('올바른 휴대폰 번호를 입력해주세요.');
@@ -172,6 +177,20 @@ const SignupFormContainer = () => {
       if (res.isSuccess) {
         toast.success('인증코드가 전송되었습니다!');
         setCodeSent(true);
+        setPhoneTimer(180);
+
+        clearInterval(phoneTimerRef.current);
+        phoneTimerRef.current = setInterval(() => {
+          setPhoneTimer((prev) => {
+            if (prev <= 1) {
+              clearInterval(phoneTimerRef.current);
+              setCodeSent(false);
+              toast.error('⏰ 휴대폰 인증 시간이 만료되었습니다. 다시 인증해주세요.');
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
       }
     } catch (err) {
       console.error('인증코드 전송 실패:', err);
@@ -190,6 +209,7 @@ const SignupFormContainer = () => {
       if (res.isSuccess) {
         setIsVerified(true);
         setVerifyMessage('✅ 인증 성공!');
+        clearInterval(phoneTimerRef.current); // 인증 성공 시 타이머 멈춤
       } else {
         setIsVerified(false);
         setVerifyMessage('❌ 인증 실패. 다시 시도해주세요.');
@@ -200,7 +220,7 @@ const SignupFormContainer = () => {
     }
   };
 
-  // 이메일 인증코드 전송 함수
+  // 이메일 인증코드 전송 함수 (타이머 추가)
   const handleSendEmailCode = async () => {
     if (!form.email || errors.email) {
       toast.error('올바른 이메일을 입력해주세요.');
@@ -211,6 +231,20 @@ const SignupFormContainer = () => {
       if (res.isSuccess) {
         toast.success('이메일로 인증코드가 전송되었습니다.');
         setEmailCodeSent(true);
+        setEmailTimer(180);
+
+        clearInterval(emailTimerRef.current);
+        emailTimerRef.current = setInterval(() => {
+          setEmailTimer((prev) => {
+            if (prev <= 1) {
+              clearInterval(emailTimerRef.current);
+              setEmailCodeSent(false);
+              toast.error('⏰ 이메일 인증 시간이 만료되었습니다. 다시 인증해주세요.');
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
       }
     } catch (err) {
       console.error('이메일 인증코드 전송 실패:', err);
@@ -225,6 +259,7 @@ const SignupFormContainer = () => {
       if (res.isSuccess) {
         setEmailVerified(true);
         setEmailVerifyMsg('✅ 이메일 인증 성공!');
+        clearInterval(emailTimerRef.current); // 인증 성공 시 타이머 멈춤
       } else {
         setEmailVerified(false);
         setEmailVerifyMsg('❌ 이메일 인증 실패. 다시 시도해주세요.');
@@ -234,6 +269,13 @@ const SignupFormContainer = () => {
       setEmailVerifyMsg('❌ 이메일 인증 중 오류 발생.');
     }
   };
+
+  useEffect(() => {
+    return () => {
+      clearInterval(phoneTimerRef.current);
+      clearInterval(emailTimerRef.current);
+    };
+  }, []);
 
   return (
     <>
@@ -294,14 +336,20 @@ const SignupFormContainer = () => {
           {/* 이메일 인증코드 입력창 */}
           {emailCodeSent && (
             <div className="mb-4">
-              <div className="flex gap-2 mb-2">
-                <input
-                  type="text"
-                  value={emailCode}
-                  onChange={(e) => setEmailCode(e.target.value)}
-                  placeholder="인증코드를 입력해 주세요."
-                  className="flex-1 h-[42px] px-4 rounded-[10px] border border-gray-200 text-sm text-grey700 focus:outline-none focus:border-primary300 focus:ring-1 focus:ring-primary300 transition-all"
-                />
+              <div className="flex gap-2 mb-2 items-center">
+                <div className="relative w-[316px]">
+                  <input
+                    type="text"
+                    value={emailCode}
+                    onChange={(e) => setEmailCode(e.target.value)}
+                    placeholder="인증코드를 입력해 주세요."
+                    className="w-full h-[42px] pl-4 rounded-[10px] border border-gray-200 text-sm text-grey700 focus:outline-none focus:border-primary300 focus:ring-1 focus:ring-primary300 transition-all"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-red-500">
+                    {String(Math.floor(emailTimer / 60)).padStart(2, '0')}:
+                    {String(emailTimer % 60).padStart(2, '0')}
+                  </span>
+                </div>
                 <button
                   className="w-[80px] h-[42px] bg-white border border-primary300 text-primary300 rounded-[10px] text-sm font-semibold hover:bg-primary300 hover:text-white"
                   onClick={handleVerifyEmailCode}
@@ -409,14 +457,21 @@ const SignupFormContainer = () => {
           {/* 인증번호 입력창 -> 인증 요청 후에만 보여짐 */}
           {codeSent && (
             <div className="mb-4">
-              <div className="flex gap-2 mb-2">
-                <input
-                  type="text"
-                  value={verificationCode}
-                  onChange={(e) => setVerificationCode(e.target.value)}
-                  placeholder="인증번호를 입력해 주세요."
-                  className="flex-1 h-[42px] px-4 rounded-[10px] border border-gray-200 text-sm text-grey700 focus:outline-none focus:border-primary300 focus:ring-1 focus:ring-primary300 transition-all"
-                />
+              <div className="flex gap-2 mb-2 items-center">
+                <div className="relative w-[316px]">
+                  {' '}
+                  <input
+                    type="text"
+                    value={verificationCode}
+                    onChange={(e) => setVerificationCode(e.target.value)}
+                    placeholder="인증번호를 입력해 주세요."
+                    className="w-full h-[42px] pl-4 rounded-[10px] border border-gray-200 text-sm text-grey700 focus:outline-none focus:border-primary300 focus:ring-1 focus:ring-primary300 transition-all"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-red-500">
+                    {String(Math.floor(phoneTimer / 60)).padStart(2, '0')}:
+                    {String(phoneTimer % 60).padStart(2, '0')}
+                  </span>
+                </div>
                 <button
                   className="w-[80px] h-[42px] bg-white border border-primary300 text-primary300 rounded-[10px] text-sm font-semibold hover:bg-primary300 hover:text-white"
                   onClick={handleVerifyCode}

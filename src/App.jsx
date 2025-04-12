@@ -24,6 +24,7 @@ import CommunityWrite from './pages/CommunityWrite';
 import LoginKakaoCallback from './pages/LoginKakaoCallback';
 import Loading from './components/common/Loading';
 import PayFail from './pages/PayFail';
+import SignupSuccess from './pages/SignupSuccess';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/education" element={<Education />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/signupSuccess" element={<SignupSuccess />} />
         <Route path="/career" element={<Career />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/mypage" element={<Mypage />} />
