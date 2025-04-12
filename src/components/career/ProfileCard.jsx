@@ -8,7 +8,13 @@ const ProfileCard = ({ data }) => {
         <div className="w-[300px] h-[440px] border rounded-t-[15px] rounded-[8px] mb-[15px]">
           {/* 이미지 */}
           <div className="w-[300px] h-[278px] rounded-t-[8px] bg-slate-600 overflow-hidden relative">
-            <img src={data.profileImage} alt="" className="h-[278px] object-cover" />
+            <img
+              src={
+                data.profileImage ? data.profileImage : 'public/images/career/profileDefalut.png'
+              }
+              alt=""
+              className="w-full h-full object-cover"
+            />
             <Badge
               text={`${data.year}년차`}
               className="w-[72px] h-[33px] bg-[#3FC22E] text-white text-sm absolute bottom-[12px] right-[21px] "
