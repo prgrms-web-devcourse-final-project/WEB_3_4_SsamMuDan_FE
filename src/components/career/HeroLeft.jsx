@@ -7,26 +7,26 @@ const HeroLeft = () => {
           <div className="text-white text-[16px]">1</div>
         </div>
         <div className="flex flex-col">
-          <div className="text-[16px] text-primary300">step1</div>
+          <div className="text-[14px] text-primary300">STEP 1</div>
           <div className="text-[25px] font-bold"> 기본정보 등록</div>
         </div>
       </div>
       <div className="w-full flex flex-row items-end gap-7 z-10">
         <div className="w-[40px] h-[40px] bg-[#EE5945] rounded-[50%] flex justify-center items-center">
-          <div className="text-white text-[16px]">1</div>
+          <div className="text-white text-[16px]">2</div>
         </div>
         <div className="flex flex-col">
-          <div className="text-[16px] text-primary300">step1</div>
-          <div className="text-[25px] font-bold"> 기본정보 등록</div>
+          <div className="text-[14px] text-primary300">STEP 2</div>
+          <div className="text-[25px] font-bold"> 경력 등록</div>
         </div>
       </div>
       <div className="w-full flex flex-row items-end gap-7 z-10">
         <div className="w-[40px] h-[40px] bg-[#EE5945] rounded-[50%] flex justify-center items-center">
-          <div className="text-white text-[16px]">1</div>
+          <div className="text-white text-[16px]">3</div>
         </div>
         <div className="flex flex-col">
-          <div className="text-[16px] text-primary300">step1</div>
-          <div className="text-[25px] font-bold"> 기본정보 등록</div>
+          <div className="text-[14px] text-primary300">STEP 3</div>
+          <div className="text-[25px] font-bold"> 프로젝트 등록</div>
         </div>
       </div>
     </div>

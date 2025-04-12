@@ -18,7 +18,7 @@ const HeroRight = () => {
           to={isLoggedIn && userInfo?.nickname ? `/careerWrite/${userInfo.nickname}` : '/login'}
         >
           <MotionButton
-            className="w-[124px] h-[34px] bg-[#FFE3DD] text-primary400 hover:bg-[#FFE3DD] flex items-center justify-center rounded-md"
+            className="w-[124px] h-[34px] font-semibold bg-[#FFE3DD] text-primary400 hover:bg-[#FFE3DD] flex items-center justify-center rounded-md"
             initial={{ scale: 1 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -36,15 +36,15 @@ const HeroRight = () => {
         <div className="flex flex-col w-full h-[92px] justify-between">
           <div className="flex flex-row gap-4">
             <CheckIcon className="w-[24px] text-primary400" />
-            <div>헤드헌팅 기회 이제는 CoTree에서 시작하세요!</div>
+            <div>헤드헌팅 기회 이제는 CoTree에서 시작하세요.</div>
           </div>
           <div className="flex flex-row gap-4 ">
             <CheckIcon className="w-[24px] text-primary400" />
-            <div>헤드헌팅 기회 이제는 CoTree에서 시작하세요!</div>
+            <div>CoTree에서 나에게 맞는 커리어 기회를 만나보세요.</div>
           </div>
           <div className="flex flex-row gap-4 ">
             <CheckIcon className="w-[24px] text-primary400" />
-            <div>헤드헌팅 기회 이제는 CoTree에서 시작하세요!</div>
+            <div>한 번의 이력서 등록으로 다양한 제안을 받을 수 있어요.</div>
           </div>
         </div>
       </div>

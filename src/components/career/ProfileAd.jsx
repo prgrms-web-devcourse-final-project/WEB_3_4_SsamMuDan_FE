@@ -20,7 +20,7 @@ const ProfileAd = () => {
             className="w-full object-cover"
           />
         </motion.div>
-        <div>생생한 성장 경험을 듣고, 프포필을 클릭해 제안을 보내거나 댓글을 남겨보세요</div>
+        <div>생생한 성장 경험을 듣고, 프로필을 클릭해 제안을 보내거나 댓글을 남겨보세요!</div>
       </div>
     </>
   );
