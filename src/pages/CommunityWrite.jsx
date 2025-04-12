@@ -17,7 +17,6 @@ import getCommunityDetail from '@/api/community/getCommunityDetail';
 import editCommunityPost from '@/api/community/editCommunityPost';
 import { COTREE_ENDPOINT } from '@/api/endpoint';
 import coTreeAPI from '@/config/cotree';
-import { PlusIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 const CommunityWrite = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

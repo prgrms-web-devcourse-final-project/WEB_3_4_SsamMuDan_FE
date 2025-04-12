@@ -10,7 +10,6 @@ import getCareerDetail from '@/api/careerDetail/getCareerDetail';
 
 const CareerDetail = () => {
   const { id } = useParams();
-  console.log('id', id);
   const category = 'RESUME';
   const [introduceData, setIntroduceData] = useState({
     name: '',
