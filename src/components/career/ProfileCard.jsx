@@ -1,6 +1,7 @@
 import Badge from '@/common/Badge';
 import { Link } from 'react-router-dom';
 const ProfileCard = ({ data }) => {
+  console.log(data);
   return (
     <>
       <Link to={`/careerDetail/${data.resumeId}`}>
@@ -17,7 +18,9 @@ const ProfileCard = ({ data }) => {
           <div className="w-full h-[162px]">
             <div className="w-full h-full p-[15px] mx-auto flex flex-col justify-center gap-2 ">
               {/* 직업 */}
-              <div className="line-clamp-1 text-[22px] font-semibold">{data.positions}</div>
+              <div className="line-clamp-1 text-[22px] font-semibold">
+                {Array.isArray(data.positions) ? data.positions.join(' / ') : data.positions}
+              </div>
               {/* 내용 */}
               <div className="line-clamp-4">{data.introduction}</div>
             </div>
