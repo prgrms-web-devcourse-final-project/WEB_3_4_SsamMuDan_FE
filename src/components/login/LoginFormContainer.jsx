@@ -6,6 +6,7 @@ import loginUser from '@/api/login/loginUser';
 import useAuthStore from '@/store/useAuthStore';
 import getUserInfo from '@/api/login/getUserInfo';
 import { Toaster, toast } from 'react-hot-toast';
+import FindIdModal from './FindIdModal';
 
 const LoginFormContainer = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +14,7 @@ const LoginFormContainer = () => {
   const [password, setPassword] = useState('');
   const { login } = useAuthStore();
   const navigate = useNavigate();
+  const [isFindIdOpen, setIsFindIdOpen] = useState(false); // 아이디찾기 모달 상태
 
   const handleLogin = async (e) => {
     e?.preventDefault();
@@ -80,7 +82,8 @@ const LoginFormContainer = () => {
         {/* 아이디 찾기 & 비밀번호 재설정 */}
         <div className="flex justify-end gap-4 text-sm text-gray-400 mb-6 w-full">
           <button
-            onClick={() => alert('아이디 찾기 클릭됨')}
+            type="button"
+            onClick={() => setIsFindIdOpen(true)}
             className="underline hover:text-primary300 transition-colors"
           >
             아이디 찾기
@@ -116,6 +119,9 @@ const LoginFormContainer = () => {
           </span>
         </button>
       </form>
+
+      {/* 아이디 찾기 모달 */}
+      {isFindIdOpen && <FindIdModal onClose={() => setIsFindIdOpen(false)} />}
     </>
   );
 };

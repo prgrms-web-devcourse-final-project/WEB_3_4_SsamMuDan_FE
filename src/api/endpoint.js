@@ -35,6 +35,9 @@ export const COTREE_ENDPOINT = Object.freeze({
   signupPhoneVerify: `/api/v1/member/signup/phone/verify`, // 회원가입 휴대폰번호 인증코드 확인
   signupEmail: `/api/v1/email/code`, // 회원가입 이메일 인증코드 전송
   signupEmailVerify: `/api/v1/email/code/verify`, // 회원가입 이메일 인증코드 확인
+  findIdCode: `/api/v1/member/recovery/loginId`, // 아이디찾기 휴대폰번호 인증코드 전송
+  findIdCodeVerify: `/api/v1/member/recovery/loginId/verify`, // 아이디찾기 휴대폰번호 인증코드 확인
+  resetPassword: `/api/v1/member/recovery/password`, // 비밀번호 재설정
   educationCategory: `/api/v1/category/education`, // 교육 카테고리 전체 조회
   tosspay: '/api/v1/payment/prepare', // 토스페이
   tosspayconfirm: '/api/v1/payment/confirm', //토스페이 확인
