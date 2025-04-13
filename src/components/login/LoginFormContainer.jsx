@@ -24,8 +24,12 @@ const LoginFormContainer = () => {
       const res = await getUserInfo(); // 유저 정보 조회
       login(res.data); // 스토어에 저장
 
-      toast.success('로그인 성공!');
-      navigate('/');
+      toast.success('로그인 성공!', {
+        duration: 5000,
+      });
+      setTimeout(() => {
+        navigate('/');
+      }, 2000); // navigate가 너무 빨라 로그인 성공 toast가 안 보여서 속도 조절함
     } catch (err) {
       toast.error('이메일 또는 비밀번호가 올바르지 않습니다.');
     }
