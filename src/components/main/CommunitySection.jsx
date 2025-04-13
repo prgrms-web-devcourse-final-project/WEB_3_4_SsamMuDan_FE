@@ -47,6 +47,7 @@ const CommunitySection = () => {
         {posts.map((post) => (
           <SwiperSlide key={post.id}>
             <CommunityCard
+              id={post.id}
               title={post.title}
               content={post.content}
               viewCount={post.viewCount}

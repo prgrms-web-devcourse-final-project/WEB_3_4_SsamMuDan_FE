@@ -49,7 +49,7 @@ const CommunityBestSection = ({ bestCommunity }) => {
             {/* 작성자 & 제목 */}
             <div className="flex items-center mt-3 gap-2">
               <img
-                src={item.authorProfile}
+                src={item.authorProfile || '/images/default-avatar.svg'}
                 alt={item.author}
                 className="w-[30px] h-[30px] rounded-full object-cover"
               />

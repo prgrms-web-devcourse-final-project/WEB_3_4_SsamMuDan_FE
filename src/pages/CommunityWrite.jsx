@@ -133,23 +133,28 @@ const CommunityWrite = () => {
 
     try {
       if (postId) {
-        // 게시글 수정
         await editCommunityPost(postId, {
           communityCategoryId: categoryId,
           title,
           content: markdown,
         });
         alert('게시글이 수정되었습니다!');
+        navigate(`/communityDetail/${postId}`); // 게시글 수정 후 해당 상세페이지로 이동
       } else {
-        // 게시글 작성
-        await postCreateCommunity({
+        const response = await postCreateCommunity({
           communityCategoryId: categoryId,
           title,
           content: markdown,
         });
+
+        const newPostId = response?.data?.boardId;
         alert('게시글이 성공적으로 작성되었습니다!');
+        if (newPostId) {
+          navigate(`/communityDetail/${newPostId}`); // 새로운 게시글 작성 후 해당 상세페이지로 이동
+        } else {
+          navigate('/community');
+        }
       }
-      navigate('/community');
     } catch (error) {
       console.error('게시글 처리 실패:', error);
     }

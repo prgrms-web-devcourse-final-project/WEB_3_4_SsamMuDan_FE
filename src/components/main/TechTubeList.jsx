@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import LectureCard from '@/common/LectureCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -18,13 +19,15 @@ const TechTubeList = ({ data, swiperRef }) => {
         {data.length > 0 ? (
           data.map((item, id) => (
             <SwiperSlide key={id}>
-              <LectureCard
-                title={item.title}
-                instructor={item.writer}
-                likes={item.likeCount}
-                price={item.price}
-                imageUrl={item.techTubeThumbnailUrl}
-              />
+              <NavLink to={`/TECH_TUBE/${item.id}`}>
+                <LectureCard
+                  title={item.title}
+                  instructor={item.writer}
+                  likes={item.likeCount}
+                  price={item.price}
+                  imageUrl={item.techTubeThumbnailUrl}
+                />
+              </NavLink>
             </SwiperSlide>
           ))
         ) : (

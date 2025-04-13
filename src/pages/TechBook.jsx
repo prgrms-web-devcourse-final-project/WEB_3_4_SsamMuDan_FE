@@ -31,6 +31,12 @@ const TechBook = () => {
     }
     fetchTechBookList();
   }, []);
+
+  // 스크롤 맨 위로 이동
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, []);
+
   return (
     <Layout>
       <div className="relative w-full max-w-[1246px] mx-auto py-10">
