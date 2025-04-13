@@ -16,7 +16,7 @@ const HeroSection = () => {
           <div className=" relative w-[601px] h-full pt-[85px]">
             {/* 제목 */}
             <div className="flex flex-col">
-              <div className="font-esamanru text-[35px] text-white">CoTree에서 다양한 경험을!!</div>
+              <div className="font-esamanru text-[35px] text-white">CoTree에서 다양한 경험을!</div>
               <div className="text-[20px] text-white">지금 바로 프로젝트를 만들어 보세요</div>
             </div>
 
@@ -35,8 +35,8 @@ const HeroSection = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span className="text-[20px] text-primary300">등록하기</span>
-                <ChevronDoubleRightIcon className="text-primary300" />
+                <span className="text-[20px] text-primary300 font-semibold">등록하기</span>
+                <ChevronDoubleRightIcon className="text-primary300 scale-[1.3]" />
               </MotionButton>
             </NavLink>
           </div>
