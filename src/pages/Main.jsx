@@ -26,7 +26,7 @@ const Main = () => {
         <div className="mt-[124px]">
           <ProjectSection />
         </div>
-        <div className="mt-[50px] mb-[200px]">
+        <div className="mt-[10px] mb-[200px]">
           <CommunitySection />
         </div>
       </Layout>
