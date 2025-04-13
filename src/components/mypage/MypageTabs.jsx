@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import CategoryTab from '../common/CategoryTab';
 import LectureCardSimple from '../common/LectureCardSimple';
 import CustomPagination from '../common/CustomPagination';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import getOrderList from '@/api/mypage/getOrderList';
 import LottieEmpty from '../common/LottieEmpty';
+import getLikedCommunity from '@/api/community/getLikedCommunity';
 
 const MypageTabs = ({ activeSection }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -15,6 +16,8 @@ const MypageTabs = ({ activeSection }) => {
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
   const [selectedSortLabel, setSelectedSortLabel] = useState('최신순');
+
+  const navigate = useNavigate();
 
   const tabs =
     activeSection === 'purchase'
@@ -48,19 +51,25 @@ const MypageTabs = ({ activeSection }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (activeSection !== 'purchase') {
-        setItems([]); // 관심목록은 아직 API 없음
-        return;
-      }
-
       setLoading(true);
       try {
-        const type = category === 'techtube' ? 'TECH_TUBE' : 'TECH_BOOK';
-        const res = await getOrderList(page, 12, type);
-        setItems(res.content);
-        setTotalPages(res.totalPages);
+        if (activeSection === 'purchase') {
+          const type = category === 'techtube' ? 'TECH_TUBE' : 'TECH_BOOK';
+          const res = await getOrderList(page, 12, type);
+          setItems(res.content);
+          setTotalPages(res.totalPages);
+        } else {
+          if (category === 'community') {
+            const res = await getLikedCommunity(page, 12);
+            setItems(res.content);
+            setTotalPages(res.totalPages);
+          } else {
+            setItems([]);
+            setTotalPages(0);
+          }
+        }
       } catch (err) {
-        console.error('구매 목록 로드 실패:', err);
+        console.error('목록 로드 실패:', err);
       } finally {
         setLoading(false);
       }
@@ -85,15 +94,27 @@ const MypageTabs = ({ activeSection }) => {
           <p>로딩 중...</p>
         ) : items.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10">
-            {items.map((item) => (
-              <LectureCardSimple
-                key={item.productId}
-                title={item.title}
-                instructor={item.author}
-                imageUrl={item.thumbnail}
-                showPrice={false}
-              />
-            ))}
+            {items.map((item) => {
+              if (category === 'community') {
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() => navigate(`/communityDetail/${item.id}`)}
+                    className="cursor-pointer"
+                  >
+                    <LectureCardSimple
+                      title={item.title}
+                      instructor={item.author}
+                      imageUrl={item.thumbnailImage || '/images/default-image.svg'}
+                      showPrice={false}
+                    />
+                  </div>
+                );
+              }
+
+              // 프로젝트, 테크북, 테크튜브 추가 예정
+              return null;
+            })}
           </div>
         ) : (
           <LottieEmpty
@@ -107,12 +128,13 @@ const MypageTabs = ({ activeSection }) => {
       </div>
 
       {/* 페이지네이션 */}
-      {activeSection === 'purchase' && totalPages > 1 && (
+      {totalPages > 1 && (
         <div className="my-[80px]">
           <CustomPagination
             totalPages={totalPages}
             currentPage={page + 1}
             onChangePage={handlePagination}
+            style="mt-[17px]"
           />
         </div>
       )}

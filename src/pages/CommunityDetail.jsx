@@ -1,5 +1,7 @@
+import deleteCommunityLike from '@/api/community/deleteCommunityLike';
 import deleteCommunityPost from '@/api/community/deleteCommunityPost';
 import getCommunityDetail from '@/api/community/getCommunityDetail';
+import postCommunityLike from '@/api/community/postCommunityLike';
 import Layout from '@/common/Layout/Layout';
 import CommentSection from '@/components/careerDetail/CommentSection';
 import CommunityDetailContens from '@/components/communityDetail/CommunityDetailContens';
@@ -32,6 +34,35 @@ const CommunityDetail = () => {
     },
   });
 
+  const [isLiked, setIsLiked] = useState(false); // 좋아요 여부
+  const [likeCount, setLikeCount] = useState(0);
+
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn); // 로그인 여부
+
+  // 좋아요 토글 함수
+  const handleLikeToggle = async () => {
+    if (!isLoggedIn) {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+      return;
+    }
+
+    try {
+      if (isLiked) {
+        await deleteCommunityLike({ itemId: Number(id) });
+        setIsLiked(false);
+        setLikeCount((prev) => prev - 1);
+      } else {
+        await postCommunityLike({ itemId: Number(id) });
+        setIsLiked(true);
+        setLikeCount((prev) => prev + 1);
+      }
+    } catch (err) {
+      alert('좋아요 처리 중 오류가 발생했습니다.');
+      console.error(err);
+    }
+  };
+
   const handleDelete = async () => {
     const confirm = window.confirm('게시글을 삭제할까요?');
 
@@ -51,6 +82,8 @@ const CommunityDetail = () => {
       try {
         const res = await getCommunityDetail(id);
         setPostData(res);
+        setLikeCount(res.likeCount);
+        setIsLiked(res.isLike ?? false); // undefined 방지
       } catch (err) {
         console.error('상세 조회 실패:', err);
       }
@@ -77,7 +110,12 @@ const CommunityDetail = () => {
         <CommentSection id={id} category={category} />
         <div className="fixed top-[300px] right-[100px] max-w-[800px] ">
           <CommunityFloating text={postData.viewCount} type="viwer" />
-          <CommunityFloating text={postData.likeCount} type="like" />
+          <CommunityFloating
+            text={likeCount}
+            type="like"
+            image={isLiked ? 'solid' : 'outline'}
+            eventhandler={handleLikeToggle}
+          />
           {userInfo?.nickname === postData.author && (
             <>
               <CommunityFloating
