@@ -8,7 +8,7 @@ export const COTREE_ENDPOINT = Object.freeze({
   techtube: `/api/v1/education/techtube`, // 교육 테크튜브  조회와 상세에 씀
   techbookDetail: `/api/v1/education/techbook`, // 교육 테크북 상세페이지
   techbookReview: `/api/v1/education/review`, // 교육 테크북 리뷰
-  techLike: `/api/v1/like`, // 교육 좋아요
+  techLike: `/api/v1/like`, // 교육 좋아요 (⭐️ 교육, 프로젝트, 커뮤니티 모두 해당 엔드포인트 사용)
   projectPostsMain: `/api/v1/project/team/hot/main`, // 메인페이지에서 프로젝트 모집글 조회
   signin: `/api/v1/member/signin`, // 로그인
   careerWrite: '/api/v1/recruitment/resume?id=1',
@@ -17,6 +17,7 @@ export const COTREE_ENDPOINT = Object.freeze({
   community: '/api/v1/community/board', // 커뮤니티 조회
   communityCategory: '/api/v1/category/community', //커뮤니티 카테고리 조회
   communityCreate: '/api/v1/community/board', // 커뮤니티 작성
+  likedCommunity: '/api/v1/community/like', // 내가 좋아요한 커뮤니티 게시글 목록 조회
   careerPosition: '/api/v1/category/position',
   careerInfo: '/api/v1/recruitment/resume',
   CareerDetail: '/api/v1/recruitment/resume',
