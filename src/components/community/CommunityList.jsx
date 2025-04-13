@@ -39,9 +39,9 @@ const CommunityList = ({ communityinfo }) => {
             {/* 프로필사진 */}
             <div className="flex">
               <img
-                src={item.profileImage}
+                src={item.profileImage || '/images/default-avatar.svg'}
                 alt={item.author}
-                className="w-[55px] h-[55px] rounded-full object-cover mr-3"
+                className="w-[55px] h-[55px] rounded-full object-cover mr-3 border"
               />
               <div>
                 {/* 작성자 & 작성일 */}
