@@ -5,9 +5,11 @@ import { COTREE_ENDPOINT } from '../endpoint';
 
 const postSignupEmail = async ({ email }) => {
   try {
-    const response = await coTreeAPI.post(COTREE_ENDPOINT.signupEmail, {
-      email,
-    });
+    const response = await coTreeAPI.post(
+      COTREE_ENDPOINT.signupEmail,
+      { email },
+      { withCredentials: true }, //
+    );
 
     console.log('이메일 인증코드 전송 응답:', response.data);
     return response.data;
