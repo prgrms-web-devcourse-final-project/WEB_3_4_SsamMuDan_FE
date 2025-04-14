@@ -11,7 +11,6 @@ const EducationDetailBookBanner = ({ techBookInfo, code }) => {
     window.open(techBookInfo.techBookUrl, '_blank');
   };
   const rawRating = techBookInfo?.avgRating;
-  console.log('ratingsssssssssssssss', techBookInfo);
 
   useEffect(() => {
     async function fetchReviewList() {

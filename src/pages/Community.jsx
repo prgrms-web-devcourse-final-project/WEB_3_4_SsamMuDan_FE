@@ -129,7 +129,7 @@ const Community = () => {
         setCommunityCodeList(result?.data.content);
         setTotalPages(result?.data.totalPages);
       } catch (error) {
-        console.error('Error fetching tech book:', error);
+        console.error('Error fetching 커뮤니티:', error);
       } finally {
         setIsLoading(false);
       }
@@ -176,8 +176,8 @@ const Community = () => {
         {/* 글쓰기 버튼 (페이지네이션 우측 고정) */}
         <button
           onClick={handlewrite}
-
-          className="absolute  bottom-0 right-8 w-[150px] h-[51px] bg-primary300 text-white font-semibold rounded-[10px] transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-lg hover:scale-105">
+          className="absolute  bottom-0 right-8 w-[150px] h-[51px] bg-primary300 text-white font-semibold rounded-[10px] transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-lg hover:scale-105"
+        >
           <PencilSquareIcon className="w-6 h-6 text-white" />
           글쓰기
         </button>

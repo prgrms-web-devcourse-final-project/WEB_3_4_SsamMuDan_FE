@@ -7,7 +7,6 @@ const CommunityList = ({ communityinfo }) => {
 
   // new 뱃지
   const isNew = (createdAt) => {
-    console.log('와우', createdAt);
     const now = new Date();
     const created = new Date(createdAt);
     const diffInHours = (now - created) / (1000 * 60 * 60); // ms → hour
@@ -38,7 +37,6 @@ const CommunityList = ({ communityinfo }) => {
           <div className="w-[872px] h-[146px] ml-2">
             {/* 프로필사진 */}
             <div className="flex">
-
               <div className="w-[55px] h-[55px]  rounded-full mb-1 overflow-hidden mr-4">
                 {item?.profileImage ? (
                   <img
@@ -59,7 +57,6 @@ const CommunityList = ({ communityinfo }) => {
                 alt={item.author}
                 className="w-[55px] h-[55px] rounded-full object-cover mr-3"
               /> */}
-
 
               <div>
                 {/* 작성자 & 작성일 */}

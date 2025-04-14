@@ -21,6 +21,7 @@ const MypageTabs = ({ activeSection }) => {
   const [loading, setLoading] = useState(false);
   const [selectedSortLabel, setSelectedSortLabel] = useState('최신순');
 
+  console.log('items', items);
   const navigate = useNavigate();
 
   const tabs =
@@ -138,7 +139,7 @@ const MypageTabs = ({ activeSection }) => {
                   >
                     <LectureCardSimple
                       title={item.title}
-                      imageUrl={item.techTubeThumbnailUrl || '/images/default-image.svg'}
+                      imageUrl={item.thumbnail || '/images/default-image.svg'}
                       showPrice={false}
                     />
                   </div>
@@ -156,7 +157,7 @@ const MypageTabs = ({ activeSection }) => {
                   >
                     <LectureCardSimple
                       title={item.title}
-                      imageUrl={item.techBookThumbnailUrl || '/images/default-image.svg'}
+                      imageUrl={item.thumbnail || '/images/default-image.svg'}
                       showPrice={false}
                     />
                   </div>

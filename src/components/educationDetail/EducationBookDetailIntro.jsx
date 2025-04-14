@@ -1,9 +1,11 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-
+import ReactMarkdown from 'react-markdown'; // ReactMarkdown import
 import { useState } from 'react';
 import { pdfjs } from 'react-pdf';
 import { Document, Page } from 'react-pdf';
-import ReactMarkdown from 'react-markdown';
+
+import remarkGfm from 'remark-gfm';
+// import ReactMarkdown from 'react-markdown';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 
@@ -13,17 +15,37 @@ const EducationBookDetailIntro = ({ introduction, content, totalpage }) => {
   //pdf 버튼
   const [pageNumber, setPageNumber] = useState(1);
   const [numPages, setNumPages] = useState(30); // 전체 페이지 수
-  const markdownContent = introduction || '';
+  const markdownText = introduction || '';
 
-  console.log('techBookPreviewUrl', content);
   return (
-    <div className="bg-white rounded-[15px] border p-8">
+    <div className="bg-white rounded-[15px] border p-8 min-h-[470px]">
       {/* 강의소개 */}
       <div className="mb-[86px]">
         <div className="text-[30px] font-regular mb-[30px]">강의소개</div>
-        {/* 콘텐츠 내용이 들어가야한다 */}
-        <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
-          <ReactMarkdown>{markdownContent}</ReactMarkdown>
+
+        <div className="prose max-w-none">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              code({ node, inline, className, children, ...props }) {
+                return inline ? (
+                  <code className="bg-gray-100 px-1 rounded">{children}</code>
+                ) : (
+                  <pre className="bg-gray-900 text-white p-4 rounded overflow-x-auto text-sm">
+                    <code>{children}</code>
+                  </pre>
+                );
+              },
+              ul({ node, children, ...props }) {
+                return <ul className="list-disc pl-5">{children}</ul>; // 기본적인 리스트 스타일 추가
+              },
+              li({ node, children, ...props }) {
+                return <li className="mb-1">{children}</li>; // 리스트 항목에 마진 추가
+              },
+            }}
+          >
+            {markdownText}
+          </ReactMarkdown>
         </div>
       </div>
       {/* 미리보기 */}
