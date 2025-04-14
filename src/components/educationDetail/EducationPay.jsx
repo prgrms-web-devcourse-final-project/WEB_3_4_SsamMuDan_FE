@@ -80,7 +80,7 @@ const EducationPay = ({ techBookInfo, IsLogin, id, educationType }) => {
         orderId: orderId,
         orderName: techBookInfo.title,
         customerName: userInfo.username,
-        successUrl: `http://localhost:3000/payment`,
+        successUrl: `http://www.cotree.site/payment`,
         failUrl: `https://www.cotree.site/payfail`,
       });
     } catch (error) {
