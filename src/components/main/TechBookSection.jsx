@@ -38,7 +38,7 @@ const TechBookSection = () => {
   return (
     <div className="w-full flex flex-row mt-[115px]">
       {/* 일반 TechBook */}
-      <div className="flex flex-col">
+      <div className="flex flex-col" style={{ width: '700px' }}>
         {/* 제목 */}
         <div className="flex flex-row items-center">
           <div className="font-esamanru text-[25px] mr-[69px]">TechBook</div>
@@ -64,11 +64,10 @@ const TechBookSection = () => {
       </div>
 
       {/* TechBook 베스트 */}
-      {/* 일반 TechBook */}
-      <div className="flex flex-col ml-[18px]">
+      <div className="flex flex-col ml-[18px]" style={{ width: '280px' }}>
         {/* 제목 */}
         <div className="flex flex-row items-center">
-          <div className="font-esamanru text-[25px] mr-[69px]">지금 HOT한 TechBook</div>
+          <div className="font-esamanru text-[25px]">지금 HOT한 TechBook</div>
         </div>
         <div className="mt-[75px]">
           <TechBookBest />
