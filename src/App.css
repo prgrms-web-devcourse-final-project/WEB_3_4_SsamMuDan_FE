@@ -48,3 +48,7 @@
   padding-bottom: 0 !important;
   margin-bottom: 0.5em;
 }
+
+.hide-tabs .toastui-editor-tabs {
+  display: none !important;
+}

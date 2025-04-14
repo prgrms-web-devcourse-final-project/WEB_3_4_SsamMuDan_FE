@@ -1,6 +1,7 @@
 import getTechBook from '@/api/education/getTechBook';
 import getTechBookInfo from '@/api/techbookDetail/techbookDetail';
 import Layout from '@/common/Layout/Layout';
+import FloatingButton from '@/components/common/FloatingButton';
 import EducationDetailBookBanner from '@/components/educationDetail/EducationDetailBookBanner';
 import EducationDetailBookContent from '@/components/educationDetail/EducationDetailBookContent';
 import EducationPay from '@/components/educationDetail/EducationPay';
@@ -17,7 +18,14 @@ const TechBook = () => {
   const { id } = useParams();
   const educationType = 'TECH_BOOK';
   const [techbookList, setTechbookList] = useState([]);
+
+  const toTop = () => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    console.log('클릭');
+  };
+
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
     async function fetchTechBookList() {
       try {
         const data = await getTechBookInfo(id);
@@ -30,17 +38,12 @@ const TechBook = () => {
       }
     }
     fetchTechBookList();
-  }, []);
-
-  // 스크롤 맨 위로 이동
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  }, []);
+  }, [id]);
 
   return (
     <Layout>
       <div className="relative w-full max-w-[1246px] mx-auto py-10">
-        <EducationDetailBookBanner techBookInfo={techbook} />
+        <EducationDetailBookBanner techBookInfo={techbook} code={id} />
         <div className="flex">
           <EducationDetailBookContent techBookInfo={techbook} code={id} />
           <div className="mt-[80px] ml-[21px]">
@@ -53,6 +56,11 @@ const TechBook = () => {
             <EducationRelatedVideos techbookList={techbookList} educationType={educationType} />
           </div>
         </div>
+        {/* 플로팅 버튼 */}
+        <FloatingButton
+          style="!fixed bottom-[100px] right-[150px] bg-transparent"
+          scrollTop={toTop}
+        />
       </div>
     </Layout>
   );

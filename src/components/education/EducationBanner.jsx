@@ -1,14 +1,28 @@
 import { NavLink } from 'react-router-dom';
 import LectureCardSimple from '../common/LectureCardSimple';
+import { motion } from 'framer-motion';
 
 const EducationBanner = ({ newTechtube }) => {
   return (
     <div className="h-[377px] w-full relative bg-[url(/images/education-banner.svg)] bg-no-repeat bg-cover mb-[88px]">
       <div className="w-[1246px] flex pt-[60px] mx-auto">
         <div className="mr-[50px]">
-          <div className="w-[73px] h-[33px] rounded-[20px] bg-[#3FC22E] text-[14px] font-bold mb-[20px] text-center leading-[33px] text-white">
-            New
-          </div>
+          <motion.div
+            className="origin-center w-[73px] h-[33px]  mb-[20px]"
+            initial={{ scale: 0.95, opacity: 1 }}
+            animate={{ scale: [0.95, 1.1, 0.95] }} // scale 애니메이션만 진행
+            transition={{
+              duration: 1.0, // 애니메이션 시간
+              repeat: Infinity, // 무한 반복
+              repeatType: 'loop', // 애니메이션이 반복되는 방식
+              repeatDelay: 1, // 애니메이션 후 쉬는 시간 (초 단위)
+              ease: 'easeInOut', // 이징 함수 설정
+            }}
+          >
+            <div className="w-[73px] h-[33px] rounded-[20px] bg-[#3FC22E] text-[14px] font-bold text-center leading-[33px] text-white">
+              New
+            </div>
+          </motion.div>
           <div className="font-esamanru esamanru-medium mb-[10px] text-[30px]">
             새로 등록된 강의
           </div>

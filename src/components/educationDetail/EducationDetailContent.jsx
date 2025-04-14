@@ -9,29 +9,29 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import getTechBookReview from '@/api/techbookDetail/techbookReview';
 import getTechTubeReview from '@/api/techbookDetail/techtubeReview';
 import { Editor } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
+import useAuthStore from '@/store/useAuthStore';
+import posttechtubeReview from '@/api/techtubeDetail/posttechtubeReview';
+import FloatingButton from '../common/FloatingButton';
+import { Skeleton } from '../ui/skeleton';
+import LottieEmpty from '../common/LottieEmpty';
 
 const EducationDetailContent = ({ techTubeInfo, code }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [reviewavg, setReviewAvg] = useState();
   const navigate = useNavigate();
   const tabs = [
     { label: '강의소개', value: '강의소개' },
     { label: '수강평', value: '수강평' },
   ];
-  const [currentTab, setCurrentTab] = useState('강의소개');
   const sortName = { 최신순: 'LATEST', 평점수: 'RATING' };
   const [hasMore, setHasMore] = useState(true);
   const [reviewList, setReviewList] = useState([]);
-  const reviewAverage = Math.floor(
-    reviewList.length > 0
-      ? reviewList.reduce((sum, item) => sum + item.rating, 0) / reviewList.length
-      : 0,
-  );
+  const totalreviewAverage = Math.floor(reviewList.length > 0 ? reviewavg : 0);
+  const [totalReviewNum, setTotalReviewNum] = useState(0);
   const category = searchParams.get('category') || '강의소개';
   const sortOption = searchParams.get('sort') || 'LATEST';
   const page = Number(searchParams.get('page')) || 0;
-  const [isEditing, setIsEditing] = useState(true);
-  const editorRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // 탭 변경 핸들러
   const handleTabChange = (tabValue) => {
@@ -87,39 +87,72 @@ const EducationDetailContent = ({ techTubeInfo, code }) => {
   useEffect(() => {
     async function fetchReviewList() {
       try {
-        console.log('코오오오드', code);
+        setIsLoading(true);
         const response = await getTechTubeReview(code, page, sortOption);
         const newReviews = response.data.content || [];
-        const totlaList = response.data.totalElements || [];
+        const totalList = response.data.totalElements || 0;
+        const avgreview = response.data.reviewAvgRating;
 
-        console.log('response', response.data);
-        if (page === 0) {
-          setReviewList(newReviews);
-        } else {
-          setReviewList((prev) => [...prev, ...newReviews]);
-        }
+        setReviewAvg(avgreview);
+        setTotalReviewNum(totalList);
+        // setProfile(response.data.content.profileImageUrl);
 
-        const currentCount = page === 0 ? newReviews.length : reviewList.length + newReviews.length;
-        if (currentCount >= totlaList || newReviews.length < 10) {
-          setHasMore(false);
-        }
+        setReviewList((prev) => {
+          const updatedList = page === 0 ? newReviews : [...prev, ...newReviews];
+          const currentCount = updatedList.length;
+          const hasMoreReviews = currentCount < totalList;
+
+          setHasMore(hasMoreReviews);
+          return updatedList;
+        });
       } catch (error) {
         console.error('Error fetching tech tube review:', error);
         setReviewList([]);
         setHasMore(false);
+      } finally {
+        setIsLoading(false);
       }
     }
+
     fetchReviewList();
   }, [code, page, sortOption, category]);
 
+  // 로딩 만들엇다
+  const loadingRender = () => {
+    return (
+      <div className="w-[760px] ">
+        {Array.from({ length: 10 }).map((_, index) => (
+          <div key={index} className="flex flex-col space-y-3 mb-[37px]">
+            <Skeleton className="h-[100px] w-full rounded-xl" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[250px]" />
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  // 아무것도 없을때
+  const noneRender = () => {
+    return (
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <LottieEmpty message={'리뷰가 없어요. \n 리뷰를 기다리고 있어요!'} />
+      </div>
+    );
+  };
+
   return (
     <div className="w-[870px]  py-10">
-      <CategoryTab
-        tabs={tabs}
-        currentTab={category}
-        onTabChange={handleTabChange}
-        cateColor="#00be7b"
-      />
+      <div className="mb-3">
+        <CategoryTab
+          tabs={tabs}
+          currentTab={category}
+          onTabChange={handleTabChange}
+          cateColor="#00be7b"
+        />
+      </div>
       {category === '강의소개' && (
         <EducationDetailIntro introduction={techTubeInfo?.introduction} />
       )}{' '}
@@ -128,15 +161,17 @@ const EducationDetailContent = ({ techTubeInfo, code }) => {
           {/* 수강평 별점 요약 배너 */}
           <div className="bg-[#FAFAFA] w-[760px] h-[248px] rounded-[15px] border mb-6 mx-auto flex items-center justify-center relative">
             <div className="text-center">
-              <p className="text-4xl font-bold mb-2">{reviewList.length > 0 ? reviewAverage : 0}</p>
+              <p className="text-4xl font-bold mb-2">
+                {reviewList.length > 0 ? totalreviewAverage : 0}
+              </p>
               <div className="flex items-center justify-center gap-1 mb-2">
-                {Array(reviewAverage)
+                {Array(totalreviewAverage)
                   .fill()
                   .map((_, index) => (
                     <StarIcon key={index} className="w-[32px] h-[32px] text-yellow-400" />
                   ))}
               </div>
-              <p className="text-lg text-gray-400">{reviewList.length}개의 수강평</p>
+              <p className="text-lg text-gray-400">{totalReviewNum}개의 수강평</p>
             </div>
             <img
               src="/images/review-avatar.svg"
@@ -144,7 +179,6 @@ const EducationDetailContent = ({ techTubeInfo, code }) => {
               className="absolute right-24 h-[188px]"
             />
           </div>
-
           {/* 정렬 드롭다운 */}
           <div className="flex justify-end mb-4">
             <PrimarySelect
@@ -154,33 +188,15 @@ const EducationDetailContent = ({ techTubeInfo, code }) => {
               onSortChange={handleSortChange}
             />
           </div>
-          {/* 수강평쓰기 */}
-          {isEditing && (
-            <Editor
-              // plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
-              initialValue=""
-              previewStyle="none"
-              height="300px"
-              initialEditType="markdown"
-              useCommandShortcut={true}
-              ref={editorRef}
-              hideModeSwitch={true} // 🔥 위에 모드 선택 탭 숨김
-              // hooks={{
-              //   addImageBlobHook: async (blob, callback) => {
-              //     const imageUrl = await handleImageUpload(blob);
-              //     if (imageUrl) {
-              //       callback(imageUrl, '');
-              //     }
-              //   },
-              // }}
-            />
-          )}
-
           {/* 수강평 리스트 */}
-          <div className=" text-sm text-gray-700 min-h-[500.5px]">
-            {reviewList.map((item, index) => (
-              <EducationDetailReview key={index} reviewinfo={item} />
-            ))}
+          <div className=" text-sm text-gray-700 min-h-[500.5px] relative">
+            {isLoading
+              ? loadingRender()
+              : totalReviewNum === 0
+                ? noneRender()
+                : reviewList.map((item, index) => (
+                    <EducationDetailReview key={index} reviewinfo={item} />
+                  ))}
           </div>
 
           {/* 더보기 버튼 */}

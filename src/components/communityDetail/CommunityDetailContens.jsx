@@ -5,7 +5,7 @@ import 'prismjs/themes/prism.css';
 
 const CommunityDetailContens = ({ content, image }) => {
   return (
-    <div className="py-[45px]">
+    <div className="py-[45px] min-h-[500px]">
       {image && <img src={image} className="mb-[75px]" />}
       <Viewer
         initialValue={content}
