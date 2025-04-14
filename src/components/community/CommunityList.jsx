@@ -38,6 +38,7 @@ const CommunityList = ({ communityinfo }) => {
           <div className="w-[872px] h-[146px] ml-2">
             {/* 프로필사진 */}
             <div className="flex">
+
               <div className="w-[55px] h-[55px]  rounded-full mb-1 overflow-hidden mr-4">
                 {item?.profileImage ? (
                   <img
@@ -58,6 +59,8 @@ const CommunityList = ({ communityinfo }) => {
                 alt={item.author}
                 className="w-[55px] h-[55px] rounded-full object-cover mr-3"
               /> */}
+
+
               <div>
                 {/* 작성자 & 작성일 */}
                 <div className="flex items-center gap-4 text-base text-gray-400 mb-1">

@@ -1,8 +1,19 @@
 import { EyeIcon, HeartIcon, ChatBubbleOvalLeftEllipsisIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
 
-const CommunityCard = ({ title, content, viewCount, commentCount, likeCount }) => {
+const CommunityCard = ({ id, title, content, viewCount, commentCount, likeCount }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/communityDetail/${id}`);
+  };
+
   return (
-    <div className="w-[600px] h-[254px] border rounded-[20px] bg-white p-[20px] flex flex-col justify-between ml-2">
+    <div
+      onClick={handleClick}
+      className="w-[600px] h-[254px] border rounded-[20px] bg-white p-[20px] flex flex-col justify-between ml-2
+             hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+    >
       <div className="flex flex-col gap-3">
         {/* 제목 */}
         <div className="text-[21px] font-bold line-clamp-2">{title}</div>

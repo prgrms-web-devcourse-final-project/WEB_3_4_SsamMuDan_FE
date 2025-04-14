@@ -39,6 +39,7 @@ const TechBook = () => {
     }
     fetchTechBookList();
   }, [id]);
+
   return (
     <Layout>
       <div className="relative w-full max-w-[1246px] mx-auto py-10">

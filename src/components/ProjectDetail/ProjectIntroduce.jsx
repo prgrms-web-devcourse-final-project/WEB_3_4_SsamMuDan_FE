@@ -8,7 +8,7 @@ const ProjectIntroduce = ({ data }) => {
         <div className="h-[217px] flex flex-row gap-7">
           <div className="w-[217px] h-[217px] rounded-[15px]">
             <img
-              src={data.imageUrl}
+              src={data.imageUrl || '/images/default-project.jpg'}
               alt="프로젝트 썸네일"
               className="w-full h-full object-cover rounded-[15px]"
             />

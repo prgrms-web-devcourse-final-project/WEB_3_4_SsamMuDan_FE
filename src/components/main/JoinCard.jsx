@@ -1,8 +1,12 @@
 import Badge from '@/common/Badge';
 import { EyeIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
 
 const JoinCard = ({ project }) => {
+  const navigate = useNavigate();
+
   const {
+    id, // navigate용 id
     title,
     description,
     imageUrl,
@@ -14,6 +18,10 @@ const JoinCard = ({ project }) => {
     username,
     userProfileImageUrl,
   } = project;
+
+  const handleClick = () => {
+    navigate(`/projectJoinDetail/${id}`);
+  };
 
   // 시작일자와 마감일자 총 몇 개월인지 계산
   const monthCalc = (start, end) => {
@@ -27,7 +35,10 @@ const JoinCard = ({ project }) => {
   const totalMonths = monthCalc(startDate, endDate);
 
   return (
-    <div className="w-[1240px] h-[125px] rounded-[10px] flex items-center border bg-white">
+    <div
+      className="w-[1240px] h-[125px] rounded-[10px] flex items-center border bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+      onClick={handleClick}
+    >
       <div className="w-[95%] h-[80%] flex flex-col justify-between mx-auto my-auto ">
         <div className="flex flex-row justify-between">
           <div className="flex flex-row gap-[30px] items-center">

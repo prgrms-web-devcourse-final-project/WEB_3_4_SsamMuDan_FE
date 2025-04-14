@@ -26,7 +26,7 @@ const EducationBanner = ({ newTechtube }) => {
           <div className="font-esamanru esamanru-medium mb-[10px] text-[30px]">
             새로 등록된 강의
           </div>
-          <div className="text-[16px] font-regular text-grey600">
+          <div className="text-[15px] font-regular text-grey600">
             개발 강의 신규 서비스를 CoTree에서 만나세요!
           </div>
         </div>

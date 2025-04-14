@@ -27,9 +27,9 @@ const PositionSection = ({ devPositionsInfo, isOwner, projectId }) => {
         }));
 
       await patchProjectPosition(projectId, payload);
-      alert('모집 인원이 수정되었습니다!');
+      toast.success('모집 인원이 수정되었습니다!');
     } catch (err) {
-      alert('수정에 실패했습니다.');
+      toast.error('수정에 실패했습니다.');
       console.error(err);
     }
   };
@@ -39,12 +39,16 @@ const PositionSection = ({ devPositionsInfo, isOwner, projectId }) => {
       <div className="text-[25px] font-semibold mt-[60px]">모집 분야</div>
       <div className="w-full border border-black"></div>
 
-      <div className="text-[14px] text-grey600 mt-2 mb-2">
-        ※ 인원을 0명으로 설정하면 해당 포지션은 삭제됩니다.
-      </div>
-
       <div className="w-[90%] flex flex-wrap gap-6">
         {/* 작성자는 인원수 변경 및 삭제 가능 */}
+        <div className="text-[25px] font-semibold mt-[60px]">모집 분야</div>
+        <div className="w-full border border-black"></div>
+
+        {isOwner && (
+          <div className="text-[14px] text-grey600 mt-2 mb-2">
+            ※ 인원을 0명으로 설정하면 해당 포지션은 삭제됩니다.
+          </div>
+        )}
         {positions.map((pos) =>
           isOwner ? (
             <PositionUpdate
