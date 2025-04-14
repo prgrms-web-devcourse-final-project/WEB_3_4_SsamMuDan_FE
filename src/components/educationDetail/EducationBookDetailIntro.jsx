@@ -18,7 +18,7 @@ const EducationBookDetailIntro = ({ introduction, content, totalpage }) => {
   const markdownText = introduction || '';
 
   return (
-    <div className="bg-white rounded-[15px] border p-8">
+    <div className="bg-white rounded-[15px] border p-8 min-h-[470px]">
       {/* 강의소개 */}
       <div className="mb-[86px]">
         <div className="text-[30px] font-regular mb-[30px]">강의소개</div>
