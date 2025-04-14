@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const HotProjectCard = ({ item }) => {
   return (
     <Link to={`/projectJoinDetail/${item.id}`}>
-      <div className="w-[610px] h-[405px] rounded-[30px] bg-grey100 flex flex-col justify-center gap-2 cursor-pointer">
+      <div className="w-[610px] h-[380px] rounded-[30px] bg-grey100 flex flex-col justify-center gap-2 cursor-pointer">
         {/* 상단 => 뱃지, 모집인원  */}
         <div className="w-[540px] h-[44px] mx-auto">
           {' '}
@@ -42,7 +42,7 @@ const HotProjectCard = ({ item }) => {
               </div>
             </div>
             {/* 내용 */}
-            <div className="text-[14px] w-[265px] line-clamp-4">{item.description}</div>
+            <div className="text-[14px] w-[265px] line-clamp-2">{item.description}</div>
             {/* 아이콘 */}
             <div className="w-[265px] flex flex-wrap gap-4">
               {item.techStacksImageUrl.map((item) => (

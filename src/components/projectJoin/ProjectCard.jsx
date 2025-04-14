@@ -24,7 +24,9 @@ const ProjectCard = ({ item }) => {
           <div className="w-[250px] h-[44px] flex flex-row justify-between items-center">
             <Badge
               text={item.isOpen ? '모집중' : '모집완료'}
-              className="w-[72px] h-[27px] bg-[#3FC22E]  text-white text-[13px] font-bold"
+              className={`w-[72px] h-[27px] text-white text-[13px] font-bold ${
+                item.isOpen ? 'bg-[#3FC22E]' : 'bg-gray-400'
+              }`}
             />
             <div className=" h-[27px] flex flex-row items-center gap-2 ">
               <UserIcon className="w-[16px]" />
@@ -74,11 +76,12 @@ const ProjectCard = ({ item }) => {
             {/* 왼쪽 */}
             <div className=" h-[44px] flex flex-row items-center gap-2">
               {/* 뱃지 */}
-              <Avatar className="w-[35px] h-[35px]">
-                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <div>코트리</div>
+              <img
+                src={item.userProfileImageUrl || '/images/default-avatar.svg'}
+                alt={item.username}
+                className="w-[35px] h-[35px] rounded-full object-cover"
+              />
+              <div>{item.username}</div>
             </div>
             {/* 오른쪽 */}
             <div className=" h-[44px] flex flex-row justify-center items-center">

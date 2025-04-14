@@ -31,11 +31,11 @@ const EditProfileModal = ({ onClose }) => {
       await editUserInfo(updatedInfo);
       loginWithUserInfo({ ...userInfo, ...updatedInfo });
 
-      alert('수정이 완료되었습니다!');
+      toast.success('수정이 완료되었습니다!');
       onClose();
     } catch (err) {
       console.error('회원정보 수정 실패:', err);
-      alert('수정 중 오류가 발생했습니다.');
+      toast.error('수정 중 오류가 발생했습니다.');
     }
   };
 

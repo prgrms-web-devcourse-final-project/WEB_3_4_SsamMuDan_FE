@@ -27,9 +27,9 @@ const PositionSection = ({ devPositionsInfo, isOwner, projectId }) => {
         }));
 
       await patchProjectPosition(projectId, payload);
-      alert('모집 인원이 수정되었습니다!');
+      toast.success('모집 인원이 수정되었습니다!');
     } catch (err) {
-      alert('수정에 실패했습니다.');
+      toast.error('수정에 실패했습니다.');
       console.error(err);
     }
   };
