@@ -5,13 +5,11 @@ const ProfileCard = ({ data }) => {
   return (
     <>
       <Link to={`/careerDetail/${data.resumeId}`}>
-        <div className="w-[300px] h-[440px] border rounded-t-[15px] rounded-[8px] mb-[15px]">
+        <div className="w-[300px] h-[440px] border rounded-t-[15px] rounded-[8px] mb-[15px] overflow-hidden">
           {/* 이미지 */}
           <div className="w-[300px] h-[278px] rounded-t-[8px] bg-slate-600 overflow-hidden relative">
             <img
-              src={
-                data.profileImage ? data.profileImage : 'public/images/career/profileDefalut.png'
-              }
+              src={data.profileImage ? data.profileImage : '/images/career/profileDefault.png'}
               alt=""
               className="w-full h-full object-cover"
             />

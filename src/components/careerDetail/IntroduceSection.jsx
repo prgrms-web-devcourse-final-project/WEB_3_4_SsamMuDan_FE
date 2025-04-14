@@ -1,23 +1,16 @@
-import { useState } from 'react';
-
 const IntroduceSection = ({ data }) => {
+  console.log(data);
   return (
     <>
       <div className=" w-[1136px] h-[489px] mx-auto mt-[80px] flex flex-col gap-4">
         {/* 사진, 이름 영역 */}
         <div className="h-[217px] flex flex-row gap-7">
-          <div className="w-[217px] h-[217px] rounded-[15px]">
-            {data.imageUrl ? (
-              <img
-                src={data.imageUrl}
-                alt="강의 카드 이미지"
-                className="h-full object-cover rounded-[15px]"
-              />
-            ) : (
-              <div className="w-full h-full bg-gray-200 rounded-[15px] flex items-center justify-center">
-                <span className="text-gray-500">이미지 없음</span>
-              </div>
-            )}
+          <div className="w-[217px] h-[217px] border rounded-[15px]">
+            <img
+              src={data.imageUrl !== null ? data.imageUrl : '/images/career/profileDefault.png'}
+              alt="강의 카드 이미지"
+              className="w-full h-full object-cover rounded-[15px]"
+            />
           </div>
           <div className="h-full flex flex-col justify-around">
             {/* 이름, 직업 */}

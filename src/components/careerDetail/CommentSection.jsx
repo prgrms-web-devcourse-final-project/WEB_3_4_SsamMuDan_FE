@@ -33,7 +33,6 @@ const CommentSection = ({ id, category }) => {
       setCommentData(getData.content);
       setCommentTotalElements(getData.totalElements);
       setCommentTotalPages(getData.totalPages);
-      console.log(getData.totalPages);
     } catch (error) {
       console.error('Error fetching tech stack options:', error);
     }
