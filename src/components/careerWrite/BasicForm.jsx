@@ -217,7 +217,9 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
         <div className="w-full flex flex-col gap-[42px]">
           {/* 이미지 */}
           <div className="flex flex-col items-center justify-center mt-[80px]">
-            <div className="text-[22px] font-medium mb-2">프로필 이미지</div>
+            <div className="text-[22px] font-medium mb-2 flex items-center gap-2">
+              프로필 이미지 <span className="text-red-500">*</span>
+            </div>
             <div className="relative group">
               <Label
                 htmlFor="picture"
@@ -271,7 +273,9 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
           </div>
           {/* 이메일 */}
           <div>
-            <div className="text-[22px] font-medium mb-2">이메일</div>
+            <div className="text-[22px] font-medium mb-2 flex items-center gap-2">
+              이메일 <span className="text-red-500">*</span>
+            </div>
             <IntroduceInput
               width="1213px"
               height="60px"
@@ -280,11 +284,12 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
               placeholder="이메일을 입력해주세요 (예: example@email.com)"
             />
             {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
-            <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
           </div>
           {/* 직무 */}
           <div>
-            <div className="text-[22px] font-medium mb-2">개발직무</div>
+            <div className="text-[22px] font-medium mb-2 flex items-center gap-2">
+              개발직무 <span className="text-red-500">*</span>
+            </div>
             <div className="flex flex-wrap items-center gap-6 mb-4">
               {position.map((item) => (
                 <StackBadge
@@ -338,11 +343,12 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
                 </div>
               </PopoverContent>
             </Popover>
-            <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
           </div>
           {/* 연차 */}
           <div>
-            <div className="text-[22px] font-medium mb-2">연차</div>
+            <div className="text-[22px] font-medium mb-2 flex items-center gap-2">
+              연차 <span className="text-red-500">*</span>
+            </div>
             <IntroduceInput
               value={years}
               width="1213px"
@@ -350,12 +356,12 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
               onChange={(e) => setYears(e.target.value)}
               placeholder="신입은 0, 10년 이상의 경력일 경우 10으로 입력해주세요"
             />
-
-            <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
           </div>
           {/* 기술스택 */}
           <div className="flex flex-col gap-6">
-            <div className="font-medium text-[20px]">기술스택</div>
+            <div className="font-medium text-[20px] flex items-center gap-2">
+              기술스택 <span className="text-red-500">*</span>
+            </div>
             <div className="flex flex-wrap items-center gap-6">
               {selectedSkill.map((item, index) => (
                 <StackBadge
@@ -394,18 +400,18 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
                 </div>
               )}
             </div>
-            <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
           </div>
           {/* 자기소개 */}
           <div>
-            <div className="text-[22px] font-medium mb-2">자기소개</div>
+            <div className="text-[22px] font-medium mb-2 flex items-center gap-2">
+              자기소개 <span className="text-red-500">*</span>
+            </div>
             <IntroduceTextArea
               value={introduction}
               width="1213px"
               height="170px"
               onChange={(e) => setIntroduction(e.target.value)}
             />
-            <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
           </div>
         </div>
       </div>

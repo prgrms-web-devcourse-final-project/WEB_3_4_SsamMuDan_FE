@@ -16,6 +16,7 @@ const ProjectContentForm = ({ onCareerChange, onDelete, canDelete }) => {
   const [selectedSkill, setSelectedSkill] = useState([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
   const [introduction, setIntroduction] = useState('');
+
   useEffect(() => {
     const fetchTechStack = async () => {
       try {
@@ -76,83 +77,83 @@ const ProjectContentForm = ({ onCareerChange, onDelete, canDelete }) => {
   };
 
   return (
-    <>
-      <div className="w-[800px] flex flex-col gap-[50px]">
-        {/* 회사이름 */}
-        <div className="relative w-[800px] pt-[4px] h-[45px] border-b  ">
-          <Input
-            type="text"
-            placeholder="회사이름을 입력해주세요"
-            className="focus-visible:ring-0 text-grey400 px-0 py-0 border-none shadow-none placeholder:text-grey400 placeholder:text-[20px]"
-            value={project}
-            onChange={(e) => setProject(e.target.value)}
-          />
-          <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
-          <Button
-            variant="outline"
-            className={`absolute top-0 right-0 ${canDelete ? 'bg-primary300 hover:bg-primary300' : 'bg-grey300 hover:bg-grey300'} `}
-            onClick={canDelete ? onDelete : ''}
-          >
-            <TrashIcon className="w-[25px] text-white" />
-          </Button>
-        </div>
-        {/* 프로젝트 소개 */}
-        <div>
-          <div className="text-[22px] font-medium mb-2">프로젝트 소개</div>
-          <IntroduceTextArea
-            width="800px"
-            height="170px"
-            value={introduction}
-            onChange={(e) => setIntroduction(e.target.value)}
-          />
-          <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
-        </div>
+    <div className="w-[800px] flex flex-col gap-[50px]">
+      {/* 프로젝트 이름 */}
+      <div className="relative w-[800px] pt-[4px] h-[45px] border-b">
+        <Input
+          type="text"
+          placeholder="프로젝트 이름을 입력해주세요"
+          className="focus-visible:ring-0 text-grey400 px-0 py-0 border-none shadow-none placeholder:text-grey400 placeholder:text-[20px]"
+          value={project}
+          onChange={(e) => setProject(e.target.value)}
+        />
+        <Button
+          variant="outline"
+          className={`absolute top-0 right-0 ${canDelete ? 'bg-primary300 hover:bg-primary300' : 'bg-grey300 hover:bg-grey300'} `}
+          onClick={canDelete ? onDelete : ''}
+        >
+          <TrashIcon className="w-[25px] text-white" />
+        </Button>
+      </div>
 
-        {/* 기술스택 */}
-        <div className="flex flex-col gap-6">
-          <div className="font-medium text-[20px]">기술스택</div>
-          <div className="flex flex-wrap items-center gap-6">
-            {selectedSkill.map((item, index) => (
-              <StackBadge
-                key={index}
-                text={item.name}
-                showCloseIcon={true}
-                onClose={() => removeSkill(item)}
-              />
-            ))}
-          </div>
-          <div className="relative">
-            <Input
-              className="px-14 h-[60px] bg-grey100 placeholder:text-grey400 placeholder:text-[20px] focus-visible:ring-0"
-              placeholder="보유한 기술 스택을 입력해 주세요"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
+      {/* 기술스택 */}
+      <div className="flex flex-col gap-6">
+        <div className="font-medium text-[20px] flex items-center gap-2">
+          기술스택 <span className="text-red-500">*</span>
+        </div>
+        <div className="flex flex-wrap items-center gap-6">
+          {selectedSkill.map((item, index) => (
+            <StackBadge
+              key={index}
+              text={item.name}
+              showCloseIcon={true}
+              onClose={() => removeSkill(item)}
             />
-            <MagnifyingGlassIcon className="absolute top-[20px] left-[20px] w-[20px]" />
-            {suggestions.length > 0 && (
-              <div className="absolute z-10 w-full bg-white border border-gray-200 mt-2 rounded shadow">
-                {suggestions.map((tech, index) => (
-                  <div
-                    key={index}
-                    className={`px-4 py-2 cursor-pointer ${
-                      index === activeSuggestionIndex ? 'bg-gray-100' : 'hover:bg-gray-100'
-                    }`}
-                    onClick={() => selectSkill(tech)}
-                  >
-                    <div className="flex flex-row items-center">
-                      <img src={tech.imageUrl} alt={tech.name} className="w-6 h-6 mr-2" />
-                      {tech.name}
-                    </div>
+          ))}
+        </div>
+        <div className="relative">
+          <Input
+            className="px-14 h-[60px] bg-grey100 placeholder:text-grey400 placeholder:text-[20px] focus-visible:ring-0"
+            placeholder="보유한 기술 스택을 입력해 주세요"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          <MagnifyingGlassIcon className="absolute top-[20px] left-[20px] w-[20px]" />
+          {suggestions.length > 0 && (
+            <div className="absolute z-10 w-full bg-white border border-gray-200 mt-2 rounded shadow">
+              {suggestions.map((tech, index) => (
+                <div
+                  key={index}
+                  className={`px-4 py-2 cursor-pointer ${
+                    index === activeSuggestionIndex ? 'bg-gray-100' : 'hover:bg-gray-100'
+                  }`}
+                  onClick={() => selectSkill(tech)}
+                >
+                  <div className="flex flex-row items-center">
+                    <img src={tech.imageUrl} alt={tech.name} className="w-6 h-6 mr-2" />
+                    {tech.name}
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-          <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
-    </>
+
+      {/* 프로젝트 소개 */}
+      <div>
+        <div className="text-[22px] font-medium mb-2 flex items-center gap-2">
+          프로젝트 소개 <span className="text-red-500">*</span>
+        </div>
+        <IntroduceTextArea
+          width="800px"
+          height="170px"
+          value={introduction}
+          onChange={(e) => setIntroduction(e.target.value)}
+        />
+      </div>
+    </div>
   );
 };
 
