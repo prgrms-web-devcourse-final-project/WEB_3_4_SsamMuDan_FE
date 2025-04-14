@@ -3,7 +3,7 @@ const ProjectIntroduce = ({ data }) => {
 
   return (
     <>
-      <div className="w-[1136px] mx-auto mt-[107px] flex flex-col gap-4">
+      <div className="w-[1136px] mx-auto mt-[35px] flex flex-col gap-4">
         {/* 사진, 이름 영역 */}
         <div className="h-[217px] flex flex-row gap-7">
           <div className="w-[217px] h-[217px] rounded-[15px]">

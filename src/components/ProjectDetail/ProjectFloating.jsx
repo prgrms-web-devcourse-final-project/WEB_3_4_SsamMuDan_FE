@@ -10,7 +10,7 @@ const ProjectFloating = ({ text, style, type, isLiked = false, onClick }) => {
     return (
       <>
         {type === 'viwer' ? (
-          <EyeIcon className="w-[20px] text-grey400 mr-[10px]" />
+          <EyeIcon className="w-[20px] h-[20px] text-grey400 mr-[10px]" />
         ) : isLiked ? (
           <SolidHeartIcon className="w-[20px] text-primary300 mr-[10px]" />
         ) : (
@@ -24,7 +24,7 @@ const ProjectFloating = ({ text, style, type, isLiked = false, onClick }) => {
   return (
     <div
       onClick={onClick}
-      className={`w-[101px] h-[49px] rounded-[10px] p-[16px] flex justify-center items-center shadow-custom-md mb-[8px] cursor-pointer ${style}`}
+      className={`min-w-[101px] h-[49px] rounded-[10px] p-[16px] flex justify-center items-center shadow-custom-md mb-[8px] cursor-pointer ${style}`}
     >
       {renderContent()}
     </div>

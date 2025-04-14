@@ -11,7 +11,7 @@ const Payment = () => {
   const paymentKey = searchParams.get('paymentKey');
   const orderId = searchParams.get('orderId');
   const amount = searchParams.get('amount');
-  console.log('amount', typeof amount);
+
   useEffect(() => {
     if (orderId && paymentKey && amount) {
       async function tosspayconfirm() {

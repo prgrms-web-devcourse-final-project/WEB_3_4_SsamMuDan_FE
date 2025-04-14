@@ -194,7 +194,7 @@ const CommunityWrite = () => {
 
   return (
     <Layout>
-      <div className="w-[1246px] mx-auto mt-10 mb-20 flex">
+      <div className="w-[1246px] mx-auto mt-10 mb-20 ">
         <div className="flex-1 mr-9">
           <motion.div
             initial={{ y: 30, opacity: 0 }}
@@ -248,23 +248,21 @@ const CommunityWrite = () => {
           </motion.div>
         </div>
 
-        {/* 우측 플로팅 버튼 */}
-        <div className="flex-col">
-          <div className="fixed top-[300px] right-[100px] max-w-[800px] space-y-3">
-            <CommunityFloating
-              text={floatingBadge.completed.text}
-              type="completed"
-              style={floatingBadge.completed.style}
-              eventhandler={handleComplete}
-            />
-            <CommunityFloating
-              text={floatingBadge.cancel.text}
-              type="cancel"
-              eventhandler={() => setIsModalOpen(true)}
-            />
-          </div>
+        <div className="flex items-center justify-end gap-3 mr-9 mt-7">
+          <CommunityFloating
+            text={floatingBadge.cancel.text}
+            type="cancel"
+            eventhandler={() => setIsModalOpen(true)}
+          />
+          <CommunityFloating
+            text={floatingBadge.completed.text}
+            type="completed"
+            style={floatingBadge.completed.style}
+            eventhandler={handleComplete}
+          />
         </div>
       </div>
+
       {/* 나가기 모달 */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">

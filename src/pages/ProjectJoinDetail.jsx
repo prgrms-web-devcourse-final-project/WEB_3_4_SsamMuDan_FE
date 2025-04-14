@@ -70,6 +70,21 @@ const ProjectJoinDetail = () => {
   return (
     <Layout>
       <div className="w-[1246px] border mx-auto flex flex-col mt-[68px] rounded-[8px] mb-[55px] relative">
+        {/* 플로팅 뱃지 */}
+        <div className=" flex justify-end w-full z-50 px-[54px] mt-[40px] gap-5">
+          <ProjectFloating text={data.viewCount} type="viwer" />
+          <ProjectFloating
+            text={likeCount}
+            type="like"
+            isLiked={isLiked}
+            onClick={handleLikeToggle}
+          />
+          <ProjectFloating
+            text={isOpen ? '모집중' : '모집마감'}
+            type="status"
+            style={`${isOpen ? '!bg-primary300 !border-primary300' : '!bg-gray-400'}`}
+          />
+        </div>
         <ProjectIntroduce data={data} />
         <PositionSection
           devPositionsInfo={data.devPositionsInfo}
@@ -84,21 +99,6 @@ const ProjectJoinDetail = () => {
           setIsOpen={setIsOpen}
           projectId={id}
         />
-        {/* 플로팅 뱃지 */}
-        <div className="fixed top-[300px] right-[100px] max-w-[800px] z-50">
-          <ProjectFloating
-            text={isOpen ? '모집중' : '모집마감'}
-            type="status"
-            style={`${isOpen ? '!bg-primary300 !border-primary300' : '!bg-gray-400'}`}
-          />
-          <ProjectFloating text={data.viewCount} type="viwer" />
-          <ProjectFloating
-            text={likeCount}
-            type="like"
-            isLiked={isLiked}
-            onClick={handleLikeToggle}
-          />
-        </div>
       </div>
     </Layout>
   );

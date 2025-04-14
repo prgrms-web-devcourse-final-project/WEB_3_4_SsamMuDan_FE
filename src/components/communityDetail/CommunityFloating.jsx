@@ -5,7 +5,7 @@ import { HeartIcon as SolidHeartIcon } from '@heroicons/react/24/solid';
 const CommunityFloating = ({ image, text, style, type, eventhandler }) => {
   return (
     <div
-      className={`w-[101px] h-[49px] rounded-[10px] bg-white border border-[#EEEEEE] p-[16px] flex justify-center items-center shadow-custom-md mb-[8px] cursor-pointer ${style}`}
+      className={`w-[101px] h-[49px] rounded-[10px] bg-white border border-[#EEEEEE] p-[16px] flex justify-center items-center shadow-custom-md cursor-pointer ${style}`}
       onClick={eventhandler}
     >
       {type === 'modify' || type === 'delete' || type === 'completed' || type === 'cancel' ? (
