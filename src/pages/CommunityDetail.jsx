@@ -109,12 +109,34 @@ const CommunityDetail = () => {
           title={postData.title}
           user={postData.author}
           date={postData.createdAt}
+          viewfloating={postData.viewCount}
+          onLike={handleLikeToggle}
           className="mb-[10px]"
+          isLiked={isLiked}
+          likeCount={likeCount}
         />
         <CommunityDetailContens content={postData.content} image={postData.imageUrl} />
+        <div className="flex justify-end gap-5">
+          {userInfo?.nickname === postData.author && (
+            <>
+              <CommunityFloating
+                text={floatingBadge.delete.text}
+                type="delete"
+                style={floatingBadge.delete.style}
+                eventhandler={handleDelete}
+              />
+              <CommunityFloating
+                text={floatingBadge.modify.text}
+                type="modify"
+                style={floatingBadge.modify.style}
+                eventhandler={() => navigate(`/communityWrite?id=${id}`)}
+              />
+            </>
+          )}
+        </div>
         {/* 댓글 영역*/}
         <CommentSection id={id} category={category} />
-        <div className="fixed top-[300px] right-[100px] max-w-[800px] ">
+        {/* <div className="fixed top-[300px] right-[100px] max-w-[800px] ">
           <CommunityFloating text={postData.viewCount} type="viwer" />
           <CommunityFloating
             text={likeCount}
@@ -122,23 +144,7 @@ const CommunityDetail = () => {
             image={isLiked ? 'solid' : 'outline'}
             eventhandler={handleLikeToggle}
           />
-          {userInfo?.nickname === postData.author && (
-            <>
-              <CommunityFloating
-                text={floatingBadge.modify.text}
-                type="modify"
-                style={floatingBadge.modify.style}
-                eventhandler={() => navigate(`/communityWrite?id=${id}`)}
-              />
-              <CommunityFloating
-                text={floatingBadge.delete.text}
-                type="delete"
-                style={floatingBadge.delete.style}
-                eventhandler={handleDelete}
-              />
-            </>
-          )}
-        </div>
+        </div> */}
         {/* 플로팅 버튼 */}
         <FloatingButton
           style="!fixed bottom-[100px] right-[150px] bg-transparent"
