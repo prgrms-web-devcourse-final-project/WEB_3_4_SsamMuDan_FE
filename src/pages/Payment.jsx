@@ -18,10 +18,8 @@ const Payment = () => {
         try {
           const data = await getTechsPay(orderId, paymentKey, amount);
           console.log('결제 승인 성공:', data);
-          // navigate('/education');s
         } catch (err) {
           console.error('결제 승인 실패', err);
-          // navigate('/payfail');
         }
       }
       tosspayconfirm();

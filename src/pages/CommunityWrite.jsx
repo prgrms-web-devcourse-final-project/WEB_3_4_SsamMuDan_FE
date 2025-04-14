@@ -31,6 +31,14 @@ const CommunityWrite = () => {
   const IsLogin = useAuthStore((state) => state.isLoggedIn);
   const navigate = useNavigate();
   const [postId, setPostId] = useState(null);
+  const { isLoggedIn } = useAuthStore();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      alert('로그인 후 이용가능한 서비스입니다.');
+      navigate('/login');
+    }
+  }, [isLoggedIn, navigate]);
 
   //  초기 진입 시 기본값 세팅
   useEffect(() => {
@@ -43,12 +51,7 @@ const CommunityWrite = () => {
     }
 
     if (changed) setSearchParams(newParams);
-
-    if (!IsLogin) {
-      alert('로그인 후 이용가능한 서비스입니다.');
-      navigate('/login');
-    }
-  }, [IsLogin]);
+  }, []);
 
   //정렬 핸들러
   const handleCateChange = (categoryId) => {

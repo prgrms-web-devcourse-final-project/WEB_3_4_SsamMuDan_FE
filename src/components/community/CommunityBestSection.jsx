@@ -25,6 +25,7 @@ const CommunityBestSection = ({ bestCommunity }) => {
               ) : (
                 <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover" />
               )}
+
               {/* 조회수, 댓글수, 좋아요수 뱃지 */}
               <div
                 className="max-w-[200px] h-[34px] absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-lg font-semibold flex justify-center items-center gap-3"
@@ -48,11 +49,21 @@ const CommunityBestSection = ({ bestCommunity }) => {
             </div>
             {/* 작성자 & 제목 */}
             <div className="flex items-center mt-3 gap-2">
-              <img
-                src={item.authorProfile}
-                alt={item.author}
-                className="w-[30px] h-[30px] rounded-full object-cover"
-              />
+              <div className="w-[30px] h-[30px] rounded-full overflow-hidden">
+                {item?.profileImage ? (
+                  <img
+                    src={item.profileImage}
+                    alt={item.author}
+                    className="w-[55px] h-[55px] rounded-full object-cover "
+                  />
+                ) : (
+                  <img
+                    src="/images/dummy-user-avatar.svg"
+                    alt={item?.id}
+                    className="w-[55px] h-[55px] rounded-full object-cover "
+                  />
+                )}
+              </div>
               <span className="text-base font-semibold">{item.author}</span>
             </div>
             <div className="mt-2 text-xl font-semibold line-clamp-1">{item.title}</div>

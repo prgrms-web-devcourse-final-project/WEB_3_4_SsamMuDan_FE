@@ -78,7 +78,7 @@ const Header = () => {
         <div className="flex items-center ml-auto" ref={dropdownRef}>
           {isLoggedIn ? (
             <>
-              <span className="text-[13px] font-medium">{userInfo?.nickname}</span>
+              <span className="text-[16px] font-medium">{userInfo?.nickname}</span>
               {/* 드롭다운 전체를 감싸는 컨테이너 */}
               <div className="relative ml-[20px]">
                 <button onClick={() => setDropdownOpen((prev) => !prev)}>
@@ -110,7 +110,7 @@ const Header = () => {
             </>
           ) : (
             <>
-              <NavLink to="/login" className="text-[20px] font-Thin mr-[28px]">
+              <NavLink to="/login" className="text-[16px] font-Thin mr-[28px]">
                 로그인
               </NavLink>
               <NavLink

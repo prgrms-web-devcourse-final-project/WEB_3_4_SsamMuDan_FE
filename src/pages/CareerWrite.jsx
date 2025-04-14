@@ -12,6 +12,11 @@ import { Toaster, toast } from 'react-hot-toast';
 const CareerWrite = () => {
   const navigate = useNavigate();
 
+  const toTop = () => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    console.log('클릭');
+  };
+
   // 이력서 데이터 상태 관리
   const [postData, setPostData] = useState({
     basicInfo: {
@@ -218,9 +223,11 @@ const CareerWrite = () => {
           />
         </div>
 
-        <div className="fixed bottom-[350px] right-[1%]">
-          <FloatingButton />
-        </div>
+        {/* 플로팅 버튼 */}
+        <FloatingButton
+          style="!fixed bottom-[100px] right-[150px] bg-transparent"
+          scrollTop={toTop}
+        />
       </div>
     </Layout>
   );

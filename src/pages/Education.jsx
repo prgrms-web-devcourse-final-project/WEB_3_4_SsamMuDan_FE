@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { NavLink, useSearchParams } from 'react-router-dom';
 import getTechBook from '@/api/education/getTechBook';
 import getTechTube from '@/api/education/getTechTube';
+import LottieEmpty from '@/components/common/LottieEmpty';
 
 const Education = () => {
   const tabs = [
@@ -104,7 +105,6 @@ const Education = () => {
       try {
         setTechBookList([]);
         let result;
-        // let newtechtubelist ;
         const newtechtubelist = await getTechTube(0, 3, 'LATEST');
         if (category === 'techbook') {
           result = await getTechBook(page, '', sortOption, keyword);
@@ -116,8 +116,6 @@ const Education = () => {
         setTotalList(result?.data.totalElements || []);
         setTotalPages(result?.data.totalPages || []);
         setNewTechtube(newtechtubelist?.data.content || []);
-
-        console.log('newTechtubenewTechtube', newtechtubelist?.data.content);
       } catch (error) {
         console.error('Error fetching data:', error);
         setTechBookList([]);
@@ -133,24 +131,30 @@ const Education = () => {
 
   const loadingRender = () => {
     return (
-      <div className="flex flex-col space-y-3">
-        <Skeleton className="h-[125px] w-[250px] rounded-xl" />
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-[250px]" />
-          <Skeleton className="h-4 w-[200px]" />
-        </div>
+      <div className="w-[1246px] grid grid-cols-4 gap-[17px]">
+        {Array.from({ length: 16 }).map((_, index) => (
+          <div key={index} className="flex flex-col space-y-3 mb-[37px]">
+            <Skeleton className="h-[200px] w-[300px] rounded-xl" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[250px]" />
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+          </div>
+        ))}
       </div>
     );
   };
 
+  // 아무것도 없을때
   const noneRender = () => {
     return (
-      <div>
-        <div className="text-[50px] col-span-4 text-center">없다!@@@</div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <LottieEmpty message={'검색 결과가 없어요'} />
       </div>
     );
   };
 
+  getTechBook();
   return (
     <Layout>
       <EducationBanner newTechtube={newTechtube} />
@@ -177,7 +181,7 @@ const Education = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-[17px] min-h-[700px]">
+        <div className="grid grid-cols-4 gap-[17px] min-h-[700px] relative">
           {isLoading
             ? loadingRender()
             : techbookList.length <= 0

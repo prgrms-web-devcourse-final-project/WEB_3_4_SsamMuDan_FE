@@ -4,6 +4,7 @@ import SearchBar from '@/components/common/SearchBar';
 import CommunityFloating from '@/components/communityDetail/CommunityFloating';
 import EducationPay from '@/components/educationDetail/EducationPay';
 import EducationRelatedVideos from '@/components/educationDetail/EducationRelatedVideos';
+import { Skeleton } from '@/components/ui/skeleton';
 import ReactPlayer from 'react-player';
 
 const JongHee = () => {
@@ -21,6 +22,17 @@ const JongHee = () => {
         controls
       />
       <Loading />
+      <div className="w-full grid grid-cols-4">
+        {Array.from({ length: 16 }).map((_, index) => (
+          <div key={index} className="flex flex-col space-y-3">
+            <Skeleton className="h-[200px] w-[300px] rounded-xl" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[250px]" />
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -5,10 +5,12 @@ import SearchBar from '../common/SearchBar';
 import PrimarySelect from '../common/PrimarySelect';
 import CommunityList from './CommunityList';
 import CustomPagination from '../common/CustomPagination';
+import LottieEmpty from '../common/LottieEmpty';
+import { Skeleton } from '../ui/skeleton';
 
 const CommunityPostList = ({ postData, onTabChange, searchProps, selectData, paginationData }) => {
   // const categoryList = ['전체', '게시글', '코드리뷰'];
-  const { communityList, communityPostList, communityCodeList, currentTab } = postData;
+  const { communityList, communityPostList, communityCodeList, currentTab, isLoading } = postData;
   const { value, onSearchChange } = searchProps;
   const { selectList, placeholder, customstyle, onSortChange, selectvalue } = selectData;
   const { totalPages, currentPage, onChangePage, style } = paginationData;
@@ -24,9 +26,34 @@ const CommunityPostList = ({ postData, onTabChange, searchProps, selectData, pag
   else if (currentTab === 'BOARD') currentList = communityPostList;
   else if (currentTab === 'CODE_REVIEW') currentList = communityCodeList;
 
+  // 아무것도 없을때
+  const noneRender = () => {
+    return (
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <LottieEmpty message={'커뮤니티글이 없어요 \n 다같이 소통해요!'} />
+      </div>
+    );
+  };
+
+  // 로딩 만들엇다
+  const loadingRender = () => {
+    return (
+      <div className="w-[760px] ">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <div key={index} className="flex flex-col space-y-3 mb-[37px]">
+            <Skeleton className="h-[100px] w-full rounded-xl" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[250px]" />
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
   return (
-    <div className="relative">
-      <div className="mb-20">
+    <div className="relative pb-[80px]">
+      <div className="">
         <div className="flex justify-between items-center mt-[33px] mb-3">
           {/* 카테고리 탭 */}
           <div className="flex gap-4 relative">
@@ -67,7 +94,18 @@ const CommunityPostList = ({ postData, onTabChange, searchProps, selectData, pag
         </div>
 
         {/* 게시글 카드 리스트 */}
-        {currentList.length > 0 ? <CommunityList communityinfo={currentList} /> : <h1>없습니다</h1>}
+        {currentList.length > 0 ? (
+          <CommunityList communityinfo={currentList} />
+        ) : (
+          <div className="min-h-[600px] relative">{noneRender()}</div>
+        )}
+        {/* {isLoading ? (
+          loadingRender()
+        ) : currentList.length > 0 ? (
+          <CommunityList communityinfo={currentList} />
+        ) : (
+          <div className="min-h-[600px] relative">{noneRender()}</div>
+        )} */}
       </div>
       <CustomPagination
         totalPages={totalPages}

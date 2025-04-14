@@ -5,11 +5,21 @@ const EducationDetailReview = ({ reviewinfo }) => {
     <div className="w-[760px] mb-10 mt-4 relative mx-auto">
       <div className="flex gap-2">
         {/* 프로필사진 */}
-        <img
-          src="/images/dummy-user-avatar.svg"
-          alt={reviewinfo?.id}
-          className="w-11 h-11 rounded-full object-cover mb-1"
-        />
+        <div className="w-11 h-11 rounded-full mb-1 overflow-hidden">
+          {reviewinfo?.profileImageUrl ? (
+            <img
+              src={reviewinfo?.profileImageUrl}
+              alt={reviewinfo?.id}
+              className="object-cover w-full h-full"
+            />
+          ) : (
+            <img
+              src="/images/dummy-user-avatar.svg"
+              alt={reviewinfo?.id}
+              className="object-cover "
+            />
+          )}
+        </div>
         {/* 닉네임 & 작성일 */}
         <div className="flex flex-col mb-1">
           <p className="text-base font-semibold">{reviewinfo?.id}</p>

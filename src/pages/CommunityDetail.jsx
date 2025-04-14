@@ -2,6 +2,7 @@ import deleteCommunityPost from '@/api/community/deleteCommunityPost';
 import getCommunityDetail from '@/api/community/getCommunityDetail';
 import Layout from '@/common/Layout/Layout';
 import CommentSection from '@/components/careerDetail/CommentSection';
+import FloatingButton from '@/components/common/FloatingButton';
 import CommunityDetailContens from '@/components/communityDetail/CommunityDetailContens';
 import CommunityDetailInfo from '@/components/communityDetail/CommunityDetailInfo';
 import CommunityFloating from '@/components/communityDetail/CommunityFloating';
@@ -63,6 +64,11 @@ const CommunityDetail = () => {
     return <div>로딩 중...</div>;
   }
 
+  const toTop = () => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    console.log('클릭');
+  };
+
   return (
     <Layout>
       <div className="w-[1246px] mx-auto relative">
@@ -95,6 +101,11 @@ const CommunityDetail = () => {
             </>
           )}
         </div>
+        {/* 플로팅 버튼 */}
+        <FloatingButton
+          style="!fixed bottom-[100px] right-[150px] bg-transparent"
+          scrollTop={toTop}
+        />
       </div>
     </Layout>
   );
