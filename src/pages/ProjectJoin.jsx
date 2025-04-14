@@ -8,6 +8,7 @@ import CustomPagination from '@/components/common/CustomPagination';
 import { useEffect, useState } from 'react';
 import getProjectList from '@/api/projectJoin/getProjectList';
 import ProjectPositionModal from '@/components/projectJoin/projectPositionModal';
+import { useLocation } from 'react-router-dom';
 
 const ProjectJoin = () => {
   const dateSelectList = [
@@ -19,17 +20,28 @@ const ProjectJoin = () => {
   const [selectedTechStack, setSelectedTechStack] = useState([]);
   const [selectedSort, setSelectedSort] = useState('createdAt');
 
+  const location = useLocation();
   const [projectList, setProjectList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
+
+  // 페이지 번호 저장을 위해 세션에서 불러오거나 0으로 초기화
+  const [currentPage, setCurrentPage] = useState(() => {
+    const saved = sessionStorage.getItem('projectPage');
+    return saved !== null ? Number(saved) : 0;
+  });
+
   const itemsPerPage = 16;
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage - 1);
   };
 
-  // 리스트 받아오기
+  // 페이지 번호를 세션스토리지에 저장
+  useEffect(() => {
+    sessionStorage.setItem('projectPage', String(currentPage));
+  }, [currentPage]);
+
   const fetchProjectList = async () => {
     const projectList = await getProjectList(
       selectedTechStack,
@@ -43,28 +55,20 @@ const ProjectJoin = () => {
     setTotalPages(projectList.totalPages);
   };
 
-  // 기술 스택 선택
   const handleTechStackSelect = (selectedStacks) => {
     setSelectedTechStack(selectedStacks);
-    setCurrentPage(0); // 기술 스택이 변경되면 첫 페이지로 이동
+    setCurrentPage(0); // 필터 바뀌면 초기화
   };
 
-  // 정렬 상태가 변경될 때마다 프로젝트 목록 다시 불러오기
   useEffect(() => {
     console.log('페이지 변경 감지:', currentPage);
     fetchProjectList();
   }, [currentPage, selectedTechStack, selectedPosition, selectedSort]);
 
-  // 초기 프로젝트 목록 불러오기
-  useEffect(() => {
-    fetchProjectList();
-  }, []);
-
   useEffect(() => {
     console.log('selectedPosition', selectedPosition);
   }, [selectedPosition]);
 
-  // 스크롤 맨 위로 이동
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, [currentPage]);
