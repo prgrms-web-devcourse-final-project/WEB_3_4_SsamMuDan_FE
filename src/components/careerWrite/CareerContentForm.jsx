@@ -102,7 +102,9 @@ const CareerContentForm = ({ onCareerChange, onDelete, canDelete }) => {
 
       {/* 직무 */}
       <div>
-        <div className="text-[22px] font-medium mb-2">직무</div>
+        <div className="text-[22px] font-medium mb-2 flex items-center gap-2">
+          직무 <span className="text-red-500">*</span>
+        </div>
         <IntroduceInput
           width="800px"
           height="60px"
@@ -113,7 +115,9 @@ const CareerContentForm = ({ onCareerChange, onDelete, canDelete }) => {
 
       {/* 기술스택 */}
       <div className="flex flex-col gap-6">
-        <div className="font-medium text-[20px]">기술스택</div>
+        <div className="font-medium text-[20px] flex items-center gap-2">
+          기술스택 <span className="text-red-500">*</span>
+        </div>
         <div className="flex flex-wrap items-center gap-6">
           {selectedSkill.map((item, index) => (
             <StackBadge
@@ -156,7 +160,9 @@ const CareerContentForm = ({ onCareerChange, onDelete, canDelete }) => {
 
       {/* 자기소개 */}
       <div>
-        <div className="text-[22px] font-medium mb-2">주요성과 및 업무</div>
+        <div className="text-[22px] font-medium mb-2 flex items-center gap-2">
+          주요성과 및 업무 <span className="text-red-500">*</span>
+        </div>
         <IntroduceTextArea
           width="800px"
           height="170px"
