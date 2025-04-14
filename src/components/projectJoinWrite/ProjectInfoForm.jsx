@@ -27,13 +27,32 @@ const ProjectInfoForm = () => {
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+
+      if (!allowedTypes.includes(file.type)) {
+        toast.error('지원하지 않는 파일 형식입니다. (jpeg, jpg, png, gif, webp만 가능)');
+        e.target.value = ''; // 파일 선택 초기화
+        return;
+      }
 
       // 미리보기용 URL 생성
-      const previewUrl = URL.createObjectURL(file);
-      setImgUrl(previewUrl);
-      setPostImgUrl(file); // 실제 파일 객체 저장
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImgUrl(reader.result);
+        setPostImgUrl(file);
+      };
+      reader.readAsDataURL(file);
     }
   };
+
+  // 컴포넌트 언마운트 시 URL.revokeObjectURL 호출
+  useEffect(() => {
+    return () => {
+      if (imageUrl) {
+        URL.revokeObjectURL(imageUrl);
+      }
+    };
+  }, [imageUrl]);
 
   const [postData, setPostData] = useState({
     projectName: '',
@@ -196,7 +215,35 @@ const ProjectInfoForm = () => {
   const handleSubmit = async () => {
     // 이메일 형식 검증
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(projectContact)) {
-      alert('올바른 이메일 형식을 입력해주세요.');
+      toast.error('올바른 이메일 형식을 입력해주세요.');
+      return;
+    }
+
+    // 모집 분야 최소 1개 이상 검증
+    if (selectedPositions.length === 0) {
+      toast.error('최소 1개 이상의 모집 분야를 선택해주세요.');
+      return;
+    }
+
+    // 프로젝트 기간 검증
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const startDate = new Date(postData.startDate);
+    const endDate = new Date(postData.endDate);
+
+    if (startDate >= today) {
+      toast.error('프로젝트 시작일은 오늘 이전이어야 합니다.');
+      return;
+    }
+
+    if (endDate <= today) {
+      toast.error('프로젝트 마감일은 오늘 이후여야 합니다.');
+      return;
+    }
+
+    if (startDate >= endDate) {
+      toast.error('프로젝트 마감일은 시작일보다 이후여야 합니다.');
       return;
     }
 
@@ -215,9 +262,6 @@ const ProjectInfoForm = () => {
       startDate: postData.startDate,
       endDate: postData.endDate,
     };
-
-    console.log('--- API Request Structure ---');
-    console.log('requestPayload:', requestPayload);
 
     const response = await postProject(requestPayload, postImgUrl);
     console.log('response', response);
@@ -281,14 +325,17 @@ const ProjectInfoForm = () => {
             <Input
               id="picture"
               type="file"
-              accept="image/*"
+              accept=".jpeg,.jpg,.png,.gif,.webp"
               className="hidden"
               onChange={handleImageChange}
             />
+            <p className="mt-2 text-sm text-gray-500">지원 파일 형식: jpeg, jpg, png, gif, webp</p>
           </div>
           {/* 프로젝트 제목 */}
           <div>
-            <div className="text-[22px] font-medium mb-2 ">프로젝트 제목</div>
+            <div className="text-[22px] font-medium mb-2 flex items-center gap-2">
+              프로젝트 제목 <span className="text-red-500">*</span>
+            </div>
             <IntroduceInput
               width="1213px"
               height="60px"
@@ -299,7 +346,9 @@ const ProjectInfoForm = () => {
 
           {/* 프로젝트 소개 */}
           <div>
-            <div className="text-[22px] font-medium mb-2">프로젝트 소개</div>
+            <div className="text-[22px] font-medium mb-2 flex items-center gap-2">
+              프로젝트 소개 <span className="text-red-500">*</span>
+            </div>
             <IntroduceTextArea
               width="1213px"
               height="170px"
@@ -310,13 +359,17 @@ const ProjectInfoForm = () => {
 
           {/* 프로젝트 기간 */}
           <div>
-            <div className="text-[22px] font-medium mb-2">프로젝트 기간</div>
+            <div className="text-[22px] font-medium mb-2 flex items-center gap-2">
+              프로젝트 기간 <span className="text-red-500">*</span>
+            </div>
             <ProjectPeriod onDateChange={handleDateChange} />
           </div>
 
           {/* 연락처 입력 */}
           <div>
-            <div className="text-[22px] font-medium mb-2">연락처</div>
+            <div className="text-[22px] font-medium mb-2 flex items-center gap-2">
+              연락처 <span className="text-red-500">*</span>
+            </div>
             <IntroduceInput
               width="1213px"
               height="60px"
@@ -331,7 +384,10 @@ const ProjectInfoForm = () => {
 
           {/* 모집 분야 */}
           <div className="flex flex-col gap-6">
-            <div className="font-medium text-[20px] ">모집 분야</div>
+            <div className="font-medium text-[20px] flex items-center gap-2">
+              모집 분야 <span className="text-red-500">*</span>
+            </div>
+            <p className="text-sm text-gray-500 -mt-4">최소 1개 이상의 모집 분야를 선택해주세요.</p>
             {/* Popover for position selection */}
             <Popover
               open={isPositionPopoverOpen}
@@ -400,7 +456,9 @@ const ProjectInfoForm = () => {
           </div>
           {/* 기술스택 */}
           <div className="flex flex-col gap-6">
-            <div className="font-medium text-[20px] ">기술스택</div>
+            <div className="font-medium text-[20px] flex items-center gap-2">
+              기술스택 <span className="text-red-500">*</span>
+            </div>
             <div className="flex flex-wrap items-center gap-6">
               {selectedSkill.map((item, index) => (
                 <StackBadge

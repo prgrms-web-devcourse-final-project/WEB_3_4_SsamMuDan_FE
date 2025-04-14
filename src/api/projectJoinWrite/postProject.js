@@ -2,6 +2,8 @@ import coTreeAPI from '@/config/cotree';
 import { COTREE_ENDPOINT } from '../endpoint';
 
 const postRecruitment = async (request, resumeImage) => {
+  console.log('request', request);
+  console.log('resumeImage', resumeImage);
   try {
     const formData = new FormData();
     formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
