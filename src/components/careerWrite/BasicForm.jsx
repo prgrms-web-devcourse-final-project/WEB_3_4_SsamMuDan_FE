@@ -217,6 +217,7 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
         <div className="w-full flex flex-col gap-[42px]">
           {/* 이미지 */}
           <div className="flex flex-col items-center justify-center mt-[80px]">
+            <div className="text-[22px] font-medium mb-2">프로필 이미지</div>
             <div className="relative group">
               <Label
                 htmlFor="picture"
@@ -260,14 +261,17 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
             <Input
               id="picture"
               type="file"
-              accept="image/*"
+              accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
               className="hidden"
               onChange={handleImageChange}
             />
+            <p className="text-grey400 text-sm mt-2">
+              지원하는 파일 형식: JPEG, JPG, PNG, GIF, WEBP
+            </p>
           </div>
           {/* 이메일 */}
           <div>
-            <div className="text-[22px] font-medium mb-2 ">이메일</div>
+            <div className="text-[22px] font-medium mb-2">이메일</div>
             <IntroduceInput
               width="1213px"
               height="60px"
@@ -276,6 +280,7 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
               placeholder="이메일을 입력해주세요 (예: example@email.com)"
             />
             {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
+            <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
           </div>
           {/* 직무 */}
           <div>
@@ -333,6 +338,7 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
                 </div>
               </PopoverContent>
             </Popover>
+            <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
           </div>
           {/* 연차 */}
           <div>
@@ -342,7 +348,10 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
               width="1213px"
               height="60px"
               onChange={(e) => setYears(e.target.value)}
+              placeholder="신입은 0, 10년 이상의 경력일 경우 10으로 입력해주세요"
             />
+
+            <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
           </div>
           {/* 기술스택 */}
           <div className="flex flex-col gap-6">
@@ -385,6 +394,7 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
                 </div>
               )}
             </div>
+            <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
           </div>
           {/* 자기소개 */}
           <div>
@@ -395,6 +405,7 @@ const BasicForm = ({ setPostData, setResumeImage }) => {
               height="170px"
               onChange={(e) => setIntroduction(e.target.value)}
             />
+            <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
           </div>
         </div>
       </div>

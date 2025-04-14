@@ -87,7 +87,7 @@ const ProjectContentForm = ({ onCareerChange, onDelete, canDelete }) => {
             value={project}
             onChange={(e) => setProject(e.target.value)}
           />
-
+          <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
           <Button
             variant="outline"
             className={`absolute top-0 right-0 ${canDelete ? 'bg-primary300 hover:bg-primary300' : 'bg-grey300 hover:bg-grey300'} `}
@@ -105,6 +105,7 @@ const ProjectContentForm = ({ onCareerChange, onDelete, canDelete }) => {
             value={introduction}
             onChange={(e) => setIntroduction(e.target.value)}
           />
+          <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
         </div>
 
         {/* 기술스택 */}
@@ -148,6 +149,7 @@ const ProjectContentForm = ({ onCareerChange, onDelete, canDelete }) => {
               </div>
             )}
           </div>
+          <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
         </div>
       </div>
     </>

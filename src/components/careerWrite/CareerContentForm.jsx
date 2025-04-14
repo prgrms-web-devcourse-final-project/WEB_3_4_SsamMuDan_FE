@@ -90,6 +90,7 @@ const CareerContentForm = ({ onCareerChange, onDelete, canDelete }) => {
           value={company}
           onChange={(e) => setCompany(e.target.value)}
         />
+        <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
 
         <Button
           variant="outline"
@@ -109,6 +110,7 @@ const CareerContentForm = ({ onCareerChange, onDelete, canDelete }) => {
           value={position}
           onChange={(e) => setPosition(e.target.value)}
         />
+        <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
       </div>
 
       {/* 기술스택 */}
@@ -152,6 +154,7 @@ const CareerContentForm = ({ onCareerChange, onDelete, canDelete }) => {
             </div>
           )}
         </div>
+        <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
       </div>
 
       {/* 자기소개 */}
@@ -163,6 +166,7 @@ const CareerContentForm = ({ onCareerChange, onDelete, canDelete }) => {
           value={introduction}
           onChange={(e) => setIntroduction(e.target.value)}
         />
+        <p className="text-red-500 text-sm mt-1">* 필수 입력 항목입니다</p>
       </div>
     </div>
   );
