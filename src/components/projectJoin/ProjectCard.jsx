@@ -9,7 +9,9 @@ const ProjectCard = ({ item }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/projectJoinDetail/${item.id}`);
+    navigate(`/projectJoinDetail/${item.id}`, {
+      state: { prevPage: window.history.state?.usr?.currentPage || 0 },
+    });
   };
 
   return (

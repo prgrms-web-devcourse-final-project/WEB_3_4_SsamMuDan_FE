@@ -27,9 +27,9 @@ const PositionSection = ({ devPositionsInfo, isOwner, projectId }) => {
         }));
 
       await patchProjectPosition(projectId, payload);
-      toast.success('모집 인원이 수정되었습니다!');
+      alert('모집 인원이 수정되었습니다!');
     } catch (err) {
-      toast.error('수정에 실패했습니다.');
+      alert('수정에 실패했습니다.');
       console.error(err);
     }
   };
@@ -39,32 +39,37 @@ const PositionSection = ({ devPositionsInfo, isOwner, projectId }) => {
       <div className="text-[25px] font-semibold mt-[60px]">모집 분야</div>
       <div className="w-full border border-black"></div>
 
-      <div className="w-[90%] flex flex-wrap gap-6">
-        {/* 작성자는 인원수 변경 및 삭제 가능 */}
-        <div className="text-[25px] font-semibold mt-[60px]">모집 분야</div>
-        <div className="w-full border border-black"></div>
-
+      <div className="w-[90%]">
         {isOwner && (
-          <div className="text-[14px] text-grey600 mt-2 mb-2">
-            ※ 인원을 0명으로 설정하면 해당 포지션은 삭제됩니다.
-          </div>
+          <>
+            <div className="text-[14px] text-grey600 mt- mb-3">
+              ※ 인원을 0명으로 설정하면 해당 포지션은 삭제되며, 다시 추가할 수 없으니 신중히 결정해
+              주세요.
+            </div>
+            <div className="flex flex-wrap gap-6 mt-2">
+              {positions.map((pos) => (
+                <PositionUpdate
+                  key={pos.projectDevPositionId}
+                  text={pos.positionName}
+                  count={pos.amount}
+                  onUpdate={(newAmount) => handleUpdate(pos.projectDevPositionId, newAmount)}
+                  onDelete={() => handleDelete(pos.projectDevPositionId)}
+                />
+              ))}
+            </div>
+          </>
         )}
-        {positions.map((pos) =>
-          isOwner ? (
-            <PositionUpdate
-              key={pos.projectDevPositionId}
-              text={pos.positionName}
-              count={pos.amount}
-              onUpdate={(newAmount) => handleUpdate(pos.projectDevPositionId, newAmount)}
-              onDelete={() => handleDelete(pos.projectDevPositionId)}
-            />
-          ) : (
-            <PositionChip
-              key={pos.projectDevPositionId}
-              text={pos.positionName}
-              count={pos.amount}
-            />
-          ),
+
+        {!isOwner && (
+          <div className="flex flex-wrap gap-6 mt-4">
+            {positions.map((pos) => (
+              <PositionChip
+                key={pos.projectDevPositionId}
+                text={pos.positionName}
+                count={pos.amount}
+              />
+            ))}
+          </div>
         )}
       </div>
 
