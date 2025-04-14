@@ -9,6 +9,8 @@ export const COTREE_ENDPOINT = Object.freeze({
   techbookDetail: `/api/v1/education/techbook`, // 교육 테크북 상세페이지
   techbookReview: `/api/v1/education/review`, // 교육 테크북 리뷰
   techLike: `/api/v1/like`, // 교육 좋아요 (⭐️ 교육, 프로젝트, 커뮤니티 모두 해당 엔드포인트 사용)
+  likedTechTube: '/api/v1/education/techtube/like', // 내가 좋아요한 테크튜브 목록 조회
+  likedTechBook: '/api/v1/education/techbook/like', // 내가 좋아요한 테크북 목록 조회
   projectPostsMain: `/api/v1/project/team/hot/main`, // 메인페이지에서 프로젝트 모집글 조회
   signin: `/api/v1/member/signin`, // 로그인
   careerWrite: '/api/v1/recruitment/resume?id=1',

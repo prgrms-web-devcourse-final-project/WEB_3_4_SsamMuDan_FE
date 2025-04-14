@@ -1,11 +1,15 @@
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import ActionButton from '../common/ActionButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import postTechTubePay from '@/api/techtubeDetail/postTechTubeLike';
 import postTechsPay from '@/api/techtubeDetail/postTechsPay';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import useAuthStore from '@/store/useAuthStore';
 import ReactPlayer from 'react-player';
+import postTechTubeLike from '@/api/education/postTechTubeLike';
+import deleteTechTubeLike from '@/api/education/deleteTechTubeLike';
+import postTechBookLike from '@/api/education/postTechBookLike';
+import deleteTechBookLike from '@/api/education/deleteTechBookLike';
 
 // props로 techInfo 를 들고온다 *테크튜브랑 테크북 동일
 const EducationPay = ({ techBookInfo, IsLogin, id, educationType }) => {
@@ -18,6 +22,7 @@ const EducationPay = ({ techBookInfo, IsLogin, id, educationType }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const userInfo = useAuthStore((state) => state.userInfo); //로그인
+  const [isLiked, setIsLiked] = useState(techBookInfo?.isLiked || false); // 좋아요 상태
 
   const handleVideoClick = () => {
     setIsModalOpen(true);
@@ -88,6 +93,40 @@ const EducationPay = ({ techBookInfo, IsLogin, id, educationType }) => {
   const handleOpenPdf = () => {
     window.open(techBookInfo.techBookUrl, '_blank');
   };
+
+  // 좋아요 토글 함수
+  const handleLikeToggle = async () => {
+    if (!IsLogin) {
+      setIsModalOpen(true);
+      return;
+    }
+
+    try {
+      if (isLiked) {
+        if (educationType === 'TECH_TUBE') {
+          await deleteTechTubeLike({ itemId: id });
+        } else {
+          await deleteTechBookLike({ itemId: id });
+        }
+      } else {
+        if (educationType === 'TECH_TUBE') {
+          await postTechTubeLike({ itemId: id });
+        } else {
+          await postTechBookLike({ itemId: id });
+        }
+      }
+
+      setIsLiked(!isLiked);
+    } catch (error) {
+      alert('좋아요 처리 중 오류가 발생했습니다.');
+      console.error(error);
+    }
+  };
+
+  // 좋아요 상태 유지
+  useEffect(() => {
+    setIsLiked(techBookInfo?.isLike ?? false);
+  }, [techBookInfo?.isLike]);
 
   return (
     <div className="w-[400px] h-[355px] rounded-[12px] bg-white border border-[#D9D9D9] shadow-md  p-[24px] mb-[28px]">
@@ -203,16 +242,13 @@ const EducationPay = ({ techBookInfo, IsLogin, id, educationType }) => {
         )}
 
         {/* 좋아요 버튼 */}
-        {IsLogin ? (
-          <ActionButton variant="like" text="좋아요" customeStyle="w-full" />
-        ) : (
-          <ActionButton
-            variant="like"
-            text="좋아요"
-            customeStyle="w-full"
-            onClick={() => setIsModalOpen(true)}
-          />
-        )}
+        <ActionButton
+          variant="like"
+          text="좋아요"
+          customeStyle="w-full"
+          isLiked={isLiked}
+          onClick={IsLogin ? handleLikeToggle : () => setIsModalOpen(true)}
+        />
 
         {/* 포인트 이미지 */}
         <img

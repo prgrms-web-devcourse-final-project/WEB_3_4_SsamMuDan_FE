@@ -20,7 +20,7 @@ const LectureCardSimple = ({
       </div>
 
       {/* 타이틀 */}
-      <p className="font-bold leading-none pl-1 mb-2 line-clamp-1">{title}</p>
+      <p className="font-bold leading-none pl-1 mb-2 line-clamp-2">{title}</p>
 
       {/* 강사 & 가격 */}
       <div className="flex items-center mb-1">
