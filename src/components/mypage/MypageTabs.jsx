@@ -8,6 +8,8 @@ import LottieEmpty from '../common/LottieEmpty';
 import getLikedCommunity from '@/api/community/getLikedCommunity';
 import getLikedTechTube from '@/api/education/getLikedTechTube';
 import getLikedTechBook from '@/api/education/getLikedTechBook';
+import getLikedProject from '@/api/projectJoin/getLikedProject';
+import MyProjectCard from './MyProjectCard';
 
 const MypageTabs = ({ activeSection }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -73,6 +75,10 @@ const MypageTabs = ({ activeSection }) => {
             const res = await getLikedTechBook(page, 12);
             setItems(res.content);
             setTotalPages(res.totalPages);
+          } else if (category === 'project') {
+            const res = await getLikedProject(page, 12);
+            setItems(res.content);
+            setTotalPages(res.totalPages);
           } else {
             setItems([]);
             setTotalPages(0);
@@ -87,6 +93,7 @@ const MypageTabs = ({ activeSection }) => {
 
     fetchData();
   }, [activeSection, category, page]);
+
   return (
     <div className="bg-white border border-grey200 p-6 shadow-lg rounded-2xl mb-[90px] max-w-[1246px] mx-auto">
       <div className="mb-8">
@@ -152,6 +159,18 @@ const MypageTabs = ({ activeSection }) => {
                       imageUrl={item.techBookThumbnailUrl || '/images/default-image.svg'}
                       showPrice={false}
                     />
+                  </div>
+                );
+              }
+
+              if (category === 'project') {
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() => navigate(`/projectJoinDetail/${item.id}`)}
+                    className="cursor-pointer"
+                  >
+                    <MyProjectCard item={item} />
                   </div>
                 );
               }
