@@ -11,7 +11,7 @@ const getTechTube = async (page, size = 16, sort, keyword) => {
         ...(keyword && { keyword }),
       },
     });
-    console.log(response.data);
+
     return response.data;
   } catch (error) {
     console.error('Error fetching career info:', error);

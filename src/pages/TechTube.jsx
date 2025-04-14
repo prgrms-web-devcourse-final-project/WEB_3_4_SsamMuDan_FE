@@ -21,7 +21,6 @@ const TechTube = () => {
 
   const toTop = () => {
     window.scrollTo({ top: 0, behavior: 'auto' });
-    console.log('클릭');
   };
 
   useEffect(() => {
@@ -34,7 +33,6 @@ const TechTube = () => {
         const educationdata = await getTechTube(0, 3, 'LIKES');
         setTechTube(data.data);
         setTechtubeList(educationdata.data.content);
-        console.log('data.data', data.data);
       } catch (error) {
         console.error('Error fetching tech tube:', error);
       }

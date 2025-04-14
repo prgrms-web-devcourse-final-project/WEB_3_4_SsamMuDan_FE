@@ -14,7 +14,6 @@ import deleteTechBookLike from '@/api/education/deleteTechBookLike';
 // props로 techInfo 를 들고온다 *테크튜브랑 테크북 동일
 const EducationPay = ({ techBookInfo, IsLogin, id, educationType }) => {
   const tosspaykey = import.meta.env.VITE_TOSSPAYMENT_KEY;
-  console.log('toss', tosspaykey);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
   const isTechBook = location.pathname.includes('TECH_BOOK');
@@ -72,15 +71,17 @@ const EducationPay = ({ techBookInfo, IsLogin, id, educationType }) => {
 
       const orderId = response.data?.orderId;
 
+      console.log('아이디가 뭘까', orderId);
       const tossPayments = await loadTossPayments(tosspaykey);
 
+      console.log('techBookInfo.price', techBookInfo.price);
       tossPayments.requestPayment('카드', {
         amount: techBookInfo.price,
         orderId: orderId,
         orderName: techBookInfo.title,
         customerName: userInfo.username,
         successUrl: `http://localhost:3000/payment`,
-        failUrl: `http://localhost:3000/payfail`,
+        failUrl: `https://www.cotree.site/payfail`,
       });
     } catch (error) {
       console.error('토스페이 실패', error);

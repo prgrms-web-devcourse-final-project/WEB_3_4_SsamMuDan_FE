@@ -7,9 +7,7 @@ import ReactPlayer from 'react-player';
 const EducationDetailBanner = ({ techTubeInfo, code }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reviewavg, setReviewAvg] = useState();
-  // const avgrating = techTubeInfo?.avgRating ? Math.floor(techTubeInfo.avgRating) : 0;
   const totalreviewAverage = Math.floor(reviewavg ? reviewavg : 0);
-  console.log('techTubeInfo', techTubeInfo);
 
   const handleVideoClick = () => {
     setIsModalOpen(true);
@@ -44,8 +42,6 @@ const EducationDetailBanner = ({ techTubeInfo, code }) => {
       try {
         const response = await getTechTubeReview(code, 0, 'LATEST');
         const avgreview = response.data.reviewAvgRating;
-
-        console.log('Adsadasddsads', avgreview);
 
         setReviewAvg(avgreview);
       } catch (error) {

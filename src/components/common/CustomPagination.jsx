@@ -14,26 +14,18 @@ const CustomPagination = ({
   onChangePage, // url페이지를 관리하는 함수
   style = '',
 }) => {
-  // const totalPages = Math.ceil(totalItems / itemsPerPage);
   if (totalPages <= 1) return null;
   const currentGroup = Math.floor((currentPage - 1) / pagesPerGroup);
   const groupStart = currentGroup * pagesPerGroup + 1;
   const groupEnd = Math.min(groupStart + pagesPerGroup - 1, totalPages);
 
-  // console.log('totalPages', totalPages, 'pagesPerGroup', pagesPerGroup, 'currentPage', currentPage);
-
   const handlePrevPage = () => {
-    console.log('쿨락');
-    // if (groupStart > 1) {
-    //   onChangePage(groupStart - 1);
-    // }
     if (currentPage > 1) {
       onChangePage(currentPage - 1);
     }
   };
 
   const handleNextPage = () => {
-    console.log('클릭');
     if (currentPage < totalPages) {
       onChangePage(currentPage + 1);
     }

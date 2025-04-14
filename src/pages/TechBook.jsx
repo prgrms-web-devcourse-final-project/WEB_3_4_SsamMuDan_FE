@@ -21,7 +21,6 @@ const TechBook = () => {
 
   const toTop = () => {
     window.scrollTo({ top: 0, behavior: 'auto' });
-    console.log('클릭');
   };
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const TechBook = () => {
         const data = await getTechBookInfo(id);
         const educationdata = await getTechBook(0, 3, 'LIKES');
         setTechbookList(educationdata.data.content);
-        console.log('로그인입니다', educationdata.data.content);
+
         setTechBook(data.data);
       } catch (error) {
         console.error('Error fetching tech book:', error);
