@@ -3,48 +3,57 @@ import Badge from '@/common/Badge';
 import getTechbookMain from '@/api/main/getTechbookMain';
 import getEducationCategory from '@/api/main/getEducationCategory';
 import { NavLink } from 'react-router-dom';
+import Loading from '../common/Loading';
 
 const TechBookBest = () => {
   const [bookList, setBookList] = useState([]);
   const [categoryMap, setCategoryMap] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchTechBooks = async () => {
+    const fetchData = async () => {
+      setLoading(true);
       try {
-        const books = await getTechbookMain({ sort: 'LIKES', size: 4 });
-        setBookList(books);
-      } catch (err) {
-        console.error('TechBook 베스트 로딩 실패:', err);
-      }
-    };
+        const [books, categories] = await Promise.all([
+          getTechbookMain({ sort: 'LIKES', size: 4 }),
+          getEducationCategory(),
+        ]);
 
-    const fetchCategories = async () => {
-      try {
-        const res = await getEducationCategory();
-        const map = res.data.reduce((acc, cur) => {
+        const map = categories.data.reduce((acc, cur) => {
           acc[cur.id] = cur.name;
           return acc;
         }, {});
+
+        setBookList(books);
         setCategoryMap(map);
       } catch (err) {
-        console.error('카테고리 불러오기 실패:', err);
+        console.error('TechBook 베스트 데이터 로딩 실패:', err);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchTechBooks();
-    fetchCategories();
+    fetchData();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="w-[670px] h-[500px] flex items-center justify-center border-r">
+        <Loading />
+      </div>
+    );
+  }
+
   return (
-    <div className="h-[507px] flex flex-wrap justify-between gap-2">
+    <div className="h-[507px] flex flex-wrap justify-between gap-x-[20px] gap-y-[20px] w-[540px]">
       {bookList.map((item) => (
-        <NavLink to={`/TECH_BOOK/${item.id}`} key={item.id}>
-          <div className="w-[260px] p-[20px] relative flex flex-col justify-center items-start border rounded-[10px] mb-[10px] hover:shadow-md transition">
+        <NavLink to={`/TECH_BOOK/${item.id}`} key={item.id} className="w-[260px]">
+          <div className="p-[20px] relative flex flex-col justify-center items-start border rounded-[10px] hover:shadow-md transition">
             <Badge
               text="HOT"
               className="w-[60px] h-[26px] bg-[#FFCACA] text-[#FF6262] border-[#FF6262] border text-[13px] absolute top-0 left-[20px] m-[-10px]"
             />
-            <div className="w-[216px] h-[106px]">
+            <div className="w-full h-[106px]">
               <img
                 src={item.techBookThumbnailUrl}
                 alt="강의 카드 이미지"

@@ -6,12 +6,14 @@ import Badge from '@/common/Badge';
 
 import getTechtubeMain from '@/api/main/getTechtubeMain';
 import getEducationCategory from '@/api/main/getEducationCategory';
+import Loading from '../common/Loading';
 
 const TechTubeSection = () => {
   const [categoryList, setCategoryList] = useState([]); // getEducationCategory로 불러온 카테고리
   const [currentCategoryId, setCurrentCategoryId] = useState(null); // 선택된 카테고리 id
   const [techTubeList, setTechTubeList] = useState([]);
   const swiperRef = useRef(null);
+  const [loading, setLoading] = useState(true); // 로딩 상태
 
   // 카테고리 가져오기
   useEffect(() => {
@@ -38,10 +40,13 @@ const TechTubeSection = () => {
 
     const fetchTechTube = async () => {
       try {
+        setLoading(true);
         const data = await getTechtubeMain({ categoryId: currentCategoryId });
         setTechTubeList(data);
       } catch (err) {
         console.error('TechTube 불러오기 실패:', err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -85,7 +90,13 @@ const TechTubeSection = () => {
       </div>
 
       <div className="mt-[54px]">
-        <TechTubeList data={techTubeList} swiperRef={swiperRef} />
+        {loading ? (
+          <div className="h-[300px] flex items-center justify-center">
+            <Loading />
+          </div>
+        ) : (
+          <TechTubeList data={techTubeList} swiperRef={swiperRef} />
+        )}
       </div>
     </div>
   );

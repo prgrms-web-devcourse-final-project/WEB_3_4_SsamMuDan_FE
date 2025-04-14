@@ -7,6 +7,7 @@ import useAuthStore from '@/store/useAuthStore';
 import getUserInfo from '@/api/login/getUserInfo';
 import { Toaster, toast } from 'react-hot-toast';
 import FindIdModal from './FindIdModal';
+import ResetPasswordModal from './ResetPasswordModal';
 
 const LoginFormContainer = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,6 +16,7 @@ const LoginFormContainer = () => {
   const { login } = useAuthStore();
   const navigate = useNavigate();
   const [isFindIdOpen, setIsFindIdOpen] = useState(false); // 아이디찾기 모달 상태
+  const [isResetPwOpen, setIsResetPwOpen] = useState(false); // 비밀번호 재설정 모달 상태
 
   const handleLogin = async (e) => {
     e?.preventDefault();
@@ -93,7 +95,8 @@ const LoginFormContainer = () => {
             아이디 찾기
           </button>
           <button
-            onClick={() => alert('비밀번호 재설정 클릭됨')}
+            type="button"
+            onClick={() => setIsResetPwOpen(true)}
             className="underline hover:text-primary300 transition-colors"
           >
             비밀번호 재설정
@@ -126,6 +129,8 @@ const LoginFormContainer = () => {
 
       {/* 아이디 찾기 모달 */}
       {isFindIdOpen && <FindIdModal onClose={() => setIsFindIdOpen(false)} />}
+      {/* 비밀번호 재설정 모달 */}
+      {isResetPwOpen && <ResetPasswordModal onClose={() => setIsResetPwOpen(false)} />}
     </>
   );
 };

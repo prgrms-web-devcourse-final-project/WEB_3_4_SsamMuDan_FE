@@ -139,7 +139,7 @@ const MypageTabs = ({ activeSection }) => {
                   >
                     <LectureCardSimple
                       title={item.title}
-                      imageUrl={item.thumbnail || '/images/default-image.svg'}
+                      imageUrl={item.techTubeThumbnailUrl || '/images/default-image.svg'}
                       showPrice={false}
                     />
                   </div>
@@ -157,7 +157,7 @@ const MypageTabs = ({ activeSection }) => {
                   >
                     <LectureCardSimple
                       title={item.title}
-                      imageUrl={item.thumbnail || '/images/default-image.svg'}
+                      imageUrl={item.techBookThumbnailUrl || '/images/default-image.svg'}
                       showPrice={false}
                     />
                   </div>

@@ -2,14 +2,17 @@ import { useEffect, useState } from 'react';
 import getTechBookDetail from '@/api/education/getTechBookDetail';
 import getTechbookMain from '@/api/main/getTechbookMain';
 import { NavLink } from 'react-router-dom';
+import Loading from '../common/Loading';
 
 const TechBookList = ({ categoryId }) => {
   const [bookList, setBookList] = useState([]);
+  const [loading, setLoading] = useState(true); // 로딩 상태
 
   useEffect(() => {
     if (!categoryId) return;
 
     const fetchTechBooks = async () => {
+      setLoading(true); // API 호출 전 로딩 시작
       try {
         const books = await getTechbookMain({
           sort: 'LATEST',
@@ -33,11 +36,22 @@ const TechBookList = ({ categoryId }) => {
         setBookList(withIntro);
       } catch (err) {
         console.error('TechBook 리스트 로딩 실패:', err);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchTechBooks();
   }, [categoryId]);
+
+  // 로딩 중일 때
+  if (loading) {
+    return (
+      <div className="w-[670px] h-[500px] flex items-center justify-center border-r">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-3 border-r">
