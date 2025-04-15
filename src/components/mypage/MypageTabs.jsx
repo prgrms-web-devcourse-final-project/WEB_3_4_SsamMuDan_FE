@@ -112,6 +112,32 @@ const MypageTabs = ({ activeSection }) => {
         ) : items.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10">
             {items.map((item) => {
+              if (activeSection === 'purchase') {
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() => {
+                      if (category === 'techtube') {
+                        navigate(
+                          `/TECH_TUBE/${item.productId}?category=강의소개&page=0&sort=LATEST`,
+                        );
+                      } else if (category === 'techbook') {
+                        navigate(
+                          `/TECH_BOOK/${item.productId}?category=강의소개&page=0&sort=LATEST`,
+                        );
+                      }
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <LectureCardSimple
+                      title={item.title}
+                      imageUrl={item.thumbnail || '/images/default-image.svg'}
+                      showPrice={false}
+                    />
+                  </div>
+                );
+              }
+
               if (category === 'community') {
                 return (
                   <div
