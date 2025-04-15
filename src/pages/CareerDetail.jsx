@@ -7,8 +7,10 @@ import CommentSection from '@/components/careerDetail/CommentSection';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import getCareerDetail from '@/api/careerDetail/getCareerDetail';
+import useAuthStore from '@/store/useAuthStore';
 
 const CareerDetail = () => {
+  const { userInfo } = useAuthStore();
   const { id } = useParams();
   const category = 'RESUME';
   const [introduceData, setIntroduceData] = useState({
@@ -50,9 +52,12 @@ const CareerDetail = () => {
           <IntroduceSection data={introduceData} />
           <CareerDetailSection data={careerData} />
           <ProjectDetailSection data={projectData} />
-          <div className="w-[1136px] h-[100px] flex flex-row justify-end mx-auto mt-8 ">
-            <Button className="bg-primary300">제안하기</Button>
-          </div>
+          {userInfo?.role === 'HUNTER' && (
+            <div className="w-[1136px] h-[100px] flex flex-col justify-center items-end mx-auto mt-8 gap-2">
+              <Button className="bg-primary300">제안하기</Button>
+              <span className="text-gray-500">(추후 개발 예정)</span>
+            </div>
+          )}
         </div>
         {/* 댓글 */}
         <div className="mt-[50px]">

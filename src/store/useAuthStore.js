@@ -8,7 +8,7 @@ const useAuthStore = create((set) => ({
   refreshToken: null,
   isLoggedIn: false, // 로그인 여부
   userInfo: null, // 로그인한 유저 정보
-
+  role: null, // 유저 역할
   // 로그인 함수: accessToken, refreshToken, userInfo 저장
   login: ({ accessToken, refreshToken, userInfo }) =>
     set({
