@@ -9,9 +9,11 @@ import { useState } from 'react';
 import postRecruitment from '@/api/careerWrite/postRecruitment';
 import { useNavigate } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
+import useAuthStore from '@/store/useAuthStore';
 const CareerWrite = () => {
   const navigate = useNavigate();
-
+  const { userInfo } = useAuthStore();
+  console.log('userInfo', userInfo);
   const toTop = () => {
     window.scrollTo({ top: 0, behavior: 'auto' });
     console.log('클릭');
@@ -165,7 +167,7 @@ const CareerWrite = () => {
       <div className="w-[1246px] mx-auto mt-[129px] relative">
         {/* 이름 */}
         <div className="font-esamanru text-[24px]">
-          ⭐ <span className="text-primary300">홍길동 </span>님의 정보를 알려주세요
+          ⭐ <span className="text-primary300">{userInfo.username} </span>님의 정보를 알려주세요
         </div>
         {/* 기본정보 */}
         <div className="mt-[70px]">
