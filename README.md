@@ -49,14 +49,14 @@
       </td>
     </tr>
      <tr>
-      <td><a href="https://github.com/cj2174">김지우</a></td>
+      <td><a href="https://github.com/erase0250">김지우</a></td>
     </tr>
     <tr>
       <td>FE | 팀원</td>
     </tr>
     <tr></tr><tr>
       <td>
-        <a>· 유기동물 조회 및 상세 페이지, 입양 신청서 페이지 퍼블리싱, 자유게시판 커뮤니티 CRUD</a><br>
+        <a>· 메인페이지, 로그인/회원가입, 마이페이지, 프로젝트 상세, 커뮤니티 상세 기능</a><br>
       </td>
     </tr>
   </tbody>
