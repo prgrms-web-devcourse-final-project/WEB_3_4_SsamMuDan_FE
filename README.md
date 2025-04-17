@@ -38,18 +38,6 @@
       </td>
     </tr>
     <tr>
-      <td><a href="https://github.com/dony0720">신중석</a></td>
-    </tr>
-    <tr>
-      <td>FE | 팀원</td>
-    </tr>
-    <tr></tr><tr>
-      <td>
-        <a>· 여행 전체 조회 페이지, 커뮤니티 메인, 마이페이지 퍼블리싱</a><br>
-        <a>· 카테고리별 검색, 키워드 검색 기능, Tour API 조회 기능</a><br>
-      </td>
-    </tr>
-    <tr>
       <td><a href="https://github.com/cj2174">홍종희</a></td>
     </tr>
     <tr>
