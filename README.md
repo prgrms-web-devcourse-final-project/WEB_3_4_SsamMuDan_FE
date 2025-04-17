@@ -73,30 +73,3 @@
   </tbody>
 </table>
 </center>
-
-## 👥 팀원 소개 및 역할
-<center>
-<table>
-  <tbody>
-    <tr>
-    </tr>
-    <center>
-    <tr>
-      <td><a href="https://github.com/dony0720">신중석</a></td>
-      <td><a href="">홍종희</a></td>
-      <td><a href="">김지우</a></td>
-   
-    </tr>
-      <tr>
-      <td><a>· 팀 리드 및 협업 관리<br>· 메인, 채용 전체, 프로젝트 전체 퍼블리싱 <br>. 채용 전체, 이력서 조회 및 작성 기능 개발 </a></td>
-      <td><a>· 국가유산 이름 및 카테고리별 검색 기능<br>. 국가유산 상세정보 제공 및 위치 마커</a></td>
-      <td><a>· Q&A 등록/수정/삭제/좋아요/댓글기능<br>·지도 길찾기,지도마커,인포윈도우기능,지도 재설정</a></td>
-      <td><a>· 국가유산 퀴즈 관련 기능 전체</a></td>
-      <td><a>· 국가유산 메인페이지 제작</a></td>
-    </tr>
-  </tbody>
-</table>
-</center>
-<br><br><br>
-
-
