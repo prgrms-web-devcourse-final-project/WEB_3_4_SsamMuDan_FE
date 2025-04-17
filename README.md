@@ -1,5 +1,6 @@
 # coTree
-![Uploading image (1).png…]()
+![image (1)](https://github.com/user-attachments/assets/8781fc41-d1b0-47a6-977f-2ac0d399a98d)
+
 
 <br><br><br>
 
@@ -17,8 +18,7 @@
  
 - 사이드 프로젝트 매칭 플랫폼
   - 개발자들이 협업할 팀원을 쉽게 찾고, 아이디어 기반의 프로젝트를 실제로 실행할 수 있도록 모집/매칭 기능을 제공합니다. 이를 통해 실무 경험을 쌓고 포트폴리오도 구축할 수 있습니다.
- 
-<br><br><br>
+<br><br>
 
 ## 팀원 소개 및 역할
 <center>
