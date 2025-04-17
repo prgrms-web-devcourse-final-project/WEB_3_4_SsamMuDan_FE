@@ -21,7 +21,6 @@ const MypageTabs = ({ activeSection }) => {
   const [loading, setLoading] = useState(false);
   const [selectedSortLabel, setSelectedSortLabel] = useState('최신순');
 
-  console.log('items', items);
   const navigate = useNavigate();
 
   const tabs =
@@ -37,6 +36,7 @@ const MypageTabs = ({ activeSection }) => {
           { label: '커뮤니티', value: 'community' },
         ];
 
+  // 탭 변경 시 URL 쿼리파라미터 변경
   const handleTabChange = (tabValue) => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set('category', tabValue);
@@ -47,6 +47,7 @@ const MypageTabs = ({ activeSection }) => {
     setSelectedSortLabel('최신순');
   };
 
+  // 페이지네이션
   const handlePagination = (newPage) => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set('page', String(newPage - 1));
@@ -54,30 +55,29 @@ const MypageTabs = ({ activeSection }) => {
     window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
+  // 각 카테고리별 API를 함수로 저장해둠
+  const fetcherMap = {
+    community: () => getLikedCommunity(page, 12),
+    techtube: () => getLikedTechTube(page, 12),
+    techbook: () => getLikedTechBook(page, 12),
+    project: () => getLikedProject(page, 12),
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
         if (activeSection === 'purchase') {
+          // 구매목록일 때 테크튜브, 테크북 구분
           const type = category === 'techtube' ? 'TECH_TUBE' : 'TECH_BOOK';
           const res = await getOrderList(page, 12, type);
           setItems(res.content);
           setTotalPages(res.totalPages);
         } else {
-          if (category === 'community') {
-            const res = await getLikedCommunity(page, 12);
-            setItems(res.content);
-            setTotalPages(res.totalPages);
-          } else if (category === 'techtube') {
-            const res = await getLikedTechTube(page, 12);
-            setItems(res.content);
-            setTotalPages(res.totalPages);
-          } else if (category === 'techbook') {
-            const res = await getLikedTechBook(page, 12);
-            setItems(res.content);
-            setTotalPages(res.totalPages);
-          } else if (category === 'project') {
-            const res = await getLikedProject(page, 12);
+          // 관심목록일 때는 해당 카테고리의 fetch 함수 실행함
+          const fetcher = fetcherMap[category];
+          if (fetcher) {
+            const res = await fetcher();
             setItems(res.content);
             setTotalPages(res.totalPages);
           } else {
@@ -95,6 +95,92 @@ const MypageTabs = ({ activeSection }) => {
     fetchData();
   }, [activeSection, category, page]);
 
+  const renderItem = (item) => {
+    // 구매 목록
+    if (activeSection === 'purchase') {
+      const path =
+        category === 'techtube'
+          ? `/TECH_TUBE/${item.productId}?category=강의소개&page=0&sort=LATEST`
+          : `/TECH_BOOK/${item.productId}?category=강의소개&page=0&sort=LATEST`;
+
+      return (
+        <div key={item.id} onClick={() => navigate(path)} className="cursor-pointer">
+          <LectureCardSimple
+            title={item.title}
+            imageUrl={item.thumbnail || '/images/default-image.svg'}
+            showPrice={false}
+          />
+        </div>
+      );
+    }
+
+    // 관심 목록 - 커뮤니티
+    if (category === 'community') {
+      return (
+        <div
+          key={item.id}
+          onClick={() => navigate(`/communityDetail/${item.id}`)}
+          className="cursor-pointer"
+        >
+          <LectureCardSimple
+            title={item.title}
+            imageUrl={item.thumbnailImage || '/images/default-image.svg'}
+            showPrice={false}
+          />
+        </div>
+      );
+    }
+
+    // 관심 목록 - TechTube
+    if (category === 'techtube') {
+      return (
+        <div
+          key={item.id}
+          onClick={() => navigate(`/TECH_TUBE/${item.id}?category=강의소개&page=0&sort=LATEST`)}
+          className="cursor-pointer"
+        >
+          <LectureCardSimple
+            title={item.title}
+            imageUrl={item.techTubeThumbnailUrl || '/images/default-image.svg'}
+            showPrice={false}
+          />
+        </div>
+      );
+    }
+
+    // 관심 목록 - TechBook
+    if (category === 'techbook') {
+      return (
+        <div
+          key={item.id}
+          onClick={() => navigate(`/TECH_BOOK/${item.id}?category=강의소개&page=0&sort=LATEST`)}
+          className="cursor-pointer"
+        >
+          <LectureCardSimple
+            title={item.title}
+            imageUrl={item.techBookThumbnailUrl || '/images/default-image.svg'}
+            showPrice={false}
+          />
+        </div>
+      );
+    }
+
+    // 관심 목록 - 프로젝트
+    if (category === 'project') {
+      return (
+        <div
+          key={item.id}
+          onClick={() => navigate(`/projectJoinDetail/${item.id}`)}
+          className="cursor-pointer"
+        >
+          <MyProjectCard item={item} />
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div className="bg-white border border-grey200 p-6 shadow-lg rounded-2xl mb-[90px] max-w-[1246px] mx-auto">
       <div className="mb-8">
@@ -111,99 +197,7 @@ const MypageTabs = ({ activeSection }) => {
           <p>로딩 중...</p>
         ) : items.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10">
-            {items.map((item) => {
-              if (activeSection === 'purchase') {
-                return (
-                  <div
-                    key={item.id}
-                    onClick={() => {
-                      if (category === 'techtube') {
-                        navigate(
-                          `/TECH_TUBE/${item.productId}?category=강의소개&page=0&sort=LATEST`,
-                        );
-                      } else if (category === 'techbook') {
-                        navigate(
-                          `/TECH_BOOK/${item.productId}?category=강의소개&page=0&sort=LATEST`,
-                        );
-                      }
-                    }}
-                    className="cursor-pointer"
-                  >
-                    <LectureCardSimple
-                      title={item.title}
-                      imageUrl={item.thumbnail || '/images/default-image.svg'}
-                      showPrice={false}
-                    />
-                  </div>
-                );
-              }
-
-              if (category === 'community') {
-                return (
-                  <div
-                    key={item.id}
-                    onClick={() => navigate(`/communityDetail/${item.id}`)}
-                    className="cursor-pointer"
-                  >
-                    <LectureCardSimple
-                      title={item.title}
-                      imageUrl={item.thumbnailImage || '/images/default-image.svg'}
-                      showPrice={false}
-                    />
-                  </div>
-                );
-              }
-
-              if (category === 'techtube') {
-                return (
-                  <div
-                    key={item.id}
-                    onClick={() =>
-                      navigate(`/TECH_TUBE/${item.id}?category=강의소개&page=0&sort=LATEST`)
-                    }
-                    className="cursor-pointer"
-                  >
-                    <LectureCardSimple
-                      title={item.title}
-                      imageUrl={item.techTubeThumbnailUrl || '/images/default-image.svg'}
-                      showPrice={false}
-                    />
-                  </div>
-                );
-              }
-
-              if (category === 'techbook') {
-                return (
-                  <div
-                    key={item.id}
-                    onClick={() =>
-                      navigate(`/TECH_BOOK/${item.id}?category=강의소개&page=0&sort=LATEST`)
-                    }
-                    className="cursor-pointer"
-                  >
-                    <LectureCardSimple
-                      title={item.title}
-                      imageUrl={item.techBookThumbnailUrl || '/images/default-image.svg'}
-                      showPrice={false}
-                    />
-                  </div>
-                );
-              }
-
-              if (category === 'project') {
-                return (
-                  <div
-                    key={item.id}
-                    onClick={() => navigate(`/projectJoinDetail/${item.id}`)}
-                    className="cursor-pointer"
-                  >
-                    <MyProjectCard item={item} />
-                  </div>
-                );
-              }
-
-              return null;
-            })}
+            {items.map((item) => renderItem(item))}
           </div>
         ) : (
           <LottieEmpty
@@ -216,7 +210,6 @@ const MypageTabs = ({ activeSection }) => {
         )}
       </div>
 
-      {/* 페이지네이션 */}
       {totalPages > 1 && (
         <div className="my-[80px]">
           <CustomPagination
