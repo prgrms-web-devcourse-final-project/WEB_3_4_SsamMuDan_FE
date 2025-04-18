@@ -38,14 +38,15 @@
       </td>
     </tr>
     <tr>
-      <td><a href="https://github.com/cj2174">홍종희</a></td>
+      <td><a href="https://github.com/HO-NNE">홍종희</a></td>
     </tr>
     <tr>
       <td>FE | 팀원</td>
     </tr>
     <tr></tr><tr>
       <td>
-        <a>· 유기동물 조회 및 상세 페이지, 입양 신청서 페이지 퍼블리싱, 자유게시판 커뮤니티 CRUD</a><br>
+        <a>· 교육조회 , 테크튜브 ,테크북 상세 , 커뮤니티 조회 퍼블리싱 </a><br>
+        <a>· 교육조회 , 테크튜브 ,테크북 상세 , 커뮤니티 조회 , 커뮤니티 작성 기능 </a><br>
       </td>
     </tr>
      <tr>
